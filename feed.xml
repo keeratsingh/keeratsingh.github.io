@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KeeratSingh</title>
+    <description>A dev blog</description>
+    <link>www.linkedin.com/in/keerat-singh-14449660/</link>
+    <atom:link href="www.linkedin.com/in/keerat-singh-14449660/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 01 Aug 2016 18:39:51 -0700</pubDate>
+    <lastBuildDate>Mon, 01 Aug 2016 18:39:51 -0700</lastBuildDate>
+    <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>Welcome to My Blog!</title>
+        <description>&lt;p&gt;This is my first post.
+Hello over time I will be posting my experiences and helpful tutorials over the time, that I encounter while discovering new stuff.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 01 Aug 2016 11:04:52 -0700</pubDate>
+        <link>www.linkedin.com/in/keerat-singh-14449660/blog/2016/welcome-to-my-blog/</link>
+        <guid isPermaLink="true">www.linkedin.com/in/keerat-singh-14449660/blog/2016/welcome-to-my-blog/</guid>
+        
+        
+        <category>First</category>
+        
+        <category>Post</category>
+        
+      </item>
+    
+  </channel>
+</rss>
