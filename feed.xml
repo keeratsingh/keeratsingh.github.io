@@ -3,10 +3,10 @@
   <channel>
     <title>KeeratSingh</title>
     <description>A dev blog</description>
-    <link>www.linkedin.com/in/keerat-singh-14449660/</link>
-    <atom:link href="www.linkedin.com/in/keerat-singh-14449660/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 01 Aug 2016 18:39:51 -0700</pubDate>
-    <lastBuildDate>Mon, 01 Aug 2016 18:39:51 -0700</lastBuildDate>
+    <link>https://keeratsingh.github.io//</link>
+    <atom:link href="https://keeratsingh.github.io//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 05 Aug 2016 23:10:40 -0700</pubDate>
+    <lastBuildDate>Fri, 05 Aug 2016 23:10:40 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -16,8 +16,8 @@ Hello over time I will be posting my experiences and helpful tutorials over the 
 
 </description>
         <pubDate>Mon, 01 Aug 2016 11:04:52 -0700</pubDate>
-        <link>www.linkedin.com/in/keerat-singh-14449660/blog/2016/welcome-to-my-blog/</link>
-        <guid isPermaLink="true">www.linkedin.com/in/keerat-singh-14449660/blog/2016/welcome-to-my-blog/</guid>
+        <link>https://keeratsingh.github.io//blog/2016/welcome-to-my-blog/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io//blog/2016/welcome-to-my-blog/</guid>
         
         
         <category>First</category>
