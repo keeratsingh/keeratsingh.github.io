@@ -5,87 +5,84 @@
     <description>A dev blog</description>
     <link>https://keeratsingh.github.io//</link>
     <atom:link href="https://keeratsingh.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 06 Aug 2016 09:41:12 -0700</pubDate>
-    <lastBuildDate>Sat, 06 Aug 2016 09:41:12 -0700</lastBuildDate>
+    <pubDate>Sat, 06 Aug 2016 23:47:33 -0700</pubDate>
+    <lastBuildDate>Sat, 06 Aug 2016 23:47:33 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
-        <title>Setting up a blog on GitHub page</title>
-        <description>&lt;p&gt;I started on a journey to setup my personal Github.io page. Just to iterate my position, I had no prior experience of Jekyll, Ruby or setting up a page on GitHub.
-I had some initial hurdles understanding and configuring, but fortunately, I was able to overcome and setup my very own personal GitHub.io page :)
-&lt;br /&gt;&lt;/p&gt;
+        <title>Setting up Jekyll blog on GitHub page using Windows 10 bash shell</title>
+        <description>&lt;p&gt;I started on a journey to setup my personal Github.io page. Just to iterate my position, 
+I had no prior experience of &lt;code class=&quot;highlighter-pygments&quot;&gt;Jekyll&lt;/code&gt;, &lt;code class=&quot;highlighter-pygments&quot;&gt;Ruby&lt;/code&gt; or setting up a page on GitHub.
+I had some initial hurdles understanding and configuring, but fortunately, I was able to overcome and setup my very own personal GitHub.io page :)&lt;/p&gt;
 
 &lt;p&gt;I had gone through some videos on YouTube, but the ones I encountered missed a really important part setting up Jekyll on windows and compiling the source code into a static website.
-As Jekyll is not officially supported on windows, but there are workarounds to setup Jekyll on windows, which we will be discussing going further into the post.
-&lt;br /&gt;&lt;/p&gt;
+As Jekyll is not officially supported on windows, but there are workarounds to setup Jekyll on windows, which we will be discussing going further into the post.&lt;/p&gt;
 
 &lt;p&gt;I figured it would be really helpful for first timers to have a useful guide on how to setup a GitHub.io page using Jekyll on Windows 10.
 Before you start, you will need Windows Subsystem for Linux (Beta) aka Bash on windows feature enabled. 
-If you have no idea as to how to get the bash setup, refer to this wonderful guide “How to Install and Use the Linux Bash Shell on Windows 10”&lt;/p&gt;
+If you have no idea as to how to get the bash setup, refer to this wonderful guide &lt;a href=&quot;http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;How to Install and Use the Linux Bash Shell on Windows 10&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-1-download-the-theme&quot;&gt;Step 1. Download the Theme:&lt;/h2&gt;
 &lt;p&gt;After you are done setting up the next part is choosing a wonderful theme for your blog. Head over to &lt;a href=&quot;http://jekyllthemes.org&quot;&gt;Jekyll Themes&lt;/a&gt; to find a theme.
 We will be using &lt;a href=&quot;http://jekyllthemes.org/themes/emerald/&quot;&gt;Emerald theme&lt;/a&gt; for our example.
-Each theme has a download zip link, click the &lt;a href=&quot;https://github.com/KingFelix/emerald/archive/master.zip&quot;&gt;download link&lt;/a&gt; to download the zip file, containing the source files.
-&lt;br /&gt;
-&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1.png&quot; alt=&quot;Theme download location&quot; /&gt;&lt;/p&gt;
+Click the &lt;a href=&quot;https://github.com/KingFelix/emerald/archive/master.zip&quot;&gt;download link&lt;/a&gt; to download the zip file, containing the source files.&lt;/p&gt;
 
-&lt;p&gt;Alternatively, you can go to github.com and search for the repository with the theme name, which is emerald in our case, generally, you will have a good idea, which repository to choose, we can choose KingFelix/emerald
-&lt;br /&gt;
-&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1a.png&quot; alt=&quot;Theme download location GitHub&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1.png&quot; alt=&quot;Theme download location&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Alternatively, you can go to github.com and search for the repository with the theme name, which is emerald in our case, generally, you will have a good idea, which repository to choose, we can choose KingFelix/emerald&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1a.png&quot; alt=&quot;Theme download location GitHub&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-2-setting-up-the-windows-10-environment&quot;&gt;Step 2. Setting up the Windows 10 environment:&lt;/h2&gt;
 &lt;p&gt;Now we will setup our local environment required to build the source code just downloaded on Windows 10.
 There are different ways to setup a Jekyll server locally which you can use as desired, however, the one I found most convenient was installing the packages on the bash shell and setting up a Jekyll server on the same.
-Extract the zip file and open the bash shell. We need to install ruby and Jekyll before we do anything.Just follow the steps below and you should be good to go.&lt;/p&gt;
+Extract the zip file and open the bash shell. We need to install Ruby and Jekyll before we do anything.Just follow the steps below and you should be good to go.&lt;/p&gt;
 
-&lt;h4 id=&quot;step-2a-switching-to-root&quot;&gt;Step 2a. Switching to Root:&lt;/h4&gt;
+&lt;h3 id=&quot;step-2a-switching-to-root&quot;&gt;Step 2a. Switching to Root:&lt;/h3&gt;
 &lt;p&gt;We need root permissions to install the packages, else you will get a permission denied error.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo -s &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-2b-installing-gcc-and-make&quot;&gt;Step 2b. Installing gcc and make:&lt;/h4&gt;
-&lt;p&gt;Since the ubuntu bash shell is almost empty and has no packages like gcc and make installed, therefore just to be on the safe side, we will install gcc and make.&lt;/p&gt;
+&lt;h3 id=&quot;step-2b-installing-gcc-and-make&quot;&gt;Step 2b. Installing gcc and make:&lt;/h3&gt;
+&lt;p&gt;Since the ubuntu bash shell is almost empty and has no packages like &lt;code class=&quot;highlighter-pygments&quot;&gt;gcc&lt;/code&gt; and &lt;code class=&quot;highlighter-pygments&quot;&gt;make&lt;/code&gt; installed, therefore just to be on the safe side, we will install gcc and make.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;apt-get update
 apt-get install gcc
 apt-get install make&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-2c-i-installing-ruby&quot;&gt;Step 2c. (i) Installing Ruby:&lt;/h4&gt;
-&lt;p&gt;We will be needing ruby and ruby-dev package to compile and build the Jekyll code and its dependencies. 
+&lt;h3 id=&quot;step-2c-i-installing-ruby-from-brightboxrecommended-method&quot;&gt;Step 2c. (i) Installing Ruby from Brightbox[Recommended Method]:&lt;/h3&gt;
+&lt;p&gt;We will be needing &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby&lt;/code&gt; and &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby-dev&lt;/code&gt; package to compile and build the Jekyll code and its dependencies. 
 The reason why we need ruby-dev is because some Jekyll dependencies are just source files, which require being compiled into binaries/executables.
-Make sure the ruby version is at least 2.0 as Jekyll requires a minimum ruby version 2.0. The current latest stable release is 2.3.1.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;apt-get install ruby
-apt-get install ruby-dev&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;step-2c-ii-installing-ruby-from-brightboxrecommended-method&quot;&gt;Step 2c. (ii) Installing Ruby from Brightbox[Recommended Method]:&lt;/h4&gt;
-&lt;p&gt;If the command above doesn’t fetch the latest package, use the package from the Brightbox repository.&lt;/p&gt;
+For more details refer to the official site: &lt;a href=&quot;https://www.brightbox.com/docs/ruby/ubuntu/#Addingtherepository&quot;&gt;BrightBox&lt;/a&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;apt-get install software-properties-common
 apt-add-repository ppa:brightbox/ruby-ng
 apt-get update
 apt-get install ruby2.3 ruby2.3-dev&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;For more details refer to the official site: &lt;a href=&quot;https://www.brightbox.com/docs/ruby/ubuntu/#Addingtherepository&quot;&gt;BrightBox&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;step-2c-ii-installing-ruby-alternate-method&quot;&gt;Step 2c. (ii) Installing Ruby [Alternate Method]:&lt;/h3&gt;
+&lt;p&gt;Make sure the Ruby version is at least 2.0 as Jekyll requires a minimum Ruby version 2.0. The current latest stable release is 2.3.1.&lt;/p&gt;
 
-&lt;h4 id=&quot;step-2d-setting-the-ruby-version&quot;&gt;Step 2d. Setting the ruby version:&lt;/h4&gt;
-&lt;p&gt;Just to be sure, change the default ruby version to 2.3, we can switch the default ruby version using the ruby-switch tool.&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;apt-get install ruby
+apt-get install ruby-dev&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;step-2d-setting-the-ruby-version&quot;&gt;Step 2d. Setting the Ruby version:&lt;/h3&gt;
+&lt;p&gt;Just to be sure, change the default Ruby version to 2.3, we can switch the default Ruby version using the &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby-switch&lt;/code&gt; tool.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;apt-get install ruby-switch
 ruby-switch --set ruby2.3
 ruby -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-2e-installing-bundler&quot;&gt;Step 2e. Installing Bundler:&lt;/h4&gt;
-&lt;p&gt;Bundler is an easy way to track and install the required and dependent gems which will make our life easier, therefore it is a good time now to install bundler.
+&lt;h3 id=&quot;step-2e-installing-bundler&quot;&gt;Step 2e. Installing Bundler:&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-pygments&quot;&gt;Bundler&lt;/code&gt; is an easy way to track and install the required and dependent gems which will make our life easier, therefore it is a good time now to install bundler.
 Once installation completes check the version using the -v flag.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;gem install bundler
 bundler -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-2f-installing-jekyll&quot;&gt;Step 2f. Installing Jekyll:&lt;/h4&gt;
+&lt;h3 id=&quot;step-2f-installing-jekyll&quot;&gt;Step 2f. Installing Jekyll:&lt;/h3&gt;
 &lt;p&gt;Even though Jekyll is not supported officially on Windows, however, it is fully supported on Linux, therefore we will take advantage of that. 
-To install Jekyll just run the following command and it would install all Jekyll and its dependencies. Once installation completes check the version using the -v flag.&lt;/p&gt;
+To install &lt;code class=&quot;highlighter-pygments&quot;&gt;Jekyll&lt;/code&gt; just run the following command and it would install all &lt;code class=&quot;highlighter-pygments&quot;&gt;Jekyll&lt;/code&gt; and its dependencies. Once installation completes check the version using the -v flag.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;gem install jekyll
 jekyll -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -94,15 +91,15 @@ jekyll -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;p&gt;Extract the zip file you downloaded in step 1 and go to the download location from the bash shell.
 All the local drives are present in the &lt;code class=&quot;highlighter-pygments&quot;&gt;/mnt/&lt;/code&gt; folder.&lt;br /&gt;
 For example:&lt;br /&gt;
-&lt;code class=&quot;highlighter-pygments&quot;&gt;Windows Location: D:\emerald-master\emerald-master&lt;/code&gt; &lt;br /&gt;
-&lt;code class=&quot;highlighter-pygments&quot;&gt;Bash Location: /mnt/d/emerald-master/emerald-master &lt;/code&gt; &lt;br /&gt;&lt;/p&gt;
+Windows Location: &lt;code class=&quot;highlighter-pygments&quot;&gt;D:\emerald-master\emerald-master&lt;/code&gt; &lt;br /&gt;
+Bash Location: &lt;code class=&quot;highlighter-pygments&quot;&gt;/mnt/d/emerald-master/emerald-master &lt;/code&gt; &lt;br /&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /mnt/d/emerald-master/emerald-master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-3a-configuring-the-configyml-file&quot;&gt;Step 3a. Configuring the _config.yml file:&lt;/h4&gt;
-&lt;p&gt;Open up any text editor and edit the _config.yml file before we start building.
-Add the following line in the build settings “gems: [jekyll-paginate]”
-Jekyll-paginate is a plugin which helps us in displaying the posts into a smaller list of posts on the main page.
+&lt;h3 id=&quot;step-3a-configuring-the-configyml-file&quot;&gt;Step 3a. Configuring the _config.yml file:&lt;/h3&gt;
+&lt;p&gt;Open up any text editor and edit the &lt;code class=&quot;highlighter-pygments&quot;&gt;_config.yml&lt;/code&gt; file before we start building.
+Add the following line in the build settings “gems: [jekyll-paginate]”.
+&lt;code class=&quot;highlighter-pygments&quot;&gt;jekyll-paginate&lt;/code&gt; is a plugin which helps us in displaying the posts into a smaller list of posts on the main page.
 After adding the line your build setting would look something like this.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Build settings&lt;/span&gt;
@@ -115,31 +112,33 @@ After adding the line your build setting would look something like this.&lt;/p&g
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;paginate_path&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;/page:num/&lt;/span&gt;
 &lt;span class=&quot;l-Scalar-Plain&quot;&gt;gems&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p-Indicator&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;jekyll-paginate&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-3b-building-and-serving-the-website-locally&quot;&gt;Step 3b. Building and serving the website locally:&lt;/h4&gt;
-&lt;p&gt;Navigate to the root of your source code folder containing the  _config.yml to build and serve the website just execute the following command.&lt;/p&gt;
+&lt;h3 id=&quot;step-3b-building-and-serving-the-website-locally&quot;&gt;Step 3b. Building and serving the website locally:&lt;/h3&gt;
+&lt;p&gt;Navigate to the root of your source code folder containing the  &lt;code class=&quot;highlighter-pygments&quot;&gt;_config.yml&lt;/code&gt; to build and serve the website just execute the following command.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;jekyll serve&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Jekyll monitors your source code and regenerates files on the fly by default.
 This is termed as watching the source folder for any changes, and in some cases, Jekyll might fail to watch when you try to serve your website.
-If you get an error similar to “Error:  Invalid argument - Failed to watch “,  just execute the following command and would resolve your issue.&lt;/p&gt;
+If you get an error similar to &lt;code class=&quot;highlighter-pygments&quot;&gt;&quot;Error:  Invalid argument - Failed to watch&quot;&lt;/code&gt;,  just execute the following command and would resolve your issue.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;jekyll serve --force_polling&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;If in some cases it still fails to watch, just serve the website using the –no-watch flag, which essentially means you will have to build and serve every time you make a change.&lt;/p&gt;
+&lt;p&gt;If in some cases it still fails to watch, just serve the website using the &lt;code class=&quot;highlighter-pygments&quot;&gt;--no-watch&lt;/code&gt; flag, which essentially means you will have to build and serve every time you make a change.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;jekyll serve --no-watch&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;step-3c-opening-the-website-locally&quot;&gt;Step 3c. Opening the website locally:&lt;/h4&gt;
-&lt;p&gt;Once the build and serve are completed in step 3b, you should get an output similar to the one given below. There are 3 main elements to look out for
-	• Configuration file :  This tells us the configuration file used. Make sure the correct file is used.
-	• Destination:  This tells us the output folder, in which the source code is built into, we will need this later.
-	• Server address:  This tells us the local address of the website, which we can use to visit our website hosted on a local server.&lt;/p&gt;
+&lt;h3 id=&quot;step-3c-opening-the-website-locally&quot;&gt;Step 3c. Opening the website locally:&lt;/h3&gt;
+&lt;p&gt;Once the build and serve are completed in step 3b, you should get an output similar to the one given below. There are 3 main elements to look out for&lt;/p&gt;
 
-&lt;p&gt;Go to the server address http://127.0.0.1:4000/emerald// to see your website.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-pygments&quot;&gt;Configuration file&lt;/code&gt;:  This tells us the configuration file used. Make sure the correct file is used.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-pygments&quot;&gt;Destination&lt;/code&gt;:  This tells us the output folder, in which the source code is built into.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-pygments&quot;&gt;Server address&lt;/code&gt;:  This tells us the local address of the website, which we can use to visit our website hosted on a local server.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;	
-Configuration file: /mnt/d/emerald-master/emerald-master/_config.yml
+&lt;p&gt;Go to the server address &lt;code class=&quot;highlighter-pygments&quot;&gt;http://127.0.0.1:4000/emerald//&lt;/code&gt; to see your website.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Configuration file: /mnt/d/emerald-master/emerald-master/_config.yml
 Source: .
 Destination: ./_site
 Incremental build: disabled. Enable with --incremental
@@ -151,10 +150,11 @@ Server address: http://127.0.0.1:4000/emerald//
 Server running... press ctrl-c to stop.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;step-4-hosting-and-uploading-the-website-on-githubio&quot;&gt;Step 4. Hosting and uploading the website on Github.io:&lt;/h2&gt;
-&lt;p&gt;After you setup and tested everything locally, the next part is setting up a GitHub repository with the username.github.io, where username is your username on GitHub. Be very careful to make sure the username is correct, as a mismatching username would not work.  Once a new repository is created online, we will upload the site that we have built locally onto the repository username.github.io.&lt;/p&gt;
+&lt;p&gt;After you setup and tested everything locally, the next part is setting up a GitHub repository with the &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;, where username is your username on GitHub. Be very careful to make sure the username is correct, as a mismatching username would not work.  Once a new repository is created online, we will upload the site that we have built locally onto the repository &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h4 id=&quot;step-4a-setup-and-push-your-code-to-github-repo-usernamegithubio&quot;&gt;Step 4a. Setup and push your code to GitHub repo username.github.io:&lt;/h4&gt;
-&lt;p&gt;Note the destination folder in step 3c, the default destination folder is _site. From your root source folder, navigate into the _site folder, initialize a new git repository, commit the change and push them to repository username.github.io&lt;/p&gt;
+&lt;h3 id=&quot;step-4a-setup-and-push-your-code-to-github-repo-usernamegithubio&quot;&gt;Step 4a. Setup and push your code to GitHub repo username.github.io:&lt;/h3&gt;
+&lt;p&gt;Note the destination folder in step 3c, the default destination folder is &lt;code class=&quot;highlighter-pygments&quot;&gt;_site&lt;/code&gt;.
+From your root source folder, navigate into the &lt;code class=&quot;highlighter-pygments&quot;&gt;_site&lt;/code&gt; folder, initialize a new git repository, commit the change and push them to repository &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;_site/
 apt-get install git
@@ -166,9 +166,9 @@ git push -u origin master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;step-5-final-check&quot;&gt;Step 5. Final Check:&lt;/h2&gt;
 &lt;p&gt;Once your code is successfully pushed, you can go to the repository settings and confirm everything is working correctly.
-https://github.com/username/username.github.io/settings&lt;/p&gt;
+&lt;code class=&quot;highlighter-pygments&quot;&gt;https://github.com/username/username.github.io/settings&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Go to https://username.github.io/ to see your website in action.&lt;/p&gt;
+&lt;p&gt;Go to &lt;code class=&quot;highlighter-pygments&quot;&gt;https://username.github.io/&lt;/code&gt; to see your website in action.&lt;/p&gt;
 
 &lt;p&gt;Making changes and updating the website:
 Repeat step 3b , 3c, 4  and 5
