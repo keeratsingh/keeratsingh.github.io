@@ -3,10 +3,10 @@
   <channel>
     <title>KeeratSingh</title>
     <description>A dev blog</description>
-    <link>https://keeratsingh.github.io//</link>
-    <atom:link href="https://keeratsingh.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 07 Aug 2016 08:39:36 -0700</pubDate>
-    <lastBuildDate>Sun, 07 Aug 2016 08:39:36 -0700</lastBuildDate>
+    <link>https://keeratsingh.github.io/</link>
+    <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 07 Aug 2016 17:30:18 -0700</pubDate>
+    <lastBuildDate>Sun, 07 Aug 2016 17:30:18 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -189,8 +189,8 @@ git push -u origin master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Fri, 05 Aug 2016 14:19:52 -0700</pubDate>
-        <link>https://keeratsingh.github.io//blog/2016/setting-up-blog-github-windows-10/</link>
-        <guid isPermaLink="true">https://keeratsingh.github.io//blog/2016/setting-up-blog-github-windows-10/</guid>
+        <link>https://keeratsingh.github.io/blog/2016/setting-up-blog-github-windows-10/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/setting-up-blog-github-windows-10/</guid>
         
         
         <category>GitHub</category>
@@ -204,8 +204,8 @@ Hello over time I will be posting my experiences and helpful tutorials over the 
 
 </description>
         <pubDate>Mon, 01 Aug 2016 11:04:52 -0700</pubDate>
-        <link>https://keeratsingh.github.io//blog/2016/welcome-to-my-blog/</link>
-        <guid isPermaLink="true">https://keeratsingh.github.io//blog/2016/welcome-to-my-blog/</guid>
+        <link>https://keeratsingh.github.io/blog/2016/welcome-to-my-blog/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/welcome-to-my-blog/</guid>
         
         
         <category>First</category>
