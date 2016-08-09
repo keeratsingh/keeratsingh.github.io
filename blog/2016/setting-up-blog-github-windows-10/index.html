@@ -73,32 +73,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </header>
 
     <div class="post-content">
-      <p>I started on a journey to setup my personal Github.io page. Just to iterate my position, 
-I had no prior experience of <code class="highlighter-pygments">Jekyll</code>, <code class="highlighter-pygments">Ruby</code> or setting up a page on GitHub.
-I had some initial hurdles understanding and configuring, but fortunately, I was able to overcome and setup my very own personal GitHub.io page :)</p>
+      <p>I started on a journey to setup my personal Github.io page and I had no prior experience of <code class="highlighter-pygments">Jekyll</code>, <code class="highlighter-pygments">Ruby</code> or setting up a page on GitHub.
+There were some initial hurdles understanding and configuring the blog, but fortunately, I was able to overcome them all and setup my very own personal GitHub.io page :)</p>
 
-<p>I had gone through some videos on YouTube, but the ones I encountered missed a really important part setting up Jekyll on windows and compiling the source code into a static website.
-As Jekyll is not officially supported on windows, but there are workarounds to setup Jekyll on windows, which we will be discussing going further into the post.</p>
+<p>I watched some videos on YouTube, however most of them missed a really important part, the part of setting up Jekyll on windows 10 and compiling the source code into a static website.
+Jekyll is not officially supported on windows, but there are workarounds to setup Jekyll on windows, which I will discuss in this post. I figured it would be really helpful for first timers to have a useful guide on how to setup a GitHub.io page using Jekyll on Windows 10.</p>
 
-<p>I figured it would be really helpful for first timers to have a useful guide on how to setup a GitHub.io page using Jekyll on Windows 10.
-Before you start, you will need Windows Subsystem for Linux (Beta) aka Bash on windows feature enabled. 
-If you have no idea as to how to get the bash setup, refer to this wonderful guide <a href="http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/">How to Install and Use the Linux Bash Shell on Windows 10</a></p>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<p>Before you start, you will need Windows Subsystem for Linux (Beta) aka Bash on windows feature enabled. 
+If you have no idea on how to get the bash setup, refer to this wonderful guide <a href="http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/">How to Install and Use the Linux Bash Shell on Windows 10</a></p>
 
 <h2 id="step-1-download-the-theme">Step 1. Download the Theme:</h2>
-<p>After you are done setting up the next part is choosing a wonderful theme for your blog. Head over to <a href="http://jekyllthemes.org">Jekyll Themes</a> to find a theme.
-We will be using <a href="http://jekyllthemes.org/themes/emerald/">Emerald theme</a> for our example.
-Click the <a href="https://github.com/KingFelix/emerald/archive/master.zip">download link</a> to download the zip file, containing the source files.</p>
+<p>After you are done setting up, the next part is choosing a wonderful theme for your blog. Head over to <a href="http://jekyllthemes.org">Jekyll Themes</a> to find a theme.
+I will be using <a href="http://jekyllthemes.org/themes/emerald/">Emerald theme</a> for our example.
+Click the <a href="https://github.com/KingFelix/emerald/archive/master.zip">download link</a> to download the zip file containing the source files.</p>
 
 <p><img src="\images\posts\2016-08-05-setting-up-blog-github-page\1.png" alt="Theme download location" /></p>
 
-<p>Alternatively, you can go to github.com and search for the repository with the theme name, which is emerald in our case, generally, you will have a good idea, which repository to choose, we can choose KingFelix/emerald</p>
+<p>Alternatively, you can go to github.com and download the source code from the GitHub repository <a href="https://github.com/kingFelix/emerald">KingFelix/emerald</a></p>
 
 <p><img src="\images\posts\2016-08-05-setting-up-blog-github-page\1a.png" alt="Theme download location GitHub" /></p>
 
 <h2 id="step-2-setting-up-the-windows-10-environment">Step 2. Setting up the Windows 10 environment:</h2>
-<p>Now we will setup our local environment required to build the source code just downloaded on Windows 10.
-There are different ways to setup a Jekyll server locally which you can use as desired, however, the one I found most convenient was installing the packages on the bash shell and setting up a Jekyll server on the same.
-Extract the zip file and open the bash shell. We need to install Ruby and Jekyll before we do anything.Just follow the steps below and you should be good to go.</p>
+<p>Now we will setup our local environment required to build the source code that we just downloaded on Windows 10.
+There are different ways to setup a Jekyll server locally which you can use as desired. The one I found most convenient was installing the packages on the bash shell and 
+setting up a Jekyll server on the Linux Subsystem.</p>
+
+<p><img src="\images\posts\2016-08-05-setting-up-blog-github-page\2.png" alt="Linux Bash Shell Windows 10" /></p>
+
+<p>Extract the zip file and open the bash shell. We need to install <code class="highlighter-pygments">ruby</code> and <code class="highlighter-pygments">jekyll</code> before we do anything. Here are the steps to follow.</p>
 
 <h3 id="step-2a-switching-to-root">Step 2a. Switching to Root:</h3>
 <p>We need root permissions to install the packages, else you will get a permission denied error.</p>
@@ -106,15 +109,15 @@ Extract the zip file and open the bash shell. We need to install Ruby and Jekyll
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">sudo -s </code></pre></figure>
 
 <h3 id="step-2b-installing-gcc-and-make">Step 2b. Installing gcc and make:</h3>
-<p>Since the ubuntu bash shell is almost empty and has no packages like <code class="highlighter-pygments">gcc</code> and <code class="highlighter-pygments">make</code> installed, therefore just to be on the safe side, we will install gcc and make.</p>
+<p>Since the ubuntu bash shell is almost empty and has no packages like <code class="highlighter-pygments">gcc</code> and <code class="highlighter-pygments">make</code> installed, we will install gcc and make.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get update
 apt-get install gcc
 apt-get install make</code></pre></figure>
 
-<h3 id="step-2c-i-installing-ruby-from-brightboxrecommended-method">Step 2c. (i) Installing Ruby from Brightbox[Recommended Method]:</h3>
-<p>We will be needing <code class="highlighter-pygments">ruby</code> and <code class="highlighter-pygments">ruby-dev</code> package to compile and build the Jekyll code and its dependencies. 
-The reason why we need ruby-dev is because some Jekyll dependencies are just source files, which require being compiled into binaries/executables.
+<h3 id="step-2c-installing-ruby-from-brightbox-recommended-method">Step 2c. Installing Ruby from Brightbox [Recommended Method]:</h3>
+<p>We will need <code class="highlighter-pygments">ruby</code> and <code class="highlighter-pygments">ruby-dev</code> package to compile and build the Jekyll code and its dependencies. 
+The reason why we need <code class="highlighter-pygments">ruby-dev</code> is because some Jekyll dependencies are just source files, which need to be compiled into binaries/executables.
 For more details refer to the official site: <a href="https://www.brightbox.com/docs/ruby/ubuntu/#Addingtherepository">BrightBox</a></p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get install software-properties-common
@@ -122,8 +125,8 @@ apt-add-repository ppa:brightbox/ruby-ng
 apt-get update
 apt-get install ruby2.3 ruby2.3-dev</code></pre></figure>
 
-<h3 id="step-2c-ii-installing-ruby-alternate-method">Step 2c. (ii) Installing Ruby [Alternate Method]:</h3>
-<p>Make sure the Ruby version is at least 2.0 as Jekyll requires a minimum Ruby version 2.0. The current latest stable release is 2.3.1.</p>
+<h3 id="step-2c-installing-ruby-alternate-method">Step 2c. Installing Ruby [Alternate Method]:</h3>
+<p>Make sure the <code class="highlighter-pygments">ruby</code> version is at least 2.0 as <code class="highlighter-pygments">jekyll</code> requires a minimum <code class="highlighter-pygments">ruby</code> version 2.0. The current latest stable release is 2.3.1.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">apt-get install ruby
 apt-get install ruby-dev</code></pre></figure>
@@ -143,8 +146,8 @@ Once installation completes check the version using the -v flag.</p>
 bundler -v</code></pre></figure>
 
 <h3 id="step-2f-installing-jekyll">Step 2f. Installing Jekyll:</h3>
-<p>Even though Jekyll is not supported officially on Windows, however, it is fully supported on Linux, therefore we will take advantage of that. 
-To install <code class="highlighter-pygments">Jekyll</code> just run the following command and it would install all <code class="highlighter-pygments">Jekyll</code> and its dependencies. Once installation completes check the version using the -v flag.</p>
+<p>Even though Jekyll is not supported officially on Windows, it is fully supported on Linux, therefore we will take advantage of that. 
+To install Jekyll run the following command and it will install all <code class="highlighter-pygments">jekyll</code> and its dependencies. Once installation completes check the version using the -v flag.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">gem install jekyll
 jekyll -v</code></pre></figure>
@@ -162,7 +165,7 @@ Bash Location: <code class="highlighter-pygments">/mnt/d/emerald-master/emerald-
 <p>Open up any text editor and edit the <code class="highlighter-pygments">_config.yml</code> file before we start building.
 Add the following line in the build settings “gems: [jekyll-paginate]”.
 <code class="highlighter-pygments">jekyll-paginate</code> is a plugin which helps us in displaying the posts into a smaller list of posts on the main page.
-After adding the line your build setting would look something like this.</p>
+After adding the line your build setting will look something like this.</p>
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Build settings</span>
 <span class="l-Scalar-Plain">baseurl</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/emerald/</span> <span class="c1"># Change this to your relative path (ex: /blog/), or leave just a /</span>
@@ -175,7 +178,7 @@ After adding the line your build setting would look something like this.</p>
 <span class="l-Scalar-Plain">gems</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">jekyll-paginate</span><span class="p-Indicator">]</span></code></pre></figure>
 
 <h3 id="step-3b-building-and-serving-the-website-locally">Step 3b. Building and serving the website locally:</h3>
-<p>Navigate to the root of your source code folder containing the  <code class="highlighter-pygments">_config.yml</code> to build and serve the website just execute the following command.</p>
+<p>Navigate to the root of your source code folder containing the  <code class="highlighter-pygments">_config.yml</code> to build and serve the website and execute the following command.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">jekyll serve</code></pre></figure>
 
@@ -198,7 +201,7 @@ If you get an error similar to <code class="highlighter-pygments">"Error:  Inval
   <li><code class="highlighter-pygments">Server address</code>:  This tells us the local address of the website, which we can use to visit our website hosted on a local server.</li>
 </ul>
 
-<p>Go to the server address <code class="highlighter-pygments">http://127.0.0.1:4000/emerald//</code> to see your website.</p>
+<p>Go to the server address <code class="highlighter-pygments">http://127.0.0.1:4000/emerald/</code> to see your website.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">Configuration file: /mnt/d/emerald-master/emerald-master/_config.yml
 Source: .
@@ -208,11 +211,11 @@ Generating...
                     <span class="k">done</span> in 0.744 seconds.
 Auto-regeneration: enabled <span class="k">for</span> <span class="s1">&#39;.&#39;</span>
 Configuration file: /mnt/d/emerald-master/emerald-master/_config.yml
-Server address: http://127.0.0.1:4000/emerald//
+Server address: http://127.0.0.1:4000/emerald/
 Server running... press ctrl-c to stop.</code></pre></figure>
 
 <h2 id="step-4-hosting-and-uploading-the-website-on-githubio">Step 4. Hosting and uploading the website on Github.io:</h2>
-<p>After you setup and tested everything locally, the next part is setting up a GitHub repository with the <code class="highlighter-pygments">username.github.io</code>, where username is your username on GitHub. Be very careful to make sure the username is correct, as a mismatching username would not work.  Once a new repository is created online, we will upload the site that we have built locally onto the repository <code class="highlighter-pygments">username.github.io</code>.</p>
+<p>After you have setup and tested everything locally, the next part is setting up a GitHub repository with the <code class="highlighter-pygments">username.github.io</code>, where username is your username on GitHub. Be very careful to make sure the username is correct, as a mismatching username will not work.  Once a new repository is created online, we will upload the site that we have built locally onto the repository <code class="highlighter-pygments">username.github.io</code>.</p>
 
 <h3 id="step-4a-setup-and-push-your-code-to-github-repo-usernamegithubio">Step 4a. Setup and push your code to GitHub repo username.github.io:</h3>
 <p>Note the destination folder in step 3c, the default destination folder is <code class="highlighter-pygments">_site</code>.
