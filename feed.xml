@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>KeeratSingh</title>
-    <description>A blog with development experiences and helpful how-to guides.</description>
+    <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 09 Aug 2016 23:15:08 -0700</pubDate>
-    <lastBuildDate>Tue, 09 Aug 2016 23:15:08 -0700</lastBuildDate>
+    <pubDate>Wed, 10 Aug 2016 21:58:48 -0700</pubDate>
+    <lastBuildDate>Wed, 10 Aug 2016 21:58:48 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -18,7 +18,7 @@ There were some initial hurdles understanding and configuring the blog, but fort
 Jekyll is not officially supported on windows, but there are workarounds to setup Jekyll on windows, which I will discuss in this post. I figured it would be really helpful for first timers to have a useful guide on how to setup a GitHub.io page using Jekyll on Windows 10.&lt;/p&gt;
 
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h2&gt;
-&lt;p&gt;Before you start, you will need Windows Subsystem for Linux (Beta) aka Bash on windows feature enabled. 
+&lt;p&gt;Before you start, you will need &lt;code class=&quot;highlighter-pygments&quot;&gt;Windows Subsystem for Linux aka Bash&lt;/code&gt; on windows feature enabled. 
 If you have no idea on how to get the bash setup, refer to this wonderful guide &lt;a href=&quot;http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;How to Install and Use the Linux Bash Shell on Windows 10&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-1-download-the-theme&quot;&gt;Step 1. Download the Theme:&lt;/h2&gt;
@@ -35,7 +35,7 @@ Click the &lt;a href=&quot;https://github.com/KingFelix/emerald/archive/master.z
 &lt;h2 id=&quot;step-2-setting-up-the-windows-10-environment&quot;&gt;Step 2. Setting up the Windows 10 environment:&lt;/h2&gt;
 &lt;p&gt;Now we will setup our local environment required to build the source code that we just downloaded on Windows 10.
 There are different ways to setup a Jekyll server locally which you can use as desired. The one I found most convenient was installing the packages on the bash shell and 
-setting up a Jekyll server on the Linux Subsystem.&lt;/p&gt;
+setting up a Jekyll server on Bash.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\2.png&quot; alt=&quot;Linux Bash Shell Windows 10&quot; /&gt;&lt;/p&gt;
 
