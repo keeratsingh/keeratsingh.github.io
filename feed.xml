@@ -5,8 +5,8 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 13 Aug 2016 23:24:41 -0700</pubDate>
-    <lastBuildDate>Sat, 13 Aug 2016 23:24:41 -0700</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2016 14:37:00 -0700</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2016 14:37:00 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -22,9 +22,9 @@ Jekyll is not officially supported on windows, but there are workarounds to setu
 If you have no idea on how to get the bash setup, refer to this wonderful guide &lt;a href=&quot;http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;How to Install and Use the Linux Bash Shell on Windows 10&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-1-download-the-theme&quot;&gt;Step 1. Download the Theme:&lt;/h2&gt;
-&lt;p&gt;After you are done setting up, the next part is choosing a wonderful theme for your blog. Head over to &lt;a href=&quot;http://jekyllthemes.org&quot;&gt;Jekyll Themes&lt;/a&gt; to find a theme.
+&lt;p&gt;After you are done setting up, the next part is choosing a wonderful theme for your blog. Head over to Jekyll Themes to find a theme.
 I will be using &lt;a href=&quot;http://jekyllthemes.org/themes/emerald/&quot;&gt;Emerald theme&lt;/a&gt; for our example.
-Click the &lt;a href=&quot;https://github.com/KingFelix/emerald/archive/master.zip&quot;&gt;download link&lt;/a&gt; to download the zip file containing the source files.&lt;/p&gt;
+Click the download link to download the zip file containing the source files.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1.png&quot; alt=&quot;Theme download location&quot; /&gt;&lt;/p&gt;
 
@@ -55,8 +55,7 @@ apt-get install make&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;step-2c-installing-ruby-from-brightbox-recommended-method&quot;&gt;Step 2c. Installing Ruby from Brightbox [Recommended Method]:&lt;/h3&gt;
 &lt;p&gt;We will need &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby&lt;/code&gt; and &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby-dev&lt;/code&gt; package to compile and build the Jekyll code and its dependencies. 
-The reason why we need &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby-dev&lt;/code&gt; is because some Jekyll dependencies are just source files, which need to be compiled into binaries/executables.
-For more details refer to the official site: &lt;a href=&quot;https://www.brightbox.com/docs/ruby/ubuntu/#Addingtherepository&quot;&gt;BrightBox&lt;/a&gt;&lt;/p&gt;
+The reason why we need &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby-dev&lt;/code&gt; is because some Jekyll dependencies are just source files, which need to be compiled into binaries/executables.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;apt-get install software-properties-common
 apt-add-repository ppa:brightbox/ruby-ng
@@ -157,7 +156,9 @@ Server running... press ctrl-c to stop.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;step-4a-setup-and-push-your-code-to-github-repo-usernamegithubio&quot;&gt;Step 4a. Setup and push your code to GitHub repo username.github.io:&lt;/h3&gt;
 &lt;p&gt;Note the destination folder in step 3c, the default destination folder is &lt;code class=&quot;highlighter-pygments&quot;&gt;_site&lt;/code&gt;.
-From your root source folder, navigate into the &lt;code class=&quot;highlighter-pygments&quot;&gt;_site&lt;/code&gt; folder, initialize a new git repository, commit the change and push them to repository &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
+From your root source folder, navigate into the &lt;code class=&quot;highlighter-pygments&quot;&gt;_site&lt;/code&gt; folder, initialize a new git repository, commit the change and push them to 
+repository &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;. GitHub gives the option of hosting your markdown code in the master branch and static website 
+code in the gh-pages branch. In our case we will be hosting just the static website code on the master branch, rather than two seperate branches.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;_site/
 apt-get install git
@@ -183,11 +184,11 @@ git remote add origin https://github.com/username/username.github.io.git
 git push -u origin master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;final-note&quot;&gt;Final Note&lt;/h2&gt;
+
 &lt;p&gt;If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
 
 &lt;p&gt;Check out the links below for detailed information: &lt;br /&gt;
 &lt;a href=&quot;http://daverupert.com/2016/04/jekyll-on-windows-with-bash/&quot;&gt;Jekyll on Bash on Ubuntu on Windows&lt;/a&gt; &lt;br /&gt;
-&lt;a href=&quot;http://jekyll.tips/jekyll-casts/install-jekyll-on-windows/&quot;&gt;Install Jekyll on Windows&lt;/a&gt; &lt;br /&gt;
 &lt;a href=&quot;http://jekyll-windows.juthilo.com&quot;&gt;Run Jekyll on Windows&lt;/a&gt;&lt;/p&gt;
 
 </description>
