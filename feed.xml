@@ -5,13 +5,161 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2016 14:37:00 -0700</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2016 14:37:00 -0700</lastBuildDate>
+    <pubDate>Sun, 21 Aug 2016 19:50:14 -0700</pubDate>
+    <lastBuildDate>Sun, 21 Aug 2016 19:50:14 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
+        <title>Get Bing Image of the Day using C# </title>
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Bing Image of the Day&lt;/strong&gt; has become quite popular over the years, it comprises of essentially the most spectacular user-submitted images from all over the world 
+which have been showcased on the Bing homepage for the past 5 years. I have absolutely loved the &lt;strong&gt;Bing Wallpaper&lt;/strong&gt; of the day part of the Bing desktop 
+application. &lt;strong&gt;Bing desktop&lt;/strong&gt; app changes your wallpaper every day to Bing Image of the Day, which is pretty cool and gives you a peace of mind without 
+having to change the wallpaper every day manually. The somewhat similar concept has been used in &lt;strong&gt;Windows Phone&lt;/strong&gt; as well, where you can set 
+the lock screen to the Bing Image of the Day.&lt;/p&gt;
+
+&lt;p&gt;I was so interested in the idea that I wanted to &lt;strong&gt;try out myself&lt;/strong&gt; building an app to retrieve the Bing Image. I knew once I could retrieve the image, 
+I had &lt;strong&gt;numerous possibilities&lt;/strong&gt; going forward. I could save it and change my desktop after a certain duration of my choice, or set it as my lock screen 
+just like a desktop wallpaper, you get my point, the key here is to get the Bing Image of the Day.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, Bing has a &lt;code class=&quot;highlighter-pygments&quot;&gt;REST API&lt;/code&gt; to retrieve a &lt;code class=&quot;highlighter-pygments&quot;&gt;JSON&lt;/code&gt; string which contains the &lt;strong&gt;URL to 
+the Bing Image&lt;/strong&gt;, which we will be making use of. 
+That is the easy part, now the hard part is to parse and retrieve the URL from the JSON string. I will be discussing in detail the &lt;strong&gt;different methods&lt;/strong&gt; that can be used for 
+parsing and how they can be used to extract the &lt;strong&gt;Bing Image URL&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-1-retrieve-the-json-string&quot;&gt;Step 1. Retrieve the JSON string:&lt;/h2&gt;
+&lt;p&gt;The first step is to retrieve the &lt;strong&gt;JSON&lt;/strong&gt; string from the &lt;strong&gt;Bing REST API&lt;/strong&gt; endpoint. 
+We retrieve the string using an &lt;code class=&quot;highlighter-pygments&quot;&gt;HttpClient&lt;/code&gt;,we have an option of using 
+&lt;code&gt;Windows.Web.Http&lt;/code&gt; or &lt;code&gt;System.Net.Http namespace&lt;/code&gt;. I prefer to choose Windows.Web.Http.HttpClient for the 
+simple reason that the System.Net.Http.HttpClient might get &lt;strong&gt;deprecated&lt;/strong&gt; over time. Another reason is that 
+&lt;strong&gt;System.Net.Http.HttpClient supports only .Net Languages&lt;/strong&gt;, whereas Windows.Web.Http.HttpClient was written with the aim of &lt;strong&gt;consolidating all the 
+HTTP APIs&lt;/strong&gt; for different Windows Application Languages, and therefore it supports all the Windows Store 
+application languages. For the avid readers &lt;a href=&quot;https://blogs.windows.com/buildingapps/2015/11/23/demystifying-httpclient-apis-in-the-universal-windows-platform/&quot;&gt;here&lt;/a&gt; is a &lt;strong&gt;detailed comparison&lt;/strong&gt; between the two.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// We can specify the region we want for the Bing Image of the Day.&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strRegion&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;en-US&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strBingImageURL&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.bing.com/HPImageArchive.aspx?format=js&amp;amp;idx=0&amp;amp;n={0}&amp;amp;mkt={1}&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_numOfImages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strRegion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strJSONString&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;HttpClient&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HttpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Using an Async call makes sure the app is responsive during the time the response is fetched.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// GetAsync sends an Async GET request to the Specified URI.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;HttpResponseMessage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strBingImageURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Content property get or sets the content of a HTTP response message. &lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ReadAsStringAsync is a method of the HttpContent which asynchronously &lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// reads the content of the HTTP Response and returns as a string.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;strJSONString&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadAsStringAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;step-2-parse-the-json-string&quot;&gt;Step 2. Parse the JSON string:&lt;/h2&gt;
+&lt;p&gt;Now we can parse the retrieved JSON string using 3 methods&lt;br /&gt;
+• Using &lt;code class=&quot;highlighter-pygments&quot;&gt;Windows.Data.Json&lt;/code&gt; (&lt;em&gt;Native Way&lt;/em&gt;)&lt;br /&gt;
+• Using &lt;code class=&quot;highlighter-pygments&quot;&gt;LINQ-to-JSON&lt;/code&gt; API’s JObject from &lt;code class=&quot;highlighter-pygments&quot;&gt;JSON.NET&lt;/code&gt; (&lt;em&gt;Newtonsoft&lt;/em&gt;)  &lt;br /&gt;
+• Using &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; object and &lt;code class=&quot;highlighter-pygments&quot;&gt;DeserializeObject&lt;/code&gt; method JSON.NET (&lt;em&gt;Newtonsoft&lt;/em&gt;)&lt;br /&gt;
+&lt;strong&gt;JSON.Net&lt;/strong&gt; has existed since long before Windows.Data.Json came into existence, however, Microsoft introduced Windows.Data.Json with &lt;strong&gt;native support&lt;/strong&gt; for parsing JSON.
+To use JSON.NET, you need to &lt;strong&gt;add&lt;/strong&gt; the &lt;code class=&quot;highlighter-pygments&quot;&gt;Newtonsoft&lt;/code&gt; Nuget package, which adds an additional library dependency.
+I personally prefer the native way, however for the purpose of this app I have discussed both the ways of parsing the JSON string using both &lt;strong&gt;JSON.NET&lt;/strong&gt; and &lt;strong&gt;Windows.Data.Json namespaces&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Retrieved JSON string:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;images&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;startdate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;20160719&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;fullstartdate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;201607190700&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;enddate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;20160720&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/az/hprichbg/rb/NeonMuseum_EN-US8131993872_1920x1080.jpg&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;urlbase&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/az/hprichbg/rb/NeonMuseum_EN-US8131993872&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;copyright&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Neon Museum, Las Vegas, Nevada (© Kerrick James/Getty Images)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;copyrightlink&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.bing.com/search?q=neon+museum&amp;amp;form=hpcapt&amp;amp;filters=HpDate:%2220160719_0700%22&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;wp&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;hsh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;96d3e7bbe87ad583a17ef765ed935d8f&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;drk&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;top&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;bot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;hs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[]}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;startdate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;20160718&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;fullstartdate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;201607180700&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;enddate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;20160719&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/az/hprichbg/rb/DiamondHead_EN-US10119574903_1920x1080.jpg&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;urlbase&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/az/hprichbg/rb/DiamondHead_EN-US10119574903&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;copyright&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Aerial view of Diamond Head, O’ahu, Hawaii (© Biederbick &amp;amp; Rumpf/Offset)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;copyrightlink&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.bing.com/search?q=diamond+head+hawaii&amp;amp;form=hpcapt&amp;amp;filters=HpDate:%2220160718_0700%22&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;wp&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;hsh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1aff492416f5e2fcf6e898743154fbda&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;drk&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;top&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;bot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;hs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[]}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;startdate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;20160717&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;fullstartdate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;201607170700&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;enddate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;20160718&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/az/hprichbg/rb/MuizenbergSA_EN-US9176714978_1920x1080.jpg&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;urlbase&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/az/hprichbg/rb/MuizenbergSA_EN-US9176714978&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;copyright&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Beach huts in Muizenberg, South Africa (© Getty Images)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;copyrightlink&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.bing.com/search?q=Muizenberg,+South+Africa&amp;amp;form=hpcapt&amp;amp;filters=HpDate:%2220160717_0700%22&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;wp&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;hsh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;8d4bf37f9d61ab103283005264b4b8cb&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;drk&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;top&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;bot&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;hs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[]}&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;tooltips&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;loading&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Loading...&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;previous&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Previous image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;next&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Next image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;walle&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;This image is not available to download as wallpaper.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;quot;walls&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Download this image. Use of this image is restricted to wallpaper only.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;step-2a-parsing-json-string-using-windowsdatajson&quot;&gt;Step 2a. Parsing JSON string using Windows.Data.Json:&lt;/h3&gt;
+&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;Microsoft Windows.Data.Json&lt;/code&gt; class. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject&lt;/code&gt; 
+that implements an &lt;strong&gt;IMap interface&lt;/strong&gt;, which can help in manipulating the name/value pairs like a dictionary. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject.TryParse&lt;/code&gt; 
+method to parse the JSON string into a JSON value, it returns a boolean value, indicating success or failure.
+The integral part of the retrieval is &lt;code class=&quot;highlighter-pygments&quot;&gt;jsonObject[&quot;images&quot;].GetArray()[i].GetObject()[&quot;url&quot;].GetString()&lt;/code&gt;.
+As seen in the above JSON string, we have a root object &lt;code class=&quot;highlighter-pygments&quot;&gt;&quot;images&quot;&lt;/code&gt;, it further has 3 arrays, which are equal to the &lt;strong&gt;number of images&lt;/strong&gt; specified in &lt;strong&gt;Step 1.&lt;/strong&gt;
+Each array has an object called &lt;code class=&quot;highlighter-pygments&quot;&gt;url&lt;/code&gt;, which is the part of the url to the Bing Image. We retrieve url for each image and store it into a list.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using Windows.Data.Json.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JsonObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jsonObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boolParsed&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JsonObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TryParse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_strRawJSONString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jsonObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boolParsed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_numOfImages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+       &lt;span class=&quot;n&quot;&gt;_lstBingImageURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jsonObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;images&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;step-2b-parsing-json-string-using-linq-to-json-apis-jobject&quot;&gt;Step 2b. Parsing JSON string using LINQ-to-JSON API’s JObject:&lt;/h3&gt;
+&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;LINQ-to-JSON&lt;/code&gt; API’s 
+&lt;code class=&quot;highlighter-pygments&quot;&gt;JObject&lt;/code&gt; explicitly.We use this method when we &lt;strong&gt;don’t know the JSON structure&lt;/strong&gt;
+ahead of time. This method is recommended if only &lt;strong&gt;one or two values&lt;/strong&gt; from the whole JSON string are required.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using LINQ-to-JSON API&amp;#39;s JObject explicitly.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jResults&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_strRawJSONString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jResults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;images&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;_lstBingImageURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;step-2c-parsing-json-string-using-deserializeobject-and-dynamic-object&quot;&gt;Step 2c. Parsing JSON string using DeserializeObject and dynamic object&lt;/h3&gt;
+&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;DeserializeObject&lt;/code&gt; method. 
+We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonConvert.DeserializeObject&lt;/code&gt; method when &lt;strong&gt;already know the JSON structure&lt;/strong&gt; and the &lt;strong&gt;strongly typed class&lt;/strong&gt; we want to deserialize into. 
+We use &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; object, as it saves us the trouble of declaring a specific class to hold the JSON object.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using DeserializeObject method.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_numOfImages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;_lstBingImageURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JsonConvert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DeserializeObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;dynamic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_strRawJSONString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;step-3-display-images-on-ui-using-bitmapimage&quot;&gt;Step 3. Display images on UI using BitmapImage:&lt;/h2&gt;
+&lt;p&gt;Each URL is converted into a Bitmap Image and added into the Stack Panel dynamically to display as an Image Object.
+&lt;code class=&quot;highlighter-pygments&quot;&gt;BitmapImage&lt;/code&gt; class inherits from the &lt;code class=&quot;highlighter-pygments&quot;&gt;BitmapSource&lt;/code&gt; class and is specialized 
+&lt;code class=&quot;highlighter-pygments&quot;&gt;BitmapSource&lt;/code&gt; that is optimized for loading images using XAML.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_lstBingImageURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// We use the Image control to display an image on the UI.&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imgbingImage&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bingURL&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;https://www.bing.com&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;BitmapSource&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imgbingImageSource&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BitmapImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bingURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;imgbingImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Source&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imgbingImageSource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;// Add the Image control to the Stack Panel&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;spImages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imgbingImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;working-windows-10-uwp-app&quot;&gt;Working Windows 10 UWP App:&lt;/h2&gt;
+&lt;p&gt;Here is the &lt;strong&gt;screenshot&lt;/strong&gt; of the working &lt;strong&gt;Windows 10 UWP&lt;/strong&gt; app, I have hosted the &lt;strong&gt;Visual Studio&lt;/strong&gt; solution file with source code at Github Repository 
+&lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Bing-Image-JSON&lt;/a&gt; which you can use to &lt;strong&gt;experiment yourself&lt;/strong&gt;.
+&lt;img src=&quot;\images\posts\2016-08-19-bing-image-json-csharp-uwp\BIOD.jpg&quot; alt=&quot;Windows 10 UWP Bing Image of the Day&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note:&lt;/h2&gt;
+&lt;p&gt;The &lt;strong&gt;source code&lt;/strong&gt; at the &lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Github repo&lt;/a&gt; contains the full detailed code, which can you can use to experiment and follow along.
+If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 19 Aug 2016 10:27:52 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2016/bing-image-json-csharp-uwp/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/bing-image-json-csharp-uwp/</guid>
+        
+        
+        <category>GitHub</category>
+        
+      </item>
+    
+      <item>
         <title>Setting up a Jekyll blog using Windows 10 Bash and hosting on GitHub Pages</title>
-        <description>&lt;p&gt;I started on a journey to setup my personal Github.io page and I had no prior experience of &lt;code class=&quot;highlighter-pygments&quot;&gt;Jekyll&lt;/code&gt;, &lt;code class=&quot;highlighter-pygments&quot;&gt;Ruby&lt;/code&gt; or setting up a page on GitHub.
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;I started on a journey to setup my personal Github.io page and I had no prior experience of &lt;code class=&quot;highlighter-pygments&quot;&gt;Jekyll&lt;/code&gt;, &lt;code class=&quot;highlighter-pygments&quot;&gt;Ruby&lt;/code&gt; or setting up a page on GitHub.
 There were some initial hurdles understanding and configuring the blog, but fortunately, I was able to overcome them all and setup my very own personal GitHub.io page :)&lt;/p&gt;
 
 &lt;p&gt;I watched some videos on YouTube, however most of them missed a really important part, the part of setting up Jekyll on windows 10 and compiling the source code into a static website.
@@ -19,7 +167,7 @@ Jekyll is not officially supported on windows, but there are workarounds to setu
 
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h2&gt;
 &lt;p&gt;Before you start, you will need &lt;code class=&quot;highlighter-pygments&quot;&gt;Windows Subsystem for Linux aka Bash&lt;/code&gt; on windows feature enabled. 
-If you have no idea on how to get the bash setup, refer to this wonderful guide &lt;a href=&quot;http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;How to Install and Use the Linux Bash Shell on Windows 10&lt;/a&gt;&lt;/p&gt;
+If you have no idea on how to get the bash setup, refer to this &lt;a href=&quot;http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;wonderful guide&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-1-download-the-theme&quot;&gt;Step 1. Download the Theme:&lt;/h2&gt;
 &lt;p&gt;After you are done setting up, the next part is choosing a wonderful theme for your blog. Head over to Jekyll Themes to find a theme.
@@ -84,7 +232,8 @@ bundler -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;step-2f-installing-jekyll&quot;&gt;Step 2f. Installing Jekyll:&lt;/h3&gt;
 &lt;p&gt;Even though Jekyll is not supported officially on Windows, it is fully supported on Linux, therefore we will take advantage of that. 
-To install Jekyll run the following command and it will install all &lt;code class=&quot;highlighter-pygments&quot;&gt;jekyll&lt;/code&gt; and its dependencies. Once installation completes check the version using the -v flag.&lt;/p&gt;
+To install Jekyll run the following command and it will install all &lt;code class=&quot;highlighter-pygments&quot;&gt;jekyll&lt;/code&gt; and its dependencies. 
+Once installation completes check the version using the -v flag.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;gem install jekyll
 jekyll -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -168,7 +317,7 @@ git commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;initial commit&amp;quot
 git remote add origin https://github.com/username/username.github.io.git
 git push -u origin master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;step-5-final-check&quot;&gt;Step 5. Final Check:&lt;/h2&gt;
+&lt;h2 id=&quot;step-5-final-check&quot;&gt;Step 5. Final check:&lt;/h2&gt;
 &lt;p&gt;Once your code is successfully pushed, you can go to the repository settings and confirm everything is working correctly.
 &lt;code class=&quot;highlighter-pygments&quot;&gt;https://github.com/username/username.github.io/settings&lt;/code&gt;&lt;/p&gt;
 
@@ -183,8 +332,7 @@ git commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;initial commit&amp;quot
 git remote add origin https://github.com/username/username.github.io.git
 git push -u origin master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;final-note&quot;&gt;Final Note&lt;/h2&gt;
-
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
 &lt;p&gt;If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
 
 &lt;p&gt;Check out the links below for detailed information: &lt;br /&gt;
