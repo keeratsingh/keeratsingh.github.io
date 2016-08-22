@@ -5,8 +5,8 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 21 Aug 2016 19:50:14 -0700</pubDate>
-    <lastBuildDate>Sun, 21 Aug 2016 19:50:14 -0700</lastBuildDate>
+    <pubDate>Sun, 21 Aug 2016 20:43:25 -0700</pubDate>
+    <lastBuildDate>Sun, 21 Aug 2016 20:43:25 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -78,11 +78,11 @@ I personally prefer the native way, however for the purpose of this app I have d
 
 &lt;h3 id=&quot;step-2a-parsing-json-string-using-windowsdatajson&quot;&gt;Step 2a. Parsing JSON string using Windows.Data.Json:&lt;/h3&gt;
 &lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;Microsoft Windows.Data.Json&lt;/code&gt; class. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject&lt;/code&gt; 
-that implements an &lt;strong&gt;IMap interface&lt;/strong&gt;, which can help in manipulating the name/value pairs like a dictionary. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject.TryParse&lt;/code&gt; 
+that implements an &lt;strong&gt;IMap interface&lt;/strong&gt;, which can help in manipulating the &lt;strong&gt;name/value&lt;/strong&gt; pairs like a &lt;strong&gt;dictionary&lt;/strong&gt;. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject.TryParse&lt;/code&gt; 
 method to parse the JSON string into a JSON value, it returns a boolean value, indicating success or failure.
 The integral part of the retrieval is &lt;code class=&quot;highlighter-pygments&quot;&gt;jsonObject[&quot;images&quot;].GetArray()[i].GetObject()[&quot;url&quot;].GetString()&lt;/code&gt;.
 As seen in the above JSON string, we have a root object &lt;code class=&quot;highlighter-pygments&quot;&gt;&quot;images&quot;&lt;/code&gt;, it further has 3 arrays, which are equal to the &lt;strong&gt;number of images&lt;/strong&gt; specified in &lt;strong&gt;Step 1.&lt;/strong&gt;
-Each array has an object called &lt;code class=&quot;highlighter-pygments&quot;&gt;url&lt;/code&gt;, which is the part of the url to the Bing Image. We retrieve url for each image and store it into a list.&lt;/p&gt;
+Each &lt;strong&gt;array&lt;/strong&gt; has an object called &lt;strong&gt;url&lt;/strong&gt;, which is the part of the url to the Bing Image. We retrieve url for each image and store it into a list.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using Windows.Data.Json.&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;JsonObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jsonObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -147,9 +147,9 @@ We use &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; o
 If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
 
 </description>
-        <pubDate>Fri, 19 Aug 2016 10:27:52 -0700</pubDate>
-        <link>https://keeratsingh.github.io/blog/2016/bing-image-json-csharp-uwp/</link>
-        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/bing-image-json-csharp-uwp/</guid>
+        <pubDate>Sun, 21 Aug 2016 10:27:52 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2016/bing-image-api-json-csharp-uwp/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/bing-image-api-json-csharp-uwp/</guid>
         
         
         <category>GitHub</category>

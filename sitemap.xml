@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://keeratsingh.github.io/blog/2016/bing-image-json-csharp-uwp/</loc>
-<lastmod>2016-08-19T10:27:52-07:00</lastmod>
+<loc>https://keeratsingh.github.io/blog/2016/bing-image-api-json-csharp-uwp/</loc>
+<lastmod>2016-08-21T10:27:52-07:00</lastmod>
 </url>
 <url>
 <loc>https://keeratsingh.github.io/blog/2016/setup-jekyll-blog-windows-10-bash-host-github-pages/</loc>
