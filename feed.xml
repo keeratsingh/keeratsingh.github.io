@@ -5,8 +5,8 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 21 Aug 2016 20:43:25 -0700</pubDate>
-    <lastBuildDate>Sun, 21 Aug 2016 20:43:25 -0700</lastBuildDate>
+    <pubDate>Mon, 22 Aug 2016 20:28:44 -0700</pubDate>
+    <lastBuildDate>Mon, 22 Aug 2016 20:28:44 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -20,7 +20,7 @@ the lock screen to the Bing Image of the Day.&lt;/p&gt;
 
 &lt;p&gt;I was so interested in the idea that I wanted to &lt;strong&gt;try out myself&lt;/strong&gt; building an app to retrieve the Bing Image. I knew once I could retrieve the image, 
 I had &lt;strong&gt;numerous possibilities&lt;/strong&gt; going forward. I could save it and change my desktop after a certain duration of my choice, or set it as my lock screen 
-just like a desktop wallpaper, you get my point, the key here is to get the Bing Image of the Day.&lt;/p&gt;
+just as a desktop wallpaper, you get my point, the key here is to get the Bing Image of the Day.&lt;/p&gt;
 
 &lt;p&gt;Fortunately, Bing has a &lt;code class=&quot;highlighter-pygments&quot;&gt;REST API&lt;/code&gt; to retrieve a &lt;code class=&quot;highlighter-pygments&quot;&gt;JSON&lt;/code&gt; string which contains the &lt;strong&gt;URL to 
 the Bing Image&lt;/strong&gt;, which we will be making use of. 
@@ -143,7 +143,7 @@ We use &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; o
 &lt;img src=&quot;\images\posts\2016-08-19-bing-image-json-csharp-uwp\BIOD.jpg&quot; alt=&quot;Windows 10 UWP Bing Image of the Day&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;final-note&quot;&gt;Final note:&lt;/h2&gt;
-&lt;p&gt;The &lt;strong&gt;source code&lt;/strong&gt; at the &lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Github repo&lt;/a&gt; contains the full detailed code, which can you can use to experiment and follow along.
+&lt;p&gt;The &lt;strong&gt;source code&lt;/strong&gt; at the &lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Github repo&lt;/a&gt; contains the full detailed code, which you can use to experiment and follow along.
 If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
 
 </description>
