@@ -5,12 +5,88 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 22 Aug 2016 20:28:44 -0700</pubDate>
-    <lastBuildDate>Mon, 22 Aug 2016 20:28:44 -0700</lastBuildDate>
+    <pubDate>Mon, 05 Sep 2016 19:45:11 -0700</pubDate>
+    <lastBuildDate>Mon, 05 Sep 2016 19:45:11 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
-        <title>Get Bing Image of the Day using C# </title>
+        <title>Font icons in UWP using Segoe MDL2 and Segoe UI</title>
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;While developing a UWP app to customize the Microsoft Band, I realized, there was no way to retrieve icons from the default band tiles, therefore 
+I decided to go the old way of displaying icons, that is using images. Now, since it is a &lt;strong&gt;Universal Platform Application&lt;/strong&gt;, it is expected to work across many different windows 10 platforms and screen sizes.
+One solution is to use an image file as an icon, which is pretty common, however, the image gets pixelated when the image and the screen size increases.
+We can use different icon files for different screen sizes, however, it is too much of hassle.  &lt;br /&gt;
+An easier solution I found is to use font icons, already predefined in the fonts &lt;strong&gt;Segoe MDL2 Assets and Segoe UI Symbol&lt;/strong&gt;, the best part is you can bind the font size 
+to a particular value, depending upon the screen size everything else is taken care of. Another benefit of using font icons is that, in case you change the theme from light to dark, 
+the icons are updated as well, depending on the theme.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Segoe MDL2 Assets&lt;/strong&gt; is a Windows 10 font that replaces Windows 8/8.1 font &lt;strong&gt;Segoe UI Symbols&lt;/strong&gt;. Some of the &lt;strong&gt;Segoe MDL2 Assets&lt;/strong&gt; icons are also available through 
+&lt;code class=&quot;highlighter-pygments&quot;&gt;Symbol Enumeration&lt;/code&gt;, which I will discuss in this post as well. 
+For list of symbols, available refer to this MSDN article &lt;a href=&quot;https://msdn.microsoft.com/en-us/windows/uwp/style/segoe-ui-symbol-font&quot;&gt;Segoe MDL2 icons&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;using-textblock&quot;&gt;Using TextBlock&lt;/h2&gt;
+&lt;p&gt;TextBlock is a FrameworkElement control that is used to display small amounts of text. We set the &lt;code class=&quot;highlighter-pygments&quot;&gt;Text&lt;/code&gt; property of the &lt;code class=&quot;highlighter-pygments&quot;&gt;TextBlock&lt;/code&gt; 
+control to the Unicode Value of the symbol we want to use. In our example below we have different symbols as the &lt;code class=&quot;highlighter-pygments&quot;&gt;Text&lt;/code&gt; property.&lt;/p&gt;
+&lt;h3&gt;Using Segoe MDL2 Assets&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;TextBlock&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Text=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;#xEB52; &amp;amp;#xEB51; &amp;amp;#xEB68;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;FontFamily=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Segoe MDL2 Assets&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;Using Segoe UI Symbols&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;TextBlock&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Text=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;#xE200; &amp;amp;#xE1D6; &amp;amp;#xE181;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;FontFamily=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Segoe UI Symbol&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;using-fonticon&quot;&gt;Using FontIcon&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-pygments&quot;&gt;FontIcon&lt;/code&gt; is a generalized version of &lt;code class=&quot;highlighter-pygments&quot;&gt;SymbolIcon&lt;/code&gt;, that inherits from &lt;code class=&quot;highlighter-pygments&quot;&gt;IconElement&lt;/code&gt; class. 
+It is pretty similar to the &lt;code class=&quot;highlighter-pygments&quot;&gt;TextBlock&lt;/code&gt; control, 
+however, we set the &lt;code class=&quot;highlighter-pygments&quot;&gt;Glyph&lt;/code&gt; property instead of &lt;code class=&quot;highlighter-pygments&quot;&gt;Text&lt;/code&gt; property in the case of &lt;code class=&quot;highlighter-pygments&quot;&gt;FontIcon&lt;/code&gt; control. 
+Instead of using a predefined set of symbols from &lt;strong&gt;Segoe MDL2 Assets&lt;/strong&gt;, you can specify the Unicode value and choose from the list of available icons.
+You can even specify a different font, such as &lt;strong&gt;Segoe UI Symbols&lt;/strong&gt; and specify respective Unicode value.&lt;/p&gt;
+&lt;h3&gt;Using Segoe MDL2 Assets&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;FontIcon&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Glyph=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;#xEB52; &amp;amp;#xEB51;  &amp;amp;#xEB68;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;FontFamily=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Segoe MDL2 Assets&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;Using Segoe UI Symbols&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;FontIcon&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Glyph=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;#xE200; &amp;amp;#xE1D6; &amp;amp;#xE181;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;FontFamily=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Segoe UI Symbol&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;using-symbolicon&quot;&gt;Using SymbolIcon&lt;/h2&gt;
+&lt;p&gt;Both the &lt;code class=&quot;highlighter-pygments&quot;&gt;SymbolIcon&lt;/code&gt; and &lt;code class=&quot;highlighter-pygments&quot;&gt;FontIcon&lt;/code&gt; inherit from the same class &lt;code class=&quot;highlighter-pygments&quot;&gt;IconElement&lt;/code&gt;, 
+however &lt;code class=&quot;highlighter-pygments&quot;&gt;SymbolIcon&lt;/code&gt; is constrained to a predefined set of Segoe MDL2 icons.&lt;/p&gt;
+&lt;h3&gt;Using Segoe MDL2 Assets&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;SymbolIcon&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Symbol=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Favorite&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;SymbolIcon&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Symbol=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Camera&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;SymbolIcon&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Symbol=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Mail&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;display-font-icons-using-c&quot;&gt;Display font icons using C#&lt;/h2&gt;
+&lt;p&gt;Font icons can also be displayed very easily using &lt;code class=&quot;highlighter-pygments&quot;&gt;C#&lt;/code&gt; by updating the respective code behind file.
+Just update the respective &lt;code class=&quot;highlighter-pygments&quot;&gt;Gylph&lt;/code&gt; or &lt;code class=&quot;highlighter-pygments&quot;&gt;Text&lt;/code&gt; property of the control you want to display the font icons in.
+The only difference in C# is that the Unicode value is escaped differently using ‘\u’.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;FontIconCS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Glyph&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\uE1D0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txtFontIconCS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\uE1D0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;icons-in-action&quot;&gt;Icons in action&lt;/h2&gt;
+&lt;p&gt;This is how &lt;strong&gt;Segoe MDL2&lt;/strong&gt; and &lt;strong&gt;Segoe UI&lt;/strong&gt; font icons look on a UWP app.&lt;br /&gt;
+&lt;img src=&quot;\images\posts\2016-09-05-using-font-icons-uwp-segoe-mdl2\FontIcons.jpg&quot; alt=&quot;Windows 10 UWP Font Icons Segoe MDL2 Segoe UI&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
+&lt;p&gt;The best part about font icons is that you don’t have to worry about pixelated icons anymore. :)&lt;br /&gt;
+You can find the &lt;strong&gt;source code&lt;/strong&gt; at the &lt;a href=&quot;https://github.com/keeratsingh/FontIcons&quot;&gt;Github repo&lt;/a&gt; along with the &lt;code class=&quot;highlighter-pygments&quot;&gt;Visual Studio 2015&lt;/code&gt; solution.
+If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 05 Sep 2016 05:50:52 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2016/using-font-icons-uwp-segoe-mdl2/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/using-font-icons-uwp-segoe-mdl2/</guid>
+        
+        
+        <category>UWP</category>
+        
+      </item>
+    
+      <item>
+        <title>Get Bing Image of the Day using C# UWP Application</title>
         <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Bing Image of the Day&lt;/strong&gt; has become quite popular over the years, it comprises of essentially the most spectacular user-submitted images from all over the world 
 which have been showcased on the Bing homepage for the past 5 years. I have absolutely loved the &lt;strong&gt;Bing Wallpaper&lt;/strong&gt; of the day part of the Bing desktop 

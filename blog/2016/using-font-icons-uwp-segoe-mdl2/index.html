@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msvalidate.01" content="16CD5DE1A9C516718DC8CB2ACA855B56" />
+    
+
+    <title>Font icons in UWP using Segoe MDL2 and Segoe UI</title>
+    <meta name="description" content="Using fonts Segoe MDL2 Assets and Segoe UI Symbol to show font Icons">
+    <meta name="keywords" content="fontIcon,Segoe MDL2,XAML,Visual Studio,UWP,Windows 10">
+    <meta name="language" content="English">
+    
+    <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="https://keeratsingh.github.io/blog/2016/using-font-icons-uwp-segoe-mdl2/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+  </head>
+
+  <body>
+    <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TJPR3V"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TJPR3V');</script>
+<!-- End Google Tag Manager -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82093765-1', 'auto');
+  ga('send', 'pageview');
+  
+</script>
+
+
+    <main>
+      <header class="site-header">
+  <div class="container">
+    <h1><a href="/">Keerat<span>Singh</span></a></h1>
+
+    <button type="button" class="sliding-panel-button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="navbar sliding-panel-content">
+      <ul>
+        
+          <li><a href="/about" title="About">About</a></li>
+        
+          <li><a href="/blog" title="Blog">Blog</a></li>
+        
+        <li><a href="/feed.xml" target="_blank"><i class="icon icon-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="sliding-panel-fade-screen"></div>
+
+
+      <div class="container">
+        <article role="article" class="post">
+
+  <div class="card">
+    <header class="post-header">
+      <h1 class="post-title">Font icons in UWP using Segoe MDL2 and Segoe UI</h1>
+      <p class="post-meta"> • <a href="http://linkedin.com/in/keerat-singh-14449660">Keerat Singh</a>  • Sep 5, 2016</p>
+    </header>
+
+    <div class="post-content">
+      <h2 id="overview">Overview</h2>
+<p>While developing a UWP app to customize the Microsoft Band, I realized, there was no way to retrieve icons from the default band tiles, therefore 
+I decided to go the old way of displaying icons, that is using images. Now, since it is a <strong>Universal Platform Application</strong>, it is expected to work across many different windows 10 platforms and screen sizes.
+One solution is to use an image file as an icon, which is pretty common, however, the image gets pixelated when the image and the screen size increases.
+We can use different icon files for different screen sizes, however, it is too much of hassle.  <br />
+An easier solution I found is to use font icons, already predefined in the fonts <strong>Segoe MDL2 Assets and Segoe UI Symbol</strong>, the best part is you can bind the font size 
+to a particular value, depending upon the screen size everything else is taken care of. Another benefit of using font icons is that, in case you change the theme from light to dark, 
+the icons are updated as well, depending on the theme.</p>
+
+<p><strong>Segoe MDL2 Assets</strong> is a Windows 10 font that replaces Windows 8/8.1 font <strong>Segoe UI Symbols</strong>. Some of the <strong>Segoe MDL2 Assets</strong> icons are also available through 
+<code class="highlighter-pygments">Symbol Enumeration</code>, which I will discuss in this post as well. 
+For list of symbols, available refer to this MSDN article <a href="https://msdn.microsoft.com/en-us/windows/uwp/style/segoe-ui-symbol-font">Segoe MDL2 icons</a></p>
+
+<h2 id="using-textblock">Using TextBlock</h2>
+<p>TextBlock is a FrameworkElement control that is used to display small amounts of text. We set the <code class="highlighter-pygments">Text</code> property of the <code class="highlighter-pygments">TextBlock</code> 
+control to the Unicode Value of the symbol we want to use. In our example below we have different symbols as the <code class="highlighter-pygments">Text</code> property.</p>
+<h3>Using Segoe MDL2 Assets</h3>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">&quot;&amp;#xEB52; &amp;#xEB51; &amp;#xEB68;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe MDL2 Assets&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+
+<h3>Using Segoe UI Symbols</h3>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"> <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">&quot;&amp;#xE200; &amp;#xE1D6; &amp;#xE181;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe UI Symbol&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+
+<h2 id="using-fonticon">Using FontIcon</h2>
+<p><code class="highlighter-pygments">FontIcon</code> is a generalized version of <code class="highlighter-pygments">SymbolIcon</code>, that inherits from <code class="highlighter-pygments">IconElement</code> class. 
+It is pretty similar to the <code class="highlighter-pygments">TextBlock</code> control, 
+however, we set the <code class="highlighter-pygments">Glyph</code> property instead of <code class="highlighter-pygments">Text</code> property in the case of <code class="highlighter-pygments">FontIcon</code> control. 
+Instead of using a predefined set of symbols from <strong>Segoe MDL2 Assets</strong>, you can specify the Unicode value and choose from the list of available icons.
+You can even specify a different font, such as <strong>Segoe UI Symbols</strong> and specify respective Unicode value.</p>
+<h3>Using Segoe MDL2 Assets</h3>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">&quot;&amp;#xEB52; &amp;#xEB51;  &amp;#xEB68;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe MDL2 Assets&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+
+<h3>Using Segoe UI Symbols</h3>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">&quot;&amp;#xE200; &amp;#xE1D6; &amp;#xE181;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe UI Symbol&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+
+<h2 id="using-symbolicon">Using SymbolIcon</h2>
+<p>Both the <code class="highlighter-pygments">SymbolIcon</code> and <code class="highlighter-pygments">FontIcon</code> inherit from the same class <code class="highlighter-pygments">IconElement</code>, 
+however <code class="highlighter-pygments">SymbolIcon</code> is constrained to a predefined set of Segoe MDL2 icons.</p>
+<h3>Using Segoe MDL2 Assets</h3>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">&quot;Favorite&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">&quot;Camera&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">&quot;Mail&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+
+<h2 id="display-font-icons-using-c">Display font icons using C#</h2>
+<p>Font icons can also be displayed very easily using <code class="highlighter-pygments">C#</code> by updating the respective code behind file.
+Just update the respective <code class="highlighter-pygments">Gylph</code> or <code class="highlighter-pygments">Text</code> property of the control you want to display the font icons in.
+The only difference in C# is that the Unicode value is escaped differently using ‘\u’.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">FontIconCS</span><span class="p">.</span><span class="n">Glyph</span> <span class="p">+=</span> <span class="s">&quot;\uE1D0&quot;</span><span class="p">;</span>
+<span class="n">txtFontIconCS</span><span class="p">.</span><span class="n">Text</span> <span class="p">+=</span> <span class="s">&quot;\uE1D0&quot;</span><span class="p">;</span></code></pre></figure>
+
+<h2 id="icons-in-action">Icons in action</h2>
+<p>This is how <strong>Segoe MDL2</strong> and <strong>Segoe UI</strong> font icons look on a UWP app.<br />
+<img src="\images\posts\2016-09-05-using-font-icons-uwp-segoe-mdl2\FontIcons.jpg" alt="Windows 10 UWP Font Icons Segoe MDL2 Segoe UI" /></p>
+
+<h2 id="final-note">Final note</h2>
+<p>The best part about font icons is that you don’t have to worry about pixelated icons anymore. :)<br />
+You can find the <strong>source code</strong> at the <a href="https://github.com/keeratsingh/FontIcons">Github repo</a> along with the <code class="highlighter-pygments">Visual Studio 2015</code> solution.
+If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)</p>
+
+
+    </div>
+
+    
+<hr>
+
+<aside id="comments" class="disqus">
+  <div class="container">
+    <h3><i class="icon icon-comments-o"></i> Comments</h3>
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function() {
+        this.page.url = 'https://keeratsingh.github.io/blog/2016/using-font-icons-uwp-segoe-mdl2/';
+        this.page.identifier = '/blog/2016/using-font-icons-uwp-segoe-mdl2';
+      };
+      (function() {
+        var d = document,
+        s = d.createElement('script');
+        s.src = '//keeratsingh.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+  <script id="dsq-count-scr" src="//https-keeratsingh-github-io.disqus.com/count.js" async></script>
+</aside>
+
+  </div>
+
+</article>
+
+      </div>
+
+      <footer class="site-footer">
+  <div class="container">
+    <ul class="social">
+  <li><a href="https://github.com/keeratsingh" target="_blank"><i class="icon myks-icon-github "></i></a></li>
+  
+  <li><a href="https://twitter.com/iamkeerat" target="_blank"><i class="icon myks-icon-twitter"></i></a></li>
+  <li><a href="http://linkedin.com/in/keerat-singh-14449660" target="_blank"><i class="icon myks-icon-linkedin"></i></a></li>
+  
+</ul>
+    <p class="txt-base-color">
+      <small>&copy;2016 Made with ♥ by Keerat Singh</small>
+    </p>
+  </div>
+</footer>
+
+
+      <a href="https://github.com/keeratsingh" target="_blank" class="github-corner"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#337ab7; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+      <script>
+      $(document).ready(function() {
+        $('.sliding-panel-button,.sliding-panel-fade-screen,.sliding-panel-close').on('click touchstart',function (e) {
+          $('.sliding-panel-content,.sliding-panel-fade-screen').toggleClass('is-visible');
+          e.preventDefault();
+        });
+      });
+      </script>
+    </main>
+  </body>
+</html>
