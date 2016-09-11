@@ -5,9 +5,139 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 05 Sep 2016 19:45:11 -0700</pubDate>
-    <lastBuildDate>Mon, 05 Sep 2016 19:45:11 -0700</lastBuildDate>
+    <pubDate>Sat, 10 Sep 2016 21:54:51 -0700</pubDate>
+    <lastBuildDate>Sat, 10 Sep 2016 21:54:51 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>Customizing Microsoft Band using Band SDK and UWP</title>
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;This idea was on the back burner for quite a while, and I never had the time to pursue this, until last week. I finally sat down and developed a Microsoft Band customization app,
+that helps you take advantage of the Band SDK and customize the &lt;code&gt;BandTheme&lt;/code&gt;. I know the &lt;strong&gt;Microsoft Health&lt;/strong&gt; app allows you to customize the BandTheme using various styles, however, I found
+it is &lt;strong&gt;limiting in terms of granular customization&lt;/strong&gt;, which inspired me to develop this app, which helps you to customize each and every &lt;code&gt;Band Color&lt;/code&gt; class.
+Another thing I felt the Microsoft Health app &lt;strong&gt;lacked in terms of Band personalization&lt;/strong&gt; was the visual UI that helped the user interpret how the theme actually
+affected the Band Tiles. This UWP application actually helps the user have a better understanding towards which parts of the Band are being customized.&lt;br /&gt;
+This post will help you guide through the &lt;code&gt;Band SDK&lt;/code&gt; functions used to retrieve and update the BandTheme. 
+There are 8 color classes that exist on the Band, however, only &lt;strong&gt;6 of the 8 can be customized&lt;/strong&gt; using the Band SDK.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Base&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;High&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Contrast&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lowlight&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Highlight&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Muted&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Secondary&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;connecting-to-the-band&quot;&gt;Connecting to the Band&lt;/h2&gt;
+&lt;p&gt;The initial step is to connect to a paired Band to the device on which your application is running. 
+We use the &lt;code&gt;BandClientManager&lt;/code&gt; to get a list of paired Bands and connect to the first Band.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Get the list of paired Bands&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairedBands&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BandClientManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Instance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetBandsAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Connect to the first Band&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;band&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairedBands&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FirstOrDefault&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Connect to the Band and get a new BandClient object&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bandClient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BandClientManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Instance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;band&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Connecting_to_the_Band.jpg&quot; alt=&quot;Connecting to Microsoft Band&quot; /&gt;
+    &lt;figcaption&gt;Connecting to Microsoft Band&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;retrieving-the-band-theme&quot;&gt;Retrieving the Band Theme&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;PersonalizationManager&lt;/code&gt; allows us to retrieve the color classes currently being used on the Band device using the &lt;code&gt;BandTheme&lt;/code&gt; class.
+The Band Theme is retrieved using the &lt;code&gt;GetThemeAsync&lt;/code&gt; method and stored into an object of the BandTheme class.
+After the theme is retrieved, the UI is updated respectively, by converting the &lt;code&gt;BandColor&lt;/code&gt; to &lt;code&gt;SolidColorBrush&lt;/code&gt; and updating the &lt;code&gt;Fill&lt;/code&gt; property of the ellipse.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Retrieve theme from the band&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;BandTheme&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bandClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PersonalizationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetThemeAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Update the UI&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;eBase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;eHighContrast&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HighContrast&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;eHighlight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Highlight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;eLowLight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Lowlight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;eMuted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Muted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;eSecondary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SecondaryText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Theme_Retrieved.jpg&quot; alt=&quot;Connected and successfully retrieved the BandTheme&quot; /&gt;
+    &lt;figcaption&gt;Connected and successfully retrieved the theme&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;personalizing-the-band-theme&quot;&gt;Personalizing the Band Theme&lt;/h2&gt;
+&lt;p&gt;The application allows the user to customize all the 6 available Band color classes individually. Your can click on each class to bring out a color dialog box.
+This color dialog box gives you the option of either choosing a color from a &lt;strong&gt;predefined list of colors&lt;/strong&gt;, included in the &lt;code&gt;Windows.UI.Colors&lt;/code&gt; or entering a &lt;strong&gt;custom color Hex Code&lt;/strong&gt;.&lt;br /&gt;
+Each Band color class has its own row and the application UI reflects how each Band color class affects the Microsoft Band UI.&lt;/p&gt;
+&lt;h3&gt;Choosing color from ComboBox&lt;/h3&gt;
+&lt;p&gt;Currently, there are &lt;strong&gt;141 colors&lt;/strong&gt; to choose from &lt;code&gt;Windows.UI.Colors&lt;/code&gt;, since the list is dynamically generated at runtime, 
+any new colors added to Windows.UI.Colors will be added to the &lt;code&gt;ComboBox&lt;/code&gt; automatically.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2a_1.jpg&quot; alt=&quot;Choosing color using ComboBox&quot; /&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2a_2.jpg&quot; alt=&quot;Choosing color using ComboBox&quot; /&gt;
+     &lt;figcaption&gt;Choosing color using ComboBox&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Entering a Custom color hex value&lt;/h3&gt;
+&lt;p&gt;You can also define a custom color, using the hex value of the color. You can use your favorite program to get the hex value or use this wonderful site that I really like 
+&lt;a href=&quot;http://www.color-hex.com&quot;&gt;hex-color&lt;/a&gt;. The hex code can be entered with or without the # symbol.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2b_1.jpg&quot; alt=&quot;Choosing color using hex value&quot; /&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2b_2.jpg&quot; alt=&quot;Choosing color using hex value&quot; /&gt;
+     &lt;figcaption&gt;Choosing color using hex value&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;uploading-the-band-theme&quot;&gt;Uploading the Band Theme&lt;/h2&gt;
+&lt;p&gt;Once you have customized the UWP application UI, we need to upload the theme to the connected Band device. We do that by clicking the &lt;strong&gt;accept icon&lt;/strong&gt;, which
+calls the &lt;code&gt;SetThemeAsync&lt;/code&gt; method. We create a new &lt;code&gt;BandTheme&lt;/code&gt; object using the color values set by the user and then call the SetThemeAsync, with the BandTheme
+object as the argument. A message is displayed on the UI once the BandTheme is uploaded successfully.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Convert user customizations into Band theme.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;BandTheme&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Base&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eBase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToBandColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;HighContrast&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eHighContrast&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToBandColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Lowlight&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eLowLight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToBandColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Highlight&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eHighlight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToBandColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Muted&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eMuted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToBandColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;SecondaryText&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SolidColorBrush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eSecondary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fill&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToBandColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Update Band with the theme.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bandClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PersonalizationManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SetThemeAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bandTheme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Upload_Theme_1.jpg&quot; alt=&quot;Uploading theme to Band&quot; /&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Upload_Theme_2.jpg&quot; alt=&quot;Upload completed&quot; /&gt;
+    &lt;figcaption&gt;Uploading theme to Microsoft Band&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
+&lt;p&gt;You can find the &lt;strong&gt;source code&lt;/strong&gt; at Github &lt;a href=&quot;https://github.com/keeratsingh/bandManager&quot;&gt;bandManager repo&lt;/a&gt; along with the &lt;code&gt;Visual Studio 2015&lt;/code&gt; solution.&lt;/p&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
+&lt;p&gt;This UWP application is very basic demonstration of using the &lt;strong&gt;Microsoft Band SDK&lt;/strong&gt; to interact and personalize the Band. A lot more things can be done with the SDK, such as subscribe to sensors 
+and use the data from the sensors, or update the &lt;strong&gt;MeTile&lt;/strong&gt;. This is application does not use the &lt;code&gt;RelativePanel&lt;/code&gt; or &lt;code&gt;VisualState&lt;/code&gt; class to make the application dynamically 
+adjust to the screen size, since that was not the motive of this app.
+If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 10 Sep 2016 14:05:00 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2016/customizing-microsoft-band-using-band-sdk-uwp/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/customizing-microsoft-band-using-band-sdk-uwp/</guid>
+        
+        
+        <category>UWP,Band</category>
+        
+      </item>
     
       <item>
         <title>Font icons in UWP using Segoe MDL2 and Segoe UI</title>
@@ -70,9 +200,11 @@ The only difference in C# is that the Unicode value is escaped differently using
 &lt;p&gt;This is how &lt;strong&gt;Segoe MDL2&lt;/strong&gt; and &lt;strong&gt;Segoe UI&lt;/strong&gt; font icons look on a UWP app.&lt;br /&gt;
 &lt;img src=&quot;\images\posts\2016-09-05-using-font-icons-uwp-segoe-mdl2\FontIcons.jpg&quot; alt=&quot;Windows 10 UWP Font Icons Segoe MDL2 Segoe UI&quot; /&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
+&lt;p&gt;You can find the &lt;strong&gt;source code&lt;/strong&gt; at Github &lt;a href=&quot;https://github.com/keeratsingh/FontIcons&quot;&gt;fontIcons repo&lt;/a&gt; along with the &lt;code&gt;Visual Studio 2015&lt;/code&gt; solution.&lt;/p&gt;
+
 &lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
 &lt;p&gt;The best part about font icons is that you don’t have to worry about pixelated icons anymore. :)&lt;br /&gt;
-You can find the &lt;strong&gt;source code&lt;/strong&gt; at the &lt;a href=&quot;https://github.com/keeratsingh/FontIcons&quot;&gt;Github repo&lt;/a&gt; along with the &lt;code class=&quot;highlighter-pygments&quot;&gt;Visual Studio 2015&lt;/code&gt; solution.
 If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)&lt;/p&gt;
 
 </description>
@@ -98,16 +230,15 @@ the lock screen to the Bing Image of the Day.&lt;/p&gt;
 I had &lt;strong&gt;numerous possibilities&lt;/strong&gt; going forward. I could save it and change my desktop after a certain duration of my choice, or set it as my lock screen 
 just as a desktop wallpaper, you get my point, the key here is to get the Bing Image of the Day.&lt;/p&gt;
 
-&lt;p&gt;Fortunately, Bing has a &lt;code class=&quot;highlighter-pygments&quot;&gt;REST API&lt;/code&gt; to retrieve a &lt;code class=&quot;highlighter-pygments&quot;&gt;JSON&lt;/code&gt; string which contains the &lt;strong&gt;URL to 
+&lt;p&gt;Fortunately, Bing has a &lt;code&gt;REST API&lt;/code&gt; to retrieve a &lt;code&gt;JSON&lt;/code&gt; string which contains the &lt;strong&gt;URL to 
 the Bing Image&lt;/strong&gt;, which we will be making use of. 
 That is the easy part, now the hard part is to parse and retrieve the URL from the JSON string. I will be discussing in detail the &lt;strong&gt;different methods&lt;/strong&gt; that can be used for 
 parsing and how they can be used to extract the &lt;strong&gt;Bing Image URL&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;step-1-retrieve-the-json-string&quot;&gt;Step 1. Retrieve the JSON string:&lt;/h2&gt;
 &lt;p&gt;The first step is to retrieve the &lt;strong&gt;JSON&lt;/strong&gt; string from the &lt;strong&gt;Bing REST API&lt;/strong&gt; endpoint. 
-We retrieve the string using an &lt;code class=&quot;highlighter-pygments&quot;&gt;HttpClient&lt;/code&gt;,we have an option of using 
-&lt;code&gt;Windows.Web.Http&lt;/code&gt; or &lt;code&gt;System.Net.Http namespace&lt;/code&gt;. I prefer to choose Windows.Web.Http.HttpClient for the 
-simple reason that the System.Net.Http.HttpClient might get &lt;strong&gt;deprecated&lt;/strong&gt; over time. Another reason is that 
+We retrieve the string using an &lt;code&gt;HttpClient&lt;/code&gt;,we have an option of using &lt;code&gt;Windows.Web.Http&lt;/code&gt; or &lt;code&gt;System.Net.Http&lt;/code&gt; namespace. &lt;br /&gt;
+I prefer to choose Windows.Web.Http.HttpClient for the simple reason that the System.Net.Http.HttpClient might get &lt;strong&gt;deprecated&lt;/strong&gt; over time. Another reason is that 
 &lt;strong&gt;System.Net.Http.HttpClient supports only .Net Languages&lt;/strong&gt;, whereas Windows.Web.Http.HttpClient was written with the aim of &lt;strong&gt;consolidating all the 
 HTTP APIs&lt;/strong&gt; for different Windows Application Languages, and therefore it supports all the Windows Store 
 application languages. For the avid readers &lt;a href=&quot;https://blogs.windows.com/buildingapps/2015/11/23/demystifying-httpclient-apis-in-the-universal-windows-platform/&quot;&gt;here&lt;/a&gt; is a &lt;strong&gt;detailed comparison&lt;/strong&gt; between the two.&lt;/p&gt;
@@ -130,11 +261,11 @@ application languages. For the avid readers &lt;a href=&quot;https://blogs.windo
 
 &lt;h2 id=&quot;step-2-parse-the-json-string&quot;&gt;Step 2. Parse the JSON string:&lt;/h2&gt;
 &lt;p&gt;Now we can parse the retrieved JSON string using 3 methods&lt;br /&gt;
-• Using &lt;code class=&quot;highlighter-pygments&quot;&gt;Windows.Data.Json&lt;/code&gt; (&lt;em&gt;Native Way&lt;/em&gt;)&lt;br /&gt;
-• Using &lt;code class=&quot;highlighter-pygments&quot;&gt;LINQ-to-JSON&lt;/code&gt; API’s JObject from &lt;code class=&quot;highlighter-pygments&quot;&gt;JSON.NET&lt;/code&gt; (&lt;em&gt;Newtonsoft&lt;/em&gt;)  &lt;br /&gt;
-• Using &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; object and &lt;code class=&quot;highlighter-pygments&quot;&gt;DeserializeObject&lt;/code&gt; method JSON.NET (&lt;em&gt;Newtonsoft&lt;/em&gt;)&lt;br /&gt;
+• Using &lt;code&gt;Windows.Data.Json&lt;/code&gt; (&lt;em&gt;Native Way&lt;/em&gt;)&lt;br /&gt;
+• Using &lt;code&gt;LINQ-to-JSON&lt;/code&gt; API’s JObject from &lt;code&gt;JSON.NET&lt;/code&gt; (&lt;em&gt;Newtonsoft&lt;/em&gt;)  &lt;br /&gt;
+• Using &lt;code&gt;dynamic&lt;/code&gt; object and &lt;code&gt;DeserializeObject&lt;/code&gt; method JSON.NET (&lt;em&gt;Newtonsoft&lt;/em&gt;)&lt;br /&gt;
 &lt;strong&gt;JSON.Net&lt;/strong&gt; has existed since long before Windows.Data.Json came into existence, however, Microsoft introduced Windows.Data.Json with &lt;strong&gt;native support&lt;/strong&gt; for parsing JSON.
-To use JSON.NET, you need to &lt;strong&gt;add&lt;/strong&gt; the &lt;code class=&quot;highlighter-pygments&quot;&gt;Newtonsoft&lt;/code&gt; Nuget package, which adds an additional library dependency.
+To use JSON.NET, you need to &lt;strong&gt;add&lt;/strong&gt; the &lt;code&gt;Newtonsoft&lt;/code&gt; Nuget package, which adds an additional library dependency.
 I personally prefer the native way, however for the purpose of this app I have discussed both the ways of parsing the JSON string using both &lt;strong&gt;JSON.NET&lt;/strong&gt; and &lt;strong&gt;Windows.Data.Json namespaces&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Retrieved JSON string:&lt;/strong&gt;&lt;/p&gt;
@@ -153,11 +284,11 @@ I personally prefer the native way, however for the purpose of this app I have d
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;step-2a-parsing-json-string-using-windowsdatajson&quot;&gt;Step 2a. Parsing JSON string using Windows.Data.Json:&lt;/h3&gt;
-&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;Microsoft Windows.Data.Json&lt;/code&gt; class. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject&lt;/code&gt; 
-that implements an &lt;strong&gt;IMap interface&lt;/strong&gt;, which can help in manipulating the &lt;strong&gt;name/value&lt;/strong&gt; pairs like a &lt;strong&gt;dictionary&lt;/strong&gt;. We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonObject.TryParse&lt;/code&gt; 
+&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code&gt;Microsoft Windows.Data.Json&lt;/code&gt; class. We use &lt;code&gt;JsonObject&lt;/code&gt; 
+that implements an &lt;strong&gt;IMap interface&lt;/strong&gt;, which can help in manipulating the &lt;strong&gt;name/value&lt;/strong&gt; pairs like a &lt;strong&gt;dictionary&lt;/strong&gt;. We use &lt;code&gt;JsonObject.TryParse&lt;/code&gt; 
 method to parse the JSON string into a JSON value, it returns a boolean value, indicating success or failure.
-The integral part of the retrieval is &lt;code class=&quot;highlighter-pygments&quot;&gt;jsonObject[&quot;images&quot;].GetArray()[i].GetObject()[&quot;url&quot;].GetString()&lt;/code&gt;.
-As seen in the above JSON string, we have a root object &lt;code class=&quot;highlighter-pygments&quot;&gt;&quot;images&quot;&lt;/code&gt;, it further has 3 arrays, which are equal to the &lt;strong&gt;number of images&lt;/strong&gt; specified in &lt;strong&gt;Step 1.&lt;/strong&gt;
+The integral part of the retrieval is &lt;code&gt;jsonObject[&quot;images&quot;].GetArray()[i].GetObject()[&quot;url&quot;].GetString()&lt;/code&gt;.
+As seen in the above JSON string, we have a root object &lt;code&gt;&quot;images&quot;&lt;/code&gt;, it further has 3 arrays, which are equal to the &lt;strong&gt;number of images&lt;/strong&gt; specified in &lt;strong&gt;Step 1.&lt;/strong&gt;
 Each &lt;strong&gt;array&lt;/strong&gt; has an object called &lt;strong&gt;url&lt;/strong&gt;, which is the part of the url to the Bing Image. We retrieve url for each image and store it into a list.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using Windows.Data.Json.&lt;/span&gt;
@@ -173,8 +304,8 @@ Each &lt;strong&gt;array&lt;/strong&gt; has an object called &lt;strong&gt;url&l
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;step-2b-parsing-json-string-using-linq-to-json-apis-jobject&quot;&gt;Step 2b. Parsing JSON string using LINQ-to-JSON API’s JObject:&lt;/h3&gt;
-&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;LINQ-to-JSON&lt;/code&gt; API’s 
-&lt;code class=&quot;highlighter-pygments&quot;&gt;JObject&lt;/code&gt; explicitly.We use this method when we &lt;strong&gt;don’t know the JSON structure&lt;/strong&gt;
+&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code&gt;LINQ-to-JSON&lt;/code&gt; API’s 
+&lt;code&gt;JObject&lt;/code&gt; explicitly.We use this method when we &lt;strong&gt;don’t know the JSON structure&lt;/strong&gt;
 ahead of time. This method is recommended if only &lt;strong&gt;one or two values&lt;/strong&gt; from the whole JSON string are required.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using LINQ-to-JSON API&amp;#39;s JObject explicitly.&lt;/span&gt;
@@ -185,9 +316,9 @@ ahead of time. This method is recommended if only &lt;strong&gt;one or two value
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;step-2c-parsing-json-string-using-deserializeobject-and-dynamic-object&quot;&gt;Step 2c. Parsing JSON string using DeserializeObject and dynamic object&lt;/h3&gt;
-&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code class=&quot;highlighter-pygments&quot;&gt;DeserializeObject&lt;/code&gt; method. 
-We use &lt;code class=&quot;highlighter-pygments&quot;&gt;JsonConvert.DeserializeObject&lt;/code&gt; method when &lt;strong&gt;already know the JSON structure&lt;/strong&gt; and the &lt;strong&gt;strongly typed class&lt;/strong&gt; we want to deserialize into. 
-We use &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; object, as it saves us the trouble of declaring a specific class to hold the JSON object.&lt;/p&gt;
+&lt;p&gt;This Method parses the fetched JSON string and retrieves the Image URLs using &lt;code&gt;DeserializeObject&lt;/code&gt; method. 
+We use &lt;code&gt;JsonConvert.DeserializeObject&lt;/code&gt; method when &lt;strong&gt;already know the JSON structure&lt;/strong&gt; and the &lt;strong&gt;strongly typed class&lt;/strong&gt; we want to deserialize into. 
+We use &lt;code&gt;dynamic&lt;/code&gt; object, as it saves us the trouble of declaring a specific class to hold the JSON object.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Parse using DeserializeObject method.&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_numOfImages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++)&lt;/span&gt;
@@ -197,8 +328,8 @@ We use &lt;code class=&quot;highlighter-pygments&quot;&gt;dynamic&lt;/code&gt; o
 
 &lt;h2 id=&quot;step-3-display-images-on-ui-using-bitmapimage&quot;&gt;Step 3. Display images on UI using BitmapImage:&lt;/h2&gt;
 &lt;p&gt;Each URL is converted into a Bitmap Image and added into the Stack Panel dynamically to display as an Image Object.
-&lt;code class=&quot;highlighter-pygments&quot;&gt;BitmapImage&lt;/code&gt; class inherits from the &lt;code class=&quot;highlighter-pygments&quot;&gt;BitmapSource&lt;/code&gt; class and is specialized 
-&lt;code class=&quot;highlighter-pygments&quot;&gt;BitmapSource&lt;/code&gt; that is optimized for loading images using XAML.&lt;/p&gt;
+&lt;code&gt;BitmapImage&lt;/code&gt; class inherits from the &lt;code&gt;BitmapSource&lt;/code&gt; class and is specialized 
+&lt;code&gt;BitmapSource&lt;/code&gt; that is optimized for loading images using XAML.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_lstBingImageURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -228,7 +359,7 @@ If you still face any problems or have any questions, feel free to leave a comme
         <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/bing-image-api-json-csharp-uwp/</guid>
         
         
-        <category>GitHub</category>
+        <category>UWP,Bing</category>
         
       </item>
     

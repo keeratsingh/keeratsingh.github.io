@@ -89,16 +89,15 @@ the lock screen to the Bing Image of the Day.</p>
 I had <strong>numerous possibilities</strong> going forward. I could save it and change my desktop after a certain duration of my choice, or set it as my lock screen 
 just as a desktop wallpaper, you get my point, the key here is to get the Bing Image of the Day.</p>
 
-<p>Fortunately, Bing has a <code class="highlighter-pygments">REST API</code> to retrieve a <code class="highlighter-pygments">JSON</code> string which contains the <strong>URL to 
+<p>Fortunately, Bing has a <code>REST API</code> to retrieve a <code>JSON</code> string which contains the <strong>URL to 
 the Bing Image</strong>, which we will be making use of. 
 That is the easy part, now the hard part is to parse and retrieve the URL from the JSON string. I will be discussing in detail the <strong>different methods</strong> that can be used for 
 parsing and how they can be used to extract the <strong>Bing Image URL</strong>.</p>
 
 <h2 id="step-1-retrieve-the-json-string">Step 1. Retrieve the JSON string:</h2>
 <p>The first step is to retrieve the <strong>JSON</strong> string from the <strong>Bing REST API</strong> endpoint. 
-We retrieve the string using an <code class="highlighter-pygments">HttpClient</code>,we have an option of using 
-<code>Windows.Web.Http</code> or <code>System.Net.Http namespace</code>. I prefer to choose Windows.Web.Http.HttpClient for the 
-simple reason that the System.Net.Http.HttpClient might get <strong>deprecated</strong> over time. Another reason is that 
+We retrieve the string using an <code>HttpClient</code>,we have an option of using <code>Windows.Web.Http</code> or <code>System.Net.Http</code> namespace. <br />
+I prefer to choose Windows.Web.Http.HttpClient for the simple reason that the System.Net.Http.HttpClient might get <strong>deprecated</strong> over time. Another reason is that 
 <strong>System.Net.Http.HttpClient supports only .Net Languages</strong>, whereas Windows.Web.Http.HttpClient was written with the aim of <strong>consolidating all the 
 HTTP APIs</strong> for different Windows Application Languages, and therefore it supports all the Windows Store 
 application languages. For the avid readers <a href="https://blogs.windows.com/buildingapps/2015/11/23/demystifying-httpclient-apis-in-the-universal-windows-platform/">here</a> is a <strong>detailed comparison</strong> between the two.</p>
@@ -121,11 +120,11 @@ application languages. For the avid readers <a href="https://blogs.windows.com/b
 
 <h2 id="step-2-parse-the-json-string">Step 2. Parse the JSON string:</h2>
 <p>Now we can parse the retrieved JSON string using 3 methods<br />
-• Using <code class="highlighter-pygments">Windows.Data.Json</code> (<em>Native Way</em>)<br />
-• Using <code class="highlighter-pygments">LINQ-to-JSON</code> API’s JObject from <code class="highlighter-pygments">JSON.NET</code> (<em>Newtonsoft</em>)  <br />
-• Using <code class="highlighter-pygments">dynamic</code> object and <code class="highlighter-pygments">DeserializeObject</code> method JSON.NET (<em>Newtonsoft</em>)<br />
+• Using <code>Windows.Data.Json</code> (<em>Native Way</em>)<br />
+• Using <code>LINQ-to-JSON</code> API’s JObject from <code>JSON.NET</code> (<em>Newtonsoft</em>)  <br />
+• Using <code>dynamic</code> object and <code>DeserializeObject</code> method JSON.NET (<em>Newtonsoft</em>)<br />
 <strong>JSON.Net</strong> has existed since long before Windows.Data.Json came into existence, however, Microsoft introduced Windows.Data.Json with <strong>native support</strong> for parsing JSON.
-To use JSON.NET, you need to <strong>add</strong> the <code class="highlighter-pygments">Newtonsoft</code> Nuget package, which adds an additional library dependency.
+To use JSON.NET, you need to <strong>add</strong> the <code>Newtonsoft</code> Nuget package, which adds an additional library dependency.
 I personally prefer the native way, however for the purpose of this app I have discussed both the ways of parsing the JSON string using both <strong>JSON.NET</strong> and <strong>Windows.Data.Json namespaces</strong>.</p>
 
 <p><strong>Retrieved JSON string:</strong></p>
@@ -144,11 +143,11 @@ I personally prefer the native way, however for the purpose of this app I have d
 <span class="p">}</span></code></pre></figure>
 
 <h3 id="step-2a-parsing-json-string-using-windowsdatajson">Step 2a. Parsing JSON string using Windows.Data.Json:</h3>
-<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code class="highlighter-pygments">Microsoft Windows.Data.Json</code> class. We use <code class="highlighter-pygments">JsonObject</code> 
-that implements an <strong>IMap interface</strong>, which can help in manipulating the <strong>name/value</strong> pairs like a <strong>dictionary</strong>. We use <code class="highlighter-pygments">JsonObject.TryParse</code> 
+<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code>Microsoft Windows.Data.Json</code> class. We use <code>JsonObject</code> 
+that implements an <strong>IMap interface</strong>, which can help in manipulating the <strong>name/value</strong> pairs like a <strong>dictionary</strong>. We use <code>JsonObject.TryParse</code> 
 method to parse the JSON string into a JSON value, it returns a boolean value, indicating success or failure.
-The integral part of the retrieval is <code class="highlighter-pygments">jsonObject["images"].GetArray()[i].GetObject()["url"].GetString()</code>.
-As seen in the above JSON string, we have a root object <code class="highlighter-pygments">"images"</code>, it further has 3 arrays, which are equal to the <strong>number of images</strong> specified in <strong>Step 1.</strong>
+The integral part of the retrieval is <code>jsonObject["images"].GetArray()[i].GetObject()["url"].GetString()</code>.
+As seen in the above JSON string, we have a root object <code>"images"</code>, it further has 3 arrays, which are equal to the <strong>number of images</strong> specified in <strong>Step 1.</strong>
 Each <strong>array</strong> has an object called <strong>url</strong>, which is the part of the url to the Bing Image. We retrieve url for each image and store it into a list.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using Windows.Data.Json.</span>
@@ -164,8 +163,8 @@ Each <strong>array</strong> has an object called <strong>url</strong>, which is 
 <span class="p">}</span></code></pre></figure>
 
 <h3 id="step-2b-parsing-json-string-using-linq-to-json-apis-jobject">Step 2b. Parsing JSON string using LINQ-to-JSON API’s JObject:</h3>
-<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code class="highlighter-pygments">LINQ-to-JSON</code> API’s 
-<code class="highlighter-pygments">JObject</code> explicitly.We use this method when we <strong>don’t know the JSON structure</strong>
+<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code>LINQ-to-JSON</code> API’s 
+<code>JObject</code> explicitly.We use this method when we <strong>don’t know the JSON structure</strong>
 ahead of time. This method is recommended if only <strong>one or two values</strong> from the whole JSON string are required.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using LINQ-to-JSON API&#39;s JObject explicitly.</span>
@@ -176,9 +175,9 @@ ahead of time. This method is recommended if only <strong>one or two values</str
 <span class="p">}</span></code></pre></figure>
 
 <h3 id="step-2c-parsing-json-string-using-deserializeobject-and-dynamic-object">Step 2c. Parsing JSON string using DeserializeObject and dynamic object</h3>
-<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code class="highlighter-pygments">DeserializeObject</code> method. 
-We use <code class="highlighter-pygments">JsonConvert.DeserializeObject</code> method when <strong>already know the JSON structure</strong> and the <strong>strongly typed class</strong> we want to deserialize into. 
-We use <code class="highlighter-pygments">dynamic</code> object, as it saves us the trouble of declaring a specific class to hold the JSON object.</p>
+<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code>DeserializeObject</code> method. 
+We use <code>JsonConvert.DeserializeObject</code> method when <strong>already know the JSON structure</strong> and the <strong>strongly typed class</strong> we want to deserialize into. 
+We use <code>dynamic</code> object, as it saves us the trouble of declaring a specific class to hold the JSON object.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using DeserializeObject method.</span>
 <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">_numOfImages</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
@@ -188,8 +187,8 @@ We use <code class="highlighter-pygments">dynamic</code> object, as it saves us 
 
 <h2 id="step-3-display-images-on-ui-using-bitmapimage">Step 3. Display images on UI using BitmapImage:</h2>
 <p>Each URL is converted into a Bitmap Image and added into the Stack Panel dynamically to display as an Image Object.
-<code class="highlighter-pygments">BitmapImage</code> class inherits from the <code class="highlighter-pygments">BitmapSource</code> class and is specialized 
-<code class="highlighter-pygments">BitmapSource</code> that is optimized for loading images using XAML.</p>
+<code>BitmapImage</code> class inherits from the <code>BitmapSource</code> class and is specialized 
+<code>BitmapSource</code> that is optimized for loading images using XAML.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">url</span> <span class="k">in</span> <span class="n">_lstBingImageURLs</span><span class="p">)</span>
 <span class="p">{</span>
