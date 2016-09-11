@@ -89,7 +89,7 @@ Jekyll is not officially supported on windows, but there are workarounds to setu
 <p>Before you start, you will need <code class="highlighter-pygments">Windows Subsystem for Linux aka Bash</code> on windows feature enabled. 
 If you have no idea on how to get the bash setup, refer to this <a href="http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/">wonderful guide</a></p>
 
-<h2 id="step-1-download-the-theme">Step 1. Download the Theme:</h2>
+<h2 id="step-1-download-the-theme">Step 1. Download the Theme</h2>
 <p>After you are done setting up, the next part is choosing a wonderful theme for your blog. Head over to Jekyll Themes to find a theme.
 I will be using <a href="http://jekyllthemes.org/themes/emerald/">Emerald theme</a> for our example.
 Click the download link to download the zip file containing the source files.</p>
@@ -100,7 +100,7 @@ Click the download link to download the zip file containing the source files.</p
 
 <p><img src="\images\posts\2016-08-05-setting-up-blog-github-page\1a.png" alt="Theme download location GitHub" /></p>
 
-<h2 id="step-2-setting-up-the-windows-10-environment">Step 2. Setting up the Windows 10 environment:</h2>
+<h2 id="step-2-setting-up-the-windows-10-environment">Step 2. Setting up the Windows 10 environment</h2>
 <p>Now we will setup our local environment required to build the source code that we just downloaded on Windows 10.
 There are different ways to setup a Jekyll server locally which you can use as desired. The one I found most convenient was installing the packages on the bash shell and 
 setting up a Jekyll server on Bash.</p>
@@ -109,7 +109,7 @@ setting up a Jekyll server on Bash.</p>
 
 <p>Extract the zip file and open the bash shell. We need to install <code class="highlighter-pygments">ruby</code> and <code class="highlighter-pygments">jekyll</code> before we do anything. Here are the steps to follow.</p>
 
-<h3 id="step-2a-switching-to-root">Step 2a. Switching to Root:</h3>
+<h3 id="step-2a-switching-to-root">Step 2a. Switching to Root</h3>
 <p>We need root permissions to install the packages, else you will get a permission denied error.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">sudo -s </code></pre></figure>
@@ -158,7 +158,7 @@ Once installation completes check the version using the -v flag.</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">gem install jekyll
 jekyll -v</code></pre></figure>
 
-<h2 id="step-3-building-and-serving-website">Step 3. Building and serving website:</h2>
+<h2 id="step-3-building-and-serving-website">Step 3. Building and serving website</h2>
 <p>Extract the zip file you downloaded in step 1 and go to the download location from the bash shell.
 All the local drives are present in the <code class="highlighter-pygments">/mnt/</code> folder.<br />
 For example:<br />
@@ -220,7 +220,7 @@ Configuration file: /mnt/d/emerald-master/emerald-master/_config.yml
 Server address: http://127.0.0.1:4000/emerald/
 Server running... press ctrl-c to stop.</code></pre></figure>
 
-<h2 id="step-4-hosting-and-uploading-the-website-on-githubio">Step 4. Hosting and uploading the website on Github.io:</h2>
+<h2 id="step-4-hosting-and-uploading-the-website-on-githubio">Step 4. Hosting and uploading the website on Github.io</h2>
 <p>After you have setup and tested everything locally, the next part is setting up a GitHub repository with the <code class="highlighter-pygments">username.github.io</code>, where username is your username on GitHub. Be very careful to make sure the username is correct, as a mismatching username will not work.  Once a new repository is created online, we will upload the site that we have built locally onto the repository <code class="highlighter-pygments">username.github.io</code>.</p>
 
 <h3 id="step-4a-setup-and-push-your-code-to-github-repo-usernamegithubio">Step 4a. Setup and push your code to GitHub repo username.github.io:</h3>
@@ -237,7 +237,7 @@ git commit -m <span class="s2">&quot;initial commit&quot;</span>
 git remote add origin https://github.com/username/username.github.io.git
 git push -u origin master</code></pre></figure>
 
-<h2 id="step-5-final-check">Step 5. Final check:</h2>
+<h2 id="step-5-final-check">Step 5. Final check</h2>
 <p>Once your code is successfully pushed, you can go to the repository settings and confirm everything is working correctly.
 <code class="highlighter-pygments">https://github.com/username/username.github.io/settings</code></p>
 
