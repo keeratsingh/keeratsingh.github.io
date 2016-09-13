@@ -94,6 +94,44 @@ There are 8 color classes that exist on the Band, however, only <strong>6 of the
 <span class="err">•</span> <span class="n">Muted</span>
 <span class="err">•</span> <span class="n">Secondary</span></code></pre></figure>
 
+<h2 id="prerequisites">Prerequisites</h2>
+<h3>Installing Nuget package Microsoft.Band</h3>
+<p>We need to install teh Nuget package Microsoft.Band, in order to have the BandSDK capabilities.</p>
+
+<ul>
+  <li>Right click on the Project you want to add the package to.</li>
+  <li>Choose <code>Manage NuGet Packages...</code>.</li>
+  <li>Seach for package called <code>Band</code>.</li>
+  <li>Install package <code>Microsoft.Band</code> by Microsoft Corporation.
+<br />
+<br /></li>
+</ul>
+<div class="postImg">
+<figure>
+    <img class="postImg" src="\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Manage_Nuget.jpg" alt="Installing Microsoft.Band package" />
+    <figcaption>Installing Microsoft.Band package</figcaption>
+</figure>
+</div>
+<p><br /></p>
+
+<h3>Enabling Bluetooth capability</h3>
+<p>We need to enable the Bluetooth capability of the UWP application, in order to allow the app to connec to the Microsoft band via Bluetooth.</p>
+
+<ul>
+  <li>Right click on the <code>Package.appxmanifest</code> and click open</li>
+  <li>Go to <code>Capabilities</code> tab.</li>
+  <li>Check the option <code>Bluetooth</code></li>
+  <li>Save Package.appxmanifest.
+<br />
+<br /></li>
+</ul>
+<div class="postImg">
+<figure>
+    <img class="postImg" src="\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Bluetooth_Capability.jpg" alt="Enabling Bluetooth capability" />
+    <figcaption>Enabling Bluetooth capability</figcaption>
+</figure>
+</div>
+
 <h2 id="connecting-to-the-band">Connecting to the Band</h2>
 <p>The initial step is to connect to a paired Band to the device on which your application is running. 
 We use the <code>BandClientManager</code> to get a list of paired Bands and connect to the first Band.</p>

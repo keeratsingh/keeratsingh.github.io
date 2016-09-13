@@ -94,7 +94,7 @@ the Bing Image</strong>, which we will be making use of.
 That is the easy part, now the hard part is to parse and retrieve the URL from the JSON string. I will be discussing in detail the <strong>different methods</strong> that can be used for 
 parsing and how they can be used to extract the <strong>Bing Image URL</strong>.</p>
 
-<h2 id="step-1-retrieve-the-json-string">Step 1. Retrieve the JSON string:</h2>
+<h2 id="step-1-retrieve-the-json-string">Step 1. Retrieve the JSON string</h2>
 <p>The first step is to retrieve the <strong>JSON</strong> string from the <strong>Bing REST API</strong> endpoint. 
 We retrieve the string using an <code>HttpClient</code>,we have an option of using <code>Windows.Web.Http</code> or <code>System.Net.Http</code> namespace. <br />
 I prefer to choose Windows.Web.Http.HttpClient for the simple reason that the System.Net.Http.HttpClient might get <strong>deprecated</strong> over time. Another reason is that 
@@ -118,7 +118,7 @@ application languages. For the avid readers <a href="https://blogs.windows.com/b
 <span class="c1">// reads the content of the HTTP Response and returns as a string.</span>
 <span class="n">strJSONString</span> <span class="p">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="n">ReadAsStringAsync</span><span class="p">();</span></code></pre></figure>
 
-<h2 id="step-2-parse-the-json-string">Step 2. Parse the JSON string:</h2>
+<h2 id="step-2-parse-the-json-string">Step 2. Parse the JSON string</h2>
 <p>Now we can parse the retrieved JSON string using 3 methods<br />
 • Using <code>Windows.Data.Json</code> (<em>Native Way</em>)<br />
 • Using <code>LINQ-to-JSON</code> API’s JObject from <code>JSON.NET</code> (<em>Newtonsoft</em>)  <br />
@@ -185,7 +185,7 @@ We use <code>dynamic</code> object, as it saves us the trouble of declaring a sp
     <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Convert</span><span class="p">.</span><span class="n">ToString</span><span class="p">((</span><span class="n">JsonConvert</span><span class="p">.</span><span class="n">DeserializeObject</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;(</span><span class="n">_strRawJSONString</span><span class="p">)).</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">url</span><span class="p">));</span>
 <span class="p">}</span></code></pre></figure>
 
-<h2 id="step-3-display-images-on-ui-using-bitmapimage">Step 3. Display images on UI using BitmapImage:</h2>
+<h2 id="step-3-display-images-on-ui-using-bitmapimage">Step 3. Display images on UI using BitmapImage</h2>
 <p>Each URL is converted into a Bitmap Image and added into the Stack Panel dynamically to display as an Image Object.
 <code>BitmapImage</code> class inherits from the <code>BitmapSource</code> class and is specialized 
 <code>BitmapSource</code> that is optimized for loading images using XAML.</p>
@@ -203,7 +203,7 @@ We use <code>dynamic</code> object, as it saves us the trouble of declaring a sp
     <span class="n">spImages</span><span class="p">.</span><span class="n">Children</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">imgbingImage</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<h2 id="working-windows-10-uwp-app">Working Windows 10 UWP App:</h2>
+<h2 id="working-windows-10-uwp-app">Working Windows 10 UWP App</h2>
 <p>Here is the <strong>screenshot</strong> of the working <strong>Windows 10 UWP</strong> app, I have hosted the <strong>Visual Studio</strong> solution file with source code at Github Repository 
 <a href="https://github.com/keeratsingh/bing-Image-JSON">Bing-Image-JSON</a> which you can use to <strong>experiment yourself</strong>.
 <img src="\images\posts\2016-08-19-bing-image-json-csharp-uwp\BIOD.jpg" alt="Windows 10 UWP Bing Image of the Day" /></p>

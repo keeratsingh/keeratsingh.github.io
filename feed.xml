@@ -5,18 +5,18 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 10 Sep 2016 21:54:51 -0700</pubDate>
-    <lastBuildDate>Sat, 10 Sep 2016 21:54:51 -0700</lastBuildDate>
+    <pubDate>Mon, 12 Sep 2016 20:59:28 -0700</pubDate>
+    <lastBuildDate>Mon, 12 Sep 2016 20:59:28 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
         <title>Customizing Microsoft Band using Band SDK and UWP</title>
         <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
 &lt;p&gt;This idea was on the back burner for quite a while, and I never had the time to pursue this, until last week. I finally sat down and developed a Microsoft Band customization app,
-that helps you take advantage of the Band SDK and customize the &lt;code&gt;BandTheme&lt;/code&gt;. I know the &lt;strong&gt;Microsoft Health&lt;/strong&gt; app allows you to customize the BandTheme using various styles, however, I found
-it is &lt;strong&gt;limiting in terms of granular customization&lt;/strong&gt;, which inspired me to develop this app, which helps you to customize each and every &lt;code&gt;Band Color&lt;/code&gt; class.
+that helps you take advantage of the Band SDK and customize the &lt;code&gt;BandTheme&lt;/code&gt;. I know the &lt;strong&gt;Microsoft Health&lt;/strong&gt; app allows you to customize the BandTheme using various styles, however, I felt
+it was &lt;strong&gt;limited in terms of granular customization&lt;/strong&gt;, which inspired me to develop this app that helps you to customize each and every &lt;code&gt;Band Color&lt;/code&gt; class individually.
 Another thing I felt the Microsoft Health app &lt;strong&gt;lacked in terms of Band personalization&lt;/strong&gt; was the visual UI that helped the user interpret how the theme actually
-affected the Band Tiles. This UWP application actually helps the user have a better understanding towards which parts of the Band are being customized.&lt;br /&gt;
+affected the Band Tiles. This UWP application actually helps the user have a better understanding of the components of the Band being customized.&lt;br /&gt;
 This post will help you guide through the &lt;code&gt;Band SDK&lt;/code&gt; functions used to retrieve and update the BandTheme. 
 There are 8 color classes that exist on the Band, however, only &lt;strong&gt;6 of the 8 can be customized&lt;/strong&gt; using the Band SDK.&lt;/p&gt;
 
@@ -26,6 +26,44 @@ There are 8 color classes that exist on the Band, however, only &lt;strong&gt;6 
 &lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Highlight&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Muted&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;•&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Secondary&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+&lt;h3&gt;Installing Nuget package Microsoft.Band&lt;/h3&gt;
+&lt;p&gt;We need to install teh Nuget package Microsoft.Band, in order to have the BandSDK capabilities.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Right click on the Project you want to add the package to.&lt;/li&gt;
+  &lt;li&gt;Choose &lt;code&gt;Manage NuGet Packages...&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Seach for package called &lt;code&gt;Band&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Install package &lt;code&gt;Microsoft.Band&lt;/code&gt; by Microsoft Corporation.
+&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Manage_Nuget.jpg&quot; alt=&quot;Installing Microsoft.Band package&quot; /&gt;
+    &lt;figcaption&gt;Installing Microsoft.Band package&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3&gt;Enabling Bluetooth capability&lt;/h3&gt;
+&lt;p&gt;We need to enable the Bluetooth capability of the UWP application, in order to allow the app to connec to the Microsoft band via Bluetooth.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Right click on the &lt;code&gt;Package.appxmanifest&lt;/code&gt; and click open&lt;/li&gt;
+  &lt;li&gt;Go to &lt;code&gt;Capabilities&lt;/code&gt; tab.&lt;/li&gt;
+  &lt;li&gt;Check the option &lt;code&gt;Bluetooth&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Save Package.appxmanifest.
+&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Bluetooth_Capability.jpg&quot; alt=&quot;Enabling Bluetooth capability&quot; /&gt;
+    &lt;figcaption&gt;Enabling Bluetooth capability&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
 
 &lt;h2 id=&quot;connecting-to-the-band&quot;&gt;Connecting to the Band&lt;/h2&gt;
 &lt;p&gt;The initial step is to connect to a paired Band to the device on which your application is running. 
@@ -118,6 +156,23 @@ object as the argument. A message is displayed on the UI once the BandTheme is u
     &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Upload_Theme_2.jpg&quot; alt=&quot;Upload completed&quot; /&gt;
     &lt;figcaption&gt;Uploading theme to Microsoft Band&lt;/figcaption&gt;
 &lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;screenshots-on-microsoft-band-2&quot;&gt;Screenshots on Microsoft Band 2&lt;/h2&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Band_1.jpg&quot; alt=&quot;Band Screenshot 1&quot; /&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Band_2.jpg&quot; alt=&quot;Band Screenshot 2&quot; /&gt;
+    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Band_3.jpg&quot; alt=&quot;Band Screenshot 3&quot; /&gt;
+    &lt;figcaption&gt;Screenshots on Microsoft Band 2&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;video-walkthrough&quot;&gt;Video Walkthrough&lt;/h2&gt;
+&lt;p&gt;Here is video Tutorial on how to use the app. It goes throug all the steps, such as retrieving, customizing and uploading the theme.
+It also covers the cancel button, in case you want to discard your changes.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+    &lt;iframe width=&quot;100%&quot; height=&quot;500&quot; src=&quot;https://www.youtube.com/embed/mONhqsVWKks&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
@@ -235,7 +290,7 @@ the Bing Image&lt;/strong&gt;, which we will be making use of.
 That is the easy part, now the hard part is to parse and retrieve the URL from the JSON string. I will be discussing in detail the &lt;strong&gt;different methods&lt;/strong&gt; that can be used for 
 parsing and how they can be used to extract the &lt;strong&gt;Bing Image URL&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;step-1-retrieve-the-json-string&quot;&gt;Step 1. Retrieve the JSON string:&lt;/h2&gt;
+&lt;h2 id=&quot;step-1-retrieve-the-json-string&quot;&gt;Step 1. Retrieve the JSON string&lt;/h2&gt;
 &lt;p&gt;The first step is to retrieve the &lt;strong&gt;JSON&lt;/strong&gt; string from the &lt;strong&gt;Bing REST API&lt;/strong&gt; endpoint. 
 We retrieve the string using an &lt;code&gt;HttpClient&lt;/code&gt;,we have an option of using &lt;code&gt;Windows.Web.Http&lt;/code&gt; or &lt;code&gt;System.Net.Http&lt;/code&gt; namespace. &lt;br /&gt;
 I prefer to choose Windows.Web.Http.HttpClient for the simple reason that the System.Net.Http.HttpClient might get &lt;strong&gt;deprecated&lt;/strong&gt; over time. Another reason is that 
@@ -259,7 +314,7 @@ application languages. For the avid readers &lt;a href=&quot;https://blogs.windo
 &lt;span class=&quot;c1&quot;&gt;// reads the content of the HTTP Response and returns as a string.&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;strJSONString&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadAsStringAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;step-2-parse-the-json-string&quot;&gt;Step 2. Parse the JSON string:&lt;/h2&gt;
+&lt;h2 id=&quot;step-2-parse-the-json-string&quot;&gt;Step 2. Parse the JSON string&lt;/h2&gt;
 &lt;p&gt;Now we can parse the retrieved JSON string using 3 methods&lt;br /&gt;
 • Using &lt;code&gt;Windows.Data.Json&lt;/code&gt; (&lt;em&gt;Native Way&lt;/em&gt;)&lt;br /&gt;
 • Using &lt;code&gt;LINQ-to-JSON&lt;/code&gt; API’s JObject from &lt;code&gt;JSON.NET&lt;/code&gt; (&lt;em&gt;Newtonsoft&lt;/em&gt;)  &lt;br /&gt;
@@ -326,7 +381,7 @@ We use &lt;code&gt;dynamic&lt;/code&gt; object, as it saves us the trouble of de
     &lt;span class=&quot;n&quot;&gt;_lstBingImageURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JsonConvert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DeserializeObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;dynamic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_strRawJSONString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;step-3-display-images-on-ui-using-bitmapimage&quot;&gt;Step 3. Display images on UI using BitmapImage:&lt;/h2&gt;
+&lt;h2 id=&quot;step-3-display-images-on-ui-using-bitmapimage&quot;&gt;Step 3. Display images on UI using BitmapImage&lt;/h2&gt;
 &lt;p&gt;Each URL is converted into a Bitmap Image and added into the Stack Panel dynamically to display as an Image Object.
 &lt;code&gt;BitmapImage&lt;/code&gt; class inherits from the &lt;code&gt;BitmapSource&lt;/code&gt; class and is specialized 
 &lt;code&gt;BitmapSource&lt;/code&gt; that is optimized for loading images using XAML.&lt;/p&gt;
@@ -344,7 +399,7 @@ We use &lt;code&gt;dynamic&lt;/code&gt; object, as it saves us the trouble of de
     &lt;span class=&quot;n&quot;&gt;spImages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imgbingImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;working-windows-10-uwp-app&quot;&gt;Working Windows 10 UWP App:&lt;/h2&gt;
+&lt;h2 id=&quot;working-windows-10-uwp-app&quot;&gt;Working Windows 10 UWP App&lt;/h2&gt;
 &lt;p&gt;Here is the &lt;strong&gt;screenshot&lt;/strong&gt; of the working &lt;strong&gt;Windows 10 UWP&lt;/strong&gt; app, I have hosted the &lt;strong&gt;Visual Studio&lt;/strong&gt; solution file with source code at Github Repository 
 &lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Bing-Image-JSON&lt;/a&gt; which you can use to &lt;strong&gt;experiment yourself&lt;/strong&gt;.
 &lt;img src=&quot;\images\posts\2016-08-19-bing-image-json-csharp-uwp\BIOD.jpg&quot; alt=&quot;Windows 10 UWP Bing Image of the Day&quot; /&gt;&lt;/p&gt;
@@ -376,7 +431,7 @@ Jekyll is not officially supported on windows, but there are workarounds to setu
 &lt;p&gt;Before you start, you will need &lt;code class=&quot;highlighter-pygments&quot;&gt;Windows Subsystem for Linux aka Bash&lt;/code&gt; on windows feature enabled. 
 If you have no idea on how to get the bash setup, refer to this &lt;a href=&quot;http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/&quot;&gt;wonderful guide&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;step-1-download-the-theme&quot;&gt;Step 1. Download the Theme:&lt;/h2&gt;
+&lt;h2 id=&quot;step-1-download-the-theme&quot;&gt;Step 1. Download the Theme&lt;/h2&gt;
 &lt;p&gt;After you are done setting up, the next part is choosing a wonderful theme for your blog. Head over to Jekyll Themes to find a theme.
 I will be using &lt;a href=&quot;http://jekyllthemes.org/themes/emerald/&quot;&gt;Emerald theme&lt;/a&gt; for our example.
 Click the download link to download the zip file containing the source files.&lt;/p&gt;
@@ -387,7 +442,7 @@ Click the download link to download the zip file containing the source files.&lt
 
 &lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1a.png&quot; alt=&quot;Theme download location GitHub&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;step-2-setting-up-the-windows-10-environment&quot;&gt;Step 2. Setting up the Windows 10 environment:&lt;/h2&gt;
+&lt;h2 id=&quot;step-2-setting-up-the-windows-10-environment&quot;&gt;Step 2. Setting up the Windows 10 environment&lt;/h2&gt;
 &lt;p&gt;Now we will setup our local environment required to build the source code that we just downloaded on Windows 10.
 There are different ways to setup a Jekyll server locally which you can use as desired. The one I found most convenient was installing the packages on the bash shell and 
 setting up a Jekyll server on Bash.&lt;/p&gt;
@@ -396,7 +451,7 @@ setting up a Jekyll server on Bash.&lt;/p&gt;
 
 &lt;p&gt;Extract the zip file and open the bash shell. We need to install &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby&lt;/code&gt; and &lt;code class=&quot;highlighter-pygments&quot;&gt;jekyll&lt;/code&gt; before we do anything. Here are the steps to follow.&lt;/p&gt;
 
-&lt;h3 id=&quot;step-2a-switching-to-root&quot;&gt;Step 2a. Switching to Root:&lt;/h3&gt;
+&lt;h3 id=&quot;step-2a-switching-to-root&quot;&gt;Step 2a. Switching to Root&lt;/h3&gt;
 &lt;p&gt;We need root permissions to install the packages, else you will get a permission denied error.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo -s &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -445,7 +500,7 @@ Once installation completes check the version using the -v flag.&lt;/p&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;gem install jekyll
 jekyll -v&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;step-3-building-and-serving-website&quot;&gt;Step 3. Building and serving website:&lt;/h2&gt;
+&lt;h2 id=&quot;step-3-building-and-serving-website&quot;&gt;Step 3. Building and serving website&lt;/h2&gt;
 &lt;p&gt;Extract the zip file you downloaded in step 1 and go to the download location from the bash shell.
 All the local drives are present in the &lt;code class=&quot;highlighter-pygments&quot;&gt;/mnt/&lt;/code&gt; folder.&lt;br /&gt;
 For example:&lt;br /&gt;
@@ -507,7 +562,7 @@ Configuration file: /mnt/d/emerald-master/emerald-master/_config.yml
 Server address: http://127.0.0.1:4000/emerald/
 Server running... press ctrl-c to stop.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;step-4-hosting-and-uploading-the-website-on-githubio&quot;&gt;Step 4. Hosting and uploading the website on Github.io:&lt;/h2&gt;
+&lt;h2 id=&quot;step-4-hosting-and-uploading-the-website-on-githubio&quot;&gt;Step 4. Hosting and uploading the website on Github.io&lt;/h2&gt;
 &lt;p&gt;After you have setup and tested everything locally, the next part is setting up a GitHub repository with the &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;, where username is your username on GitHub. Be very careful to make sure the username is correct, as a mismatching username will not work.  Once a new repository is created online, we will upload the site that we have built locally onto the repository &lt;code class=&quot;highlighter-pygments&quot;&gt;username.github.io&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;step-4a-setup-and-push-your-code-to-github-repo-usernamegithubio&quot;&gt;Step 4a. Setup and push your code to GitHub repo username.github.io:&lt;/h3&gt;
@@ -524,7 +579,7 @@ git commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;initial commit&amp;quot
 git remote add origin https://github.com/username/username.github.io.git
 git push -u origin master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;step-5-final-check&quot;&gt;Step 5. Final check:&lt;/h2&gt;
+&lt;h2 id=&quot;step-5-final-check&quot;&gt;Step 5. Final check&lt;/h2&gt;
 &lt;p&gt;Once your code is successfully pushed, you can go to the repository settings and confirm everything is working correctly.
 &lt;code class=&quot;highlighter-pygments&quot;&gt;https://github.com/username/username.github.io/settings&lt;/code&gt;&lt;/p&gt;
 
