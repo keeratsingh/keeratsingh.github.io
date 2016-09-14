@@ -5,8 +5,8 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 12 Sep 2016 21:15:44 -0700</pubDate>
-    <lastBuildDate>Mon, 12 Sep 2016 21:15:44 -0700</lastBuildDate>
+    <pubDate>Tue, 13 Sep 2016 19:22:38 -0700</pubDate>
+    <lastBuildDate>Tue, 13 Sep 2016 19:22:38 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -41,7 +41,7 @@ There are 8 color classes that exist on the Band, however, only &lt;strong&gt;6 
 &lt;/ul&gt;
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Manage_Nuget.jpg&quot; alt=&quot;Installing Microsoft.Band package&quot; /&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Manage_Nuget.jpg&quot; alt=&quot;Installing Microsoft.Band package&quot; /&gt;
     &lt;figcaption&gt;Installing Microsoft.Band package&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -60,7 +60,7 @@ There are 8 color classes that exist on the Band, however, only &lt;strong&gt;6 
 &lt;/ul&gt;
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Bluetooth_Capability.jpg&quot; alt=&quot;Enabling Bluetooth capability&quot; /&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Bluetooth_Capability.jpg&quot; alt=&quot;Enabling Bluetooth capability&quot; /&gt;
     &lt;figcaption&gt;Enabling Bluetooth capability&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -78,7 +78,7 @@ We use the &lt;code&gt;BandClientManager&lt;/code&gt; to get a list of paired Ba
 
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Connecting_to_the_Band.jpg&quot; alt=&quot;Connecting to Microsoft Band&quot; /&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Connecting_to_the_Band.jpg&quot; alt=&quot;Connecting to Microsoft Band&quot; /&gt;
     &lt;figcaption&gt;Connecting to Microsoft Band&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -101,7 +101,7 @@ After the theme is retrieved, the UI is updated respectively, by converting the 
 
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img class=&quot;postImg&quot; src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Theme_Retrieved.jpg&quot; alt=&quot;Connected and successfully retrieved the BandTheme&quot; /&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Theme_Retrieved.jpg&quot; alt=&quot;Connected and successfully retrieved the BandTheme&quot; /&gt;
     &lt;figcaption&gt;Connected and successfully retrieved the theme&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -115,8 +115,8 @@ Each Band color class has its own row and the application UI reflects how each B
 any new colors added to Windows.UI.Colors will be added to the &lt;code&gt;ComboBox&lt;/code&gt; automatically.&lt;/p&gt;
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2a_1.jpg&quot; alt=&quot;Choosing color using ComboBox&quot; /&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2a_2.jpg&quot; alt=&quot;Choosing color using ComboBox&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Personalizing_2a_1.jpg&quot; alt=&quot;Choosing color using ComboBox&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Personalizing_2a_2.jpg&quot; alt=&quot;Choosing color using ComboBox&quot; /&gt;
      &lt;figcaption&gt;Choosing color using ComboBox&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -126,8 +126,8 @@ any new colors added to Windows.UI.Colors will be added to the &lt;code&gt;Combo
 &lt;a href=&quot;http://www.color-hex.com&quot;&gt;hex-color&lt;/a&gt;. The hex code can be entered with or without the # symbol.&lt;/p&gt;
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2b_1.jpg&quot; alt=&quot;Choosing color using hex value&quot; /&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Personalizing_2b_2.jpg&quot; alt=&quot;Choosing color using hex value&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Personalizing_2b_1.jpg&quot; alt=&quot;Choosing color using hex value&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Personalizing_2b_2.jpg&quot; alt=&quot;Choosing color using hex value&quot; /&gt;
      &lt;figcaption&gt;Choosing color using hex value&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -152,8 +152,8 @@ object as the argument. A message is displayed on the UI once the BandTheme is u
 
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Upload_Theme_1.jpg&quot; alt=&quot;Uploading theme to Band&quot; /&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Upload_Theme_2.jpg&quot; alt=&quot;Upload completed&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Upload_Theme_1.jpg&quot; alt=&quot;Uploading theme to Band&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Upload_Theme_2.jpg&quot; alt=&quot;Upload completed&quot; /&gt;
     &lt;figcaption&gt;Uploading theme to Microsoft Band&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -161,9 +161,9 @@ object as the argument. A message is displayed on the UI once the BandTheme is u
 &lt;h2 id=&quot;screenshots-on-microsoft-band-2&quot;&gt;Screenshots on Microsoft Band 2&lt;/h2&gt;
 &lt;div class=&quot;postImg&quot;&gt;
 &lt;figure&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Band_1.jpg&quot; alt=&quot;Band Screenshot 1&quot; /&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Band_2.jpg&quot; alt=&quot;Band Screenshot 2&quot; /&gt;
-    &lt;img src=&quot;\images\posts\2016-09-07-customizing-microsoft-band-using-band-sdk-uwp\Band_3.jpg&quot; alt=&quot;Band Screenshot 3&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Band_1.jpg&quot; alt=&quot;Band Screenshot 1&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Band_2.jpg&quot; alt=&quot;Band Screenshot 2&quot; /&gt;
+    &lt;img src=&quot;/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Band_3.jpg&quot; alt=&quot;Band Screenshot 3&quot; /&gt;
     &lt;figcaption&gt;Screenshots on Microsoft Band 2&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;/div&gt;
@@ -253,7 +253,7 @@ The only difference in C# is that the Unicode value is escaped differently using
 
 &lt;h2 id=&quot;icons-in-action&quot;&gt;Icons in action&lt;/h2&gt;
 &lt;p&gt;This is how &lt;strong&gt;Segoe MDL2&lt;/strong&gt; and &lt;strong&gt;Segoe UI&lt;/strong&gt; font icons look on a UWP app.&lt;br /&gt;
-&lt;img src=&quot;\images\posts\2016-09-05-using-font-icons-uwp-segoe-mdl2\FontIcons.jpg&quot; alt=&quot;Windows 10 UWP Font Icons Segoe MDL2 Segoe UI&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/2016-09-05-using-font-icons-uwp-segoe-mdl2/FontIcons.jpg&quot; alt=&quot;Windows 10 UWP Font Icons Segoe MDL2 Segoe UI&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
 &lt;p&gt;You can find the &lt;strong&gt;source code&lt;/strong&gt; at Github &lt;a href=&quot;https://github.com/keeratsingh/FontIcons&quot;&gt;fontIcons repo&lt;/a&gt; along with the &lt;code&gt;Visual Studio 2015&lt;/code&gt; solution.&lt;/p&gt;
@@ -402,7 +402,7 @@ We use &lt;code&gt;dynamic&lt;/code&gt; object, as it saves us the trouble of de
 &lt;h2 id=&quot;working-windows-10-uwp-app&quot;&gt;Working Windows 10 UWP App&lt;/h2&gt;
 &lt;p&gt;Here is the &lt;strong&gt;screenshot&lt;/strong&gt; of the working &lt;strong&gt;Windows 10 UWP&lt;/strong&gt; app, I have hosted the &lt;strong&gt;Visual Studio&lt;/strong&gt; solution file with source code at Github Repository 
 &lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Bing-Image-JSON&lt;/a&gt; which you can use to &lt;strong&gt;experiment yourself&lt;/strong&gt;.
-&lt;img src=&quot;\images\posts\2016-08-19-bing-image-json-csharp-uwp\BIOD.jpg&quot; alt=&quot;Windows 10 UWP Bing Image of the Day&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/posts/2016-08-19-bing-image-json-csharp-uwp/BIOD.jpg&quot; alt=&quot;Windows 10 UWP Bing Image of the Day&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;final-note&quot;&gt;Final note:&lt;/h2&gt;
 &lt;p&gt;The &lt;strong&gt;source code&lt;/strong&gt; at the &lt;a href=&quot;https://github.com/keeratsingh/bing-Image-JSON&quot;&gt;Github repo&lt;/a&gt; contains the full detailed code, which you can use to experiment and follow along.
@@ -436,18 +436,18 @@ If you have no idea on how to get the bash setup, refer to this &lt;a href=&quot
 I will be using &lt;a href=&quot;http://jekyllthemes.org/themes/emerald/&quot;&gt;Emerald theme&lt;/a&gt; for our example.
 Click the download link to download the zip file containing the source files.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1.png&quot; alt=&quot;Theme download location&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/2016-08-05-setting-up-blog-github-page/1.png&quot; alt=&quot;Theme download location&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Alternatively, you can go to github.com and download the source code from the GitHub repository &lt;a href=&quot;https://github.com/kingFelix/emerald&quot;&gt;KingFelix/emerald&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\1a.png&quot; alt=&quot;Theme download location GitHub&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/2016-08-05-setting-up-blog-github-page/1a.png&quot; alt=&quot;Theme download location GitHub&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-2-setting-up-the-windows-10-environment&quot;&gt;Step 2. Setting up the Windows 10 environment&lt;/h2&gt;
 &lt;p&gt;Now we will setup our local environment required to build the source code that we just downloaded on Windows 10.
 There are different ways to setup a Jekyll server locally which you can use as desired. The one I found most convenient was installing the packages on the bash shell and 
 setting up a Jekyll server on Bash.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;\images\posts\2016-08-05-setting-up-blog-github-page\2.png&quot; alt=&quot;Linux Bash Shell Windows 10&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/2016-08-05-setting-up-blog-github-page/2.png&quot; alt=&quot;Linux Bash Shell Windows 10&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Extract the zip file and open the bash shell. We need to install &lt;code class=&quot;highlighter-pygments&quot;&gt;ruby&lt;/code&gt; and &lt;code class=&quot;highlighter-pygments&quot;&gt;jekyll&lt;/code&gt; before we do anything. Here are the steps to follow.&lt;/p&gt;
 
