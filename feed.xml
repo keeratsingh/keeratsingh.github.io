@@ -5,8 +5,8 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 06 Nov 2016 18:43:05 -0800</pubDate>
-    <lastBuildDate>Sun, 06 Nov 2016 18:43:05 -0800</lastBuildDate>
+    <pubDate>Sun, 06 Nov 2016 18:53:38 -0800</pubDate>
+    <lastBuildDate>Sun, 06 Nov 2016 18:53:38 -0800</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -174,7 +174,7 @@ Run the command &lt;code&gt;docker ps -a&lt;/code&gt; to list all containers, bo
 This was just an introduction on how to setup and verify docker on various platforms. If you have any questions or concerns, feel free to leave a comment.&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 25 Sep 2016 14:05:00 -0700</pubDate>
+        <pubDate>Sun, 06 Nov 2016 10:05:00 -0800</pubDate>
         <link>https://keeratsingh.github.io/blog/2016/setting-up-docker-on-mac-windows-linux-azure/</link>
         <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/setting-up-docker-on-mac-windows-linux-azure/</guid>
         
