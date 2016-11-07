@@ -5,9 +5,183 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 13 Sep 2016 20:56:36 -0700</pubDate>
-    <lastBuildDate>Tue, 13 Sep 2016 20:56:36 -0700</lastBuildDate>
+    <pubDate>Sun, 06 Nov 2016 18:43:05 -0800</pubDate>
+    <lastBuildDate>Sun, 06 Nov 2016 18:43:05 -0800</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>Setting up docker on Mac,Windows,Linux and Azure VM</title>
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Containers have been around for a while, however, Docker has made the use of the container technology simple.
+If you are new to Docker and container technology just like me, Docker has well &lt;a href=&quot;https://docs.docker.com/engine/understanding-docker/&quot;&gt;detailed documentation&lt;/a&gt; to start with.
+I was pretty curious on what all the fuss about containers was, therefore I started looking into container technology.
+Since Docker is available on many different platforms, I thought it would be appropriate to discuss as to how to setup Docker on different platforms.
+I will not be going into the detail of what containers are and how Docker works, this is more of how to tutorial, and me sharing my experience of setting up docker on 
+Mac,Windows,Linux, and Azure VM.&lt;br /&gt;
+Docker runs natively on Linux systems and uses a virtualized docker environment on Windows and Mac, I will exlore native Docker Containers on Windows in the near future.
+I will be using Docker for Mac and Windows, rather than using Docker Toolbox, details of which will be discussed further in the article.&lt;/p&gt;
+
+&lt;h2 id=&quot;download-docker-engine&quot;&gt;Download Docker Engine&lt;/h2&gt;
+&lt;h3&gt;Mac&lt;/h3&gt;
+&lt;p&gt;Docker can be setup on Mac either using Docker Toolbox or Docker for Mac. The key difference between the two is that the former 
+uses VirutalBox to setup a VM to host the Docker environment and the latter is a native application that makes use of xhyve to virtualize 
+the Docker environment, which is pretty lightweight as compared to an actual VM.&lt;br /&gt;
+Docker for Mac requires Hypervisor to be supported by the operation system and is, therefore, applicable mostly to the newer version of Mac OS.
+A detailed comparison can be found at the &lt;a href=&quot;https://docs.docker.com/docker-for-mac/docker-toolbox/&quot;&gt;Docker website&lt;/a&gt;. 
+Downloading is pretty straight forward, and you can download the official version &lt;a href=&quot;https://download.docker.com/mac/stable/Docker.dmg&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Windows&lt;/h3&gt;
+&lt;p&gt;Similar to Mac, Docker can be setup on Windows in two ways, either using Docker Toolbox or Docker for Windows. 
+Since Docker Engine uses some Linux-specific features, therefore the former creates a VM using VirtualBox and attaches it to the host Windows machine. 
+This VM then hosts the Docker environment required by the Windows system.
+The latter uses Hyper-V to virtualize the Docker enviornment.
+You can download Docker for Windows from &lt;a href=&quot;https://download.docker.com/win/stable/InstallDocker.msi&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Linux(uBuntu)&lt;/h3&gt;
+&lt;p&gt;Since Docker Engine runs natively on Linux, therefore it can be installed directly by installing the docker-engine package from apt-get. Docker is supported across
+various Linux distributions, however, I will be discussing setting up on Ubuntu.&lt;/p&gt;
+&lt;h3&gt;Azure VM(Docker on Ubuntu)&lt;/h3&gt;
+&lt;p&gt;Setting up Docker on Azure is easiest, thanks to a pre-existing template on Azure called &lt;code&gt;Docker on Ubuntu Server&lt;/code&gt;. Docker on Ubuntu Server
+template deploys a Ubuntu Server 16.04 LTS VM and then automatically installs Docker Engine on the VM.
+The terminal on this machine can be accessed via ssh using putty on windows, for linux/mac native terminal works.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-docker&quot;&gt;Installing Docker&lt;/h2&gt;
+&lt;h3&gt;Mac&lt;/h3&gt;
+&lt;p&gt;Installing Docker on Mac is fairly standard and simple, once you have downloaded the dmg package, you can double-click the package file 
+to mount dmg file. Then drag and drop Docker.app into the Applications folder as seen below.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/install-docker-on-mac1.jpg&quot; alt=&quot;Installing Docker on Mac&quot; /&gt;
+    &lt;figcaption&gt;Installing Docker on Mac&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once you have successfully installed Docker.app, run the application. If everything goes well, you can see a whale icon pop up in the status bar
+citing that Docker is now up and running.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/install-docker-on-mac2.jpg&quot; alt=&quot;Successful installation&quot; /&gt;
+    &lt;figcaption&gt;Successful installation&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Windows&lt;/h3&gt;
+&lt;p&gt;To install Docker on Windows, make sure Hyper-V is supported and enabled. If Hyper-V is not enabled, you can follow this tutorial to &lt;a href=&quot;https://msdn.microsoft.com/en-us/virtualization/hyperv_on_windows/quick_start/walkthrough_install&quot;&gt;enable Hyper-V&lt;/a&gt; on Windows 10.
+Also, virtualization should be enabled on the operating system for Docker to work.
+Once you have both Hyper-V and virtualization enabled, run the msi installer that you downloaded, follow the instructions to install Docker and at the last dialog box tick option
+&lt;code&gt;Launch Docker&lt;/code&gt;. If everything goes well, you should see a whale icon in the taskbar, which means Docker is running and ready to use.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/install-docker-on-windows.jpg&quot; alt=&quot;Installing Docker on Windows&quot; /&gt;
+     &lt;figcaption&gt;Installing Docker on Windows&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;h3&gt;Linux(uBuntu)&lt;/h3&gt;
+&lt;p&gt;Since the Docker Engine is supported natively on Linux, therefore I can just install docker by running a simple script from the official Docker website. I installed Docker on Ubuntu, it is supported
+across many flavors of Linux. Docker on Linux can be installed using respective native package managers, however, I chose to install Docker using &lt;code&gt;curl&lt;/code&gt;.
+You will need sudo permissions to install Docker, therefore make sure you have &lt;code&gt;sudo&lt;/code&gt; privileges. Once you make sure curl is installed, you can fetch the latest Docker package as shown below.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;which curl  
+curl -fsSL https://get.docker.com/ &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;Azure VM(Docker on Ubuntu)&lt;/h3&gt;
+&lt;p&gt;Docker installation is probably the easiest on Azure, since you can provision a VM with Docker pre-installed.
+To provision, a new Ubuntu VM with Docker pre-installed follow the instructions below.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;- Click the + icon to add a new resource. 
+- Choose Virtual Machines.
+- Search &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;Docker on Ubuntu Server&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;.
+- Configure your server and provision it.
+- Once the server is provisioned, SSH into the server using an SSH client like putty.
+- You will find the Docker Engine already installed.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/Docker-On-Azure.jpg&quot; alt=&quot;Docker-On-Azure&quot; /&gt;
+    &lt;figcaption&gt;Installing Docker on Azure&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;verifying-docker-installation&quot;&gt;Verifying Docker installation&lt;/h2&gt;
+&lt;p&gt;In order to verify Docker installation on each platform execute &lt;code&gt;docker info&lt;/code&gt; to see information regarding kernel version, a number of containers and images.
+&lt;code&gt;docker version&lt;/code&gt; displays all the information regarding the version of the Client and the Server, you can even format the string into JSON format.&lt;/p&gt;
+
+&lt;h3&gt;Mac&lt;/h3&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/verify-docker-install-mac.jpg&quot; alt=&quot;Verify Docker installation on Mac&quot; /&gt;
+    &lt;figcaption&gt;Verify Docker installation on Mac&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Windows&lt;/h3&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/verify-docker-install-windows.jpg&quot; alt=&quot;Verify Docker installation on Windows&quot; /&gt;
+    &lt;figcaption&gt;Verify Docker installation on Windows&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;h3&gt;Linux(uBuntu)&lt;/h3&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/verify-docker-install-linux.jpg&quot; alt=&quot;Verify Docker installation on Linux&quot; /&gt;
+    &lt;figcaption&gt;Verify Docker installation on Linux(uBuntu)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Azure VM(Docker on Ubuntu)&lt;/h3&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/verify-docker-install-azure.jpg&quot; alt=&quot;Verify Docker installation on Azure VM&quot; /&gt;
+    &lt;figcaption&gt;Verify Docker installation on Azure VM(Docker on Ubuntu)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;running-hello-world-image&quot;&gt;Running hello-world image&lt;/h2&gt;
+&lt;p&gt;Execute the &lt;code&gt;docker run&lt;/code&gt; command to run the image &lt;code&gt;hello-world&lt;/code&gt; in the container. This image is an example of minimal dockerization. You can find more images at &lt;a href=&quot;https://hub.docker.com/explore/&quot;&gt;docker explore&lt;/a&gt;.
+Run the command &lt;code&gt;docker ps -a&lt;/code&gt; to list all containers, both running and stopped.&lt;/p&gt;
+&lt;h3&gt;Mac&lt;/h3&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/running-hello-world-mac.jpg&quot; alt=&quot;Running hello world on Mac&quot; /&gt;
+    &lt;figcaption&gt;Running hello world on Mac&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;h3&gt;Windows&lt;/h3&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/running-hello-world-windows.jpg&quot; alt=&quot;Running hello world on Windows&quot; /&gt;
+    &lt;figcaption&gt;Running hello world on Windows&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;h3&gt;Linux(uBuntu)&lt;/h3&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/running-hello-world-linux.jpg&quot; alt=&quot;Running hello world on Linux(uBuntu)&quot; /&gt;
+    &lt;figcaption&gt;Running hello world on Linux(uBuntu)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+&lt;h3&gt;Azure VM(Docker on Ubuntu)&lt;/h3&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/running-hello-world-azure.jpg&quot; alt=&quot;Running hello world on Azure VM&quot; /&gt;
+    &lt;figcaption&gt;Running hello world on Azure VM(Docker on Ubuntu)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
+&lt;p&gt;Docker is supported mostly on all the popular platforms and setting up docker is pretty straight-forward and easy. 
+This was just an introduction on how to setup and verify docker on various platforms. If you have any questions or concerns, feel free to leave a comment.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 25 Sep 2016 14:05:00 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2016/setting-up-docker-on-mac-windows-linux-azure/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2016/setting-up-docker-on-mac-windows-linux-azure/</guid>
+        
+        
+        <category>Docker,Containers</category>
+        
+      </item>
     
       <item>
         <title>Customizing Microsoft Band using Band SDK and UWP</title>
