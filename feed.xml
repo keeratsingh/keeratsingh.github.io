@@ -5,14 +5,14 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 15 Apr 2017 21:00:05 -0700</pubDate>
-    <lastBuildDate>Sat, 15 Apr 2017 21:00:05 -0700</lastBuildDate>
+    <pubDate>Sat, 15 Apr 2017 21:43:29 -0700</pubDate>
+    <lastBuildDate>Sat, 15 Apr 2017 21:43:29 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
         <title>Adding appointments to Windows 10 Calendar using C#</title>
         <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;Working different shifts? Having trouble updating the Windows 10 Calendar with repetitive tasks. I had the same issue, so I decided to make it
+&lt;p&gt;Working different shifts? Having trouble updating the Windows 10 Calendar with repetitive tasks? I had the same issue, so I decided to make it
 as less painful as possible. :)
 This blog post is a result of my laziness to update calendar everytime I encounter a new weekly schedule.
 This program reads the data from a text/csv file and updates the calendar, based on the appointments in the file.&lt;/p&gt;
