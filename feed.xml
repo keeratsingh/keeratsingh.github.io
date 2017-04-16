@@ -5,9 +5,107 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 14 Apr 2017 23:40:25 -0700</pubDate>
-    <lastBuildDate>Fri, 14 Apr 2017 23:40:25 -0700</lastBuildDate>
+    <pubDate>Sat, 15 Apr 2017 21:00:05 -0700</pubDate>
+    <lastBuildDate>Sat, 15 Apr 2017 21:00:05 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>Adding appointments to Windows 10 Calendar using C#</title>
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Working different shifts? Having trouble updating the Windows 10 Calendar with repetitive tasks. I had the same issue, so I decided to make it
+as less painful as possible. :)
+This blog post is a result of my laziness to update calendar everytime I encounter a new weekly schedule.
+This program reads the data from a text/csv file and updates the calendar, based on the appointments in the file.&lt;/p&gt;
+
+&lt;h2 id=&quot;picking-a-file-using-fileopenpicker-class&quot;&gt;Picking a File using FileOpenPicker class&lt;/h2&gt;
+&lt;p&gt;The first step is to choose a file that contains the appointments in particular format. I chose the format Subject,Date,StartTime,Duration as comma separated values.&lt;br /&gt;
+This is what my csv file looks like.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;Subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StartTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Duration&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Test1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2017&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8.5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Test2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2017&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;reading-from-the-chosen-file&quot;&gt;Reading from the chosen file&lt;/h2&gt;
+&lt;p&gt;I used the &lt;code&gt;FileIO.ReadLinesAsync&lt;/code&gt; method to read from the file and store them into an enumerable list of the type string. Once the appointments are stored
+in a list, the items in the list are read one by and each item is split based on the delimiter.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Store contents of the file into an enumerable List.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;IList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FileIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadLinesAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Split the contents of the line based on the delimiter&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appointmentDetails&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chDelimiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-04-14-adding-appointments-to-windows10-calendar-using-c-sharp/windows_chosen_file.jpg&quot; alt=&quot;Choose file using FileOpenPicker&quot; /&gt;
+    &lt;figcaption&gt;Choose file using FileOpenPicker&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;initializing-the-appointment-object&quot;&gt;Initializing the Appointment object&lt;/h2&gt;
+&lt;p&gt;Windows 10 SDK provides an API &lt;code&gt;Windows.ApplicationModel.Appointments&lt;/code&gt;, through which we can manage appointments.
+Once the item in the list is split based on the delimiter, respective properties of the initialized &lt;code&gt;Appointment&lt;/code&gt; object are set based on the values in the file.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Create a new Appointment object&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Appointment&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appointment&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Appointment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Expected format of string: Subject,Date,StartTime,Duration&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;appointment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Subject&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appointmentDetails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;DateTime&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dateTime&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DateTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ParseExact&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;{0} {1}&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appointmentDetails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appointmentDetails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; 
+                                        &lt;span class=&quot;s&quot;&gt;&amp;quot;dd-MM-yyyy HH:mm&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+                                        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Globalization&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CultureInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InvariantCulture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;DateTimeOffset&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;startTime&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DateTimeOffset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dateTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;appointment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StartTime&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;startTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;appointment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Duration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TimeSpan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FromHours&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appointmentDetails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]));&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;appointment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Reminder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TimeSpan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FromHours&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;adding-appointment-to-the-calendar&quot;&gt;Adding appointment to the calendar&lt;/h2&gt;
+&lt;p&gt;Once the required properties of the Appointment object are set, we will invoke the method Windows.ApplicationModel.Appointments.&lt;code&gt;AppointmentManager.ShowAddAppointmentAsync&lt;/code&gt;,
+with the following parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;Appointment&lt;/code&gt; object: This object contains the information regarding the appointment being added.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Rect&lt;/code&gt; object: As per &lt;a href=&quot;https://msdn.microsoft.com/en-us/microsoft-r/windows.applicationmodel.appointments.appointmentstore.showaddappointmentasync&quot;&gt;MSDN documentation&lt;/a&gt; &lt;code&gt;Rect&lt;/code&gt; is the rectangular area of user selection (for example, pressing a button), around which the operating system displays the Add Appointment UI, not within that rectangular area. For example, if an app uses a button to show the Rect, pass the Rect of the button so the Add Appointment UI displays around the button, not overlapping it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When this method call concludes, it returns a string object containing the appointment identifier, which is used when updating or removing an appointment.
+If the return string is empty, it means that the appointment was not added.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appointmentId&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AppointmentManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ShowAddAppointmentAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appointment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-04-14-adding-appointments-to-windows10-calendar-using-c-sharp/windows_add_to_calendar.jpg&quot; alt=&quot;add appointment to calendar&quot; /&gt;
+    &lt;figcaption&gt;Appointment UI&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;appointment-added&quot;&gt;Appointment added&lt;/h2&gt;
+&lt;p&gt;Once the appointment is confirmed via the Add Appointment UI, it gets added to the calendar app. Do keep in mind that you have to have an outlook account setup on windows phone for this to work. In case of Windows 10 on desktop this is not the case.&lt;/p&gt;
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-04-14-adding-appointments-to-windows10-calendar-using-c-sharp/windows_appointment_added.jpg&quot; alt=&quot;Appointments added to the calendar&quot; /&gt;
+    &lt;figcaption&gt;Appointments added to the calendar&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
+&lt;p&gt;Once you have everything setup, you just have to edit the file and you are just one click away from adding all the appointments.
+If you have any questions or concerns, feel free to leave a comment.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 14 Apr 2017 13:15:00 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp/</guid>
+        
+        
+        <category>Windows</category>
+        
+        <category>10,</category>
+        
+        <category>UWP</category>
+        
+      </item>
     
       <item>
         <title>Setting up docker on Mac,Windows,Linux and Azure VM</title>
