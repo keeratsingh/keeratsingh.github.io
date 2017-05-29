@@ -5,9 +5,135 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 15 Apr 2017 21:43:29 -0700</pubDate>
-    <lastBuildDate>Sat, 15 Apr 2017 21:43:29 -0700</lastBuildDate>
+    <pubDate>Sun, 28 May 2017 22:18:11 -0700</pubDate>
+    <lastBuildDate>Sun, 28 May 2017 22:18:11 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>Authenticating Microsoft Account using Microsoft Authentication Library (MSAL)</title>
+        <description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Microsoft recently revealed the new Graph APIs at the recent MS Build 2017. These APIs provide a single unified endpoint to access different Microsoft Products, which means you no longer have to deal with different methods of authentication across different platforms.
+An exciting addition to this is the new and updated Microsoft Authentication Library (MSAL), which is conveniently available across .Net, iOS, Android, and JavaScript.
+This consolidated library will be used to authenticate both Microsoft personal and Azure AD School and work accounts.&lt;/p&gt;
+
+&lt;p&gt;In order to access Microsoft Graph functionality, the first step is to authenticate and get the &lt;code&gt;access token&lt;/code&gt; using &lt;code&gt;MSAL&lt;/code&gt;, which will be discuss in this tutorial.&lt;/p&gt;
+
+&lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h1&gt;
+
+&lt;h2 id=&quot;install-microsoftidentityclient-package&quot;&gt;Install Microsoft.Identity.Client Package&lt;/h2&gt;
+&lt;p&gt;Make sure you have added the &lt;code&gt;Microsoft.Identity.Client&lt;/code&gt; Nuget Package to your project.
+To add the pacakge Go to &lt;code&gt;Tools&lt;/code&gt; &amp;gt; &lt;code&gt;Nuget Package Manager&lt;/code&gt; &amp;gt; &lt;code&gt;Package Manager Console&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;Install&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Identity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Client&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pre&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/PM_Console.jpg&quot; alt=&quot;Install Microsoft.Identity.Client Pacakge&quot; /&gt;
+    &lt;figcaption&gt;Install Microsoft.Identity.Client Pacakge&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;register-your-application-to-get-client-id&quot;&gt;Register your application to get Client Id&lt;/h2&gt;
+&lt;p&gt;Make sure you register your application at the Microsoft Application Registration Portal and make a note of the Client id / Application Id.
+This Client Id will be required later when authenticating the user account.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//apps.dev.microsoft.com/portal/register-app&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/microsoft_application_registration_portal_1.png&quot; alt=&quot;Register your application&quot; /&gt;
+    &lt;figcaption&gt;Register your application&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/microsoft_application_registration_portal_2.png&quot; alt=&quot;Note the Client Id/Application Id&quot; /&gt;
+    &lt;figcaption&gt;Note the Client Id/Application Id&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;request-token&quot;&gt;1. Request Token&lt;/h2&gt;
+&lt;p&gt;The very first step is to request a token. Once authenticated, the requesting application receives a token, which further can be used to query Microsoft Graph API.
+This token is used to access certain resources, such as user’s information, send emails, read OneNote notebooks and many other protected resources.
+We use the AcquireTokenAsync method to acquire the token interactively, as it displays the user sign-in window as seen below.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;    &lt;span class=&quot;c1&quot;&gt;//Set the scope&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_Scopes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;User.Read&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PublicClientApplication&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientApplication&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PublicClientApplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ClientID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;authResult&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clientApplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AcquireTokenAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Scopes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/request_token_sign-in.jpg&quot; alt=&quot;Interactive Sign-In&quot; /&gt;
+    &lt;figcaption&gt;Interactive Sign-In&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/request_token_scopes.jpg&quot; alt=&quot;Allow permission for requested Scopes&quot; /&gt;
+    &lt;figcaption&gt;Allow permission for requested Scopes&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;receive-and-parse-token&quot;&gt;2. Receive and Parse Token&lt;/h2&gt;
+&lt;p&gt;AcquireTokenAsync method returns an object of class &lt;code&gt;AuthenticationResult&lt;/code&gt;, which is stored in the variable authResult.
+The actual token is stored in the &lt;code&gt;authResult.AccessToken&lt;/code&gt; property.
+We check if the object returned by the function call AcquireTokenAsync is not null and then parse the object and display it accordingly.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authResult&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;DisplayParseAuthResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SendGetRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AccessToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;DisplayAPIResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;send-get-request-with-token&quot;&gt;3. Send GET Request with token&lt;/h2&gt;
+&lt;p&gt;Once the token is received, we send a GET request attaching the access token as a header using the &lt;code&gt;HttpClient&lt;/code&gt; class.
+The GET request is sent to the &lt;code&gt;https://graph.microsoft.com/v1.0/me&lt;/code&gt; Graph API Endpoint.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//Set the API Endpoint&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GraphAPIEndpoint&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;https://graph.microsoft.com/v1.0/me&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;HttpClient&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HttpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DefaultRequestHeaders&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Authorization&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Bearer &amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_AccessToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Uri&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GraphAPIEndpointUri&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_GraphAPIEndpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;display-graph-api-response&quot;&gt;4. Display Graph API Response&lt;/h2&gt;
+
+&lt;p&gt;The response from the Graph API call is returned in the form of &lt;code&gt;HttpResponseMessage&lt;/code&gt; object. We then serialize the HTTP content to a string using the &lt;code&gt;ReadAsStringAsync&lt;/code&gt; method. This string is then displayed on the UI.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;HttpResponseMessage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GraphAPIEndpointUri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadAsStringAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/display_token_http_response.jpg&quot; alt=&quot;Display Token and Graphi API response&quot; /&gt;
+    &lt;figcaption&gt;Display Token and Graph API resposne&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
+&lt;p&gt;You can find the &lt;strong&gt;source code&lt;/strong&gt; at Github &lt;a href=&quot;https://github.com/keeratsingh/MSALAuthentication&quot;&gt;MSALAuthentication repo&lt;/a&gt; along with the &lt;code&gt;Visual Studio 2017&lt;/code&gt; solution.&lt;/p&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
+&lt;p&gt;This is a very brief introduction to get you started using the MSAL and calling the Graph API. You can use the token received for further calls to the Graph API, as long as the token is in the header of the GET request.
+If you have any questions or concerns, feel free to leave a comment.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 14 May 2017 13:15:00 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2017/authentication-using-msal/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2017/authentication-using-msal/</guid>
+        
+        
+        <category>Microsoft</category>
+        
+        <category>Graph,</category>
+        
+        <category>UWP</category>
+        
+      </item>
     
       <item>
         <title>Adding appointments to Windows 10 Calendar using C#</title>
