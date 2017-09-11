@@ -5,9 +5,122 @@
     <description>A development blog with experiences and helpful tutorials for the latest and greatest technologies.</description>
     <link>https://keeratsingh.github.io/</link>
     <atom:link href="https://keeratsingh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 28 May 2017 22:18:11 -0700</pubDate>
-    <lastBuildDate>Sun, 28 May 2017 22:18:11 -0700</lastBuildDate>
+    <pubDate>Sun, 10 Sep 2017 18:40:47 -0700</pubDate>
+    <lastBuildDate>Sun, 10 Sep 2017 18:40:47 -0700</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>Using Microsoft Azure Entity Linking Cognitive API</title>
+        <description>&lt;h2 id=&quot;microsoft-cognitive-services&quot;&gt;Microsoft Cognitive Services&lt;/h2&gt;
+&lt;p&gt;Microsoft Cognitive Services, formerly known as &lt;code&gt;Project Oxford&lt;/code&gt; are a set of APIs, SDKs and services available to developers to make their applications more intelligent, engaging and discoverable. These services let you build apps with powerful algorithms to see, hear, speak, understand and interpret using natural methods of communication, with just a few lines of code. Microsoft Cognitive Services enable the developers to easily add intelligent features such as:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Emotion and video detection&lt;/li&gt;
+  &lt;li&gt;Facial, speech and vision recognition&lt;/li&gt;
+  &lt;li&gt;Speech and language understanding&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;microsoft-entity-linking-intelligence-service-api&quot;&gt;Microsoft Entity Linking Intelligence Service API&lt;/h2&gt;
+&lt;p&gt;This API is part of the broader set of APIs provided as part of &lt;code&gt;Microsoft Cognitive Services&lt;/code&gt; APIs. This API is designed to help developers with tasks related to &lt;code&gt;Entity Linking&lt;/code&gt;. One of the challenges while working with Natural Language Processing is recognizing the context of a particular word within a paragraph/sentence, a word might be used differently in different contexts. For example, in the case where “times” is a named entity, it still may refer to two separately distinguishable entities, such as “The New York Times” or “Times Square”. Given a specific paragraph the &lt;code&gt;Entity Linking Intelligence Service&lt;/code&gt; will recognize and identify each separate entity based on its context.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-microsoftprojectoxfordentitylinking-package&quot;&gt;Install Microsoft.ProjectOxford.EntityLinking Package&lt;/h2&gt;
+&lt;p&gt;Make sure you have added the &lt;code&gt;Microsoft.ProjectOxford.EntityLinking&lt;/code&gt; NuGet Package to your project.
+To add the pacakge Go to &lt;code&gt;Tools&lt;/code&gt; &amp;gt; &lt;code&gt;Nuget Package Manager&lt;/code&gt; &amp;gt; &lt;code&gt;Package Manager Console&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;Install-Package Microsoft.ProjectOxford.EntityLinking&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-05-14-authentication-using-msal/PM_Console.jpg&quot; alt=&quot;Install Microsoft.Identity.Client Pacakge&quot; /&gt;
+    &lt;figcaption&gt;Install Microsoft.ProjectOxford.EntityLinking Pacakge&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;get-an-api-subscription-key&quot;&gt;Get an API Subscription Key&lt;/h2&gt;
+&lt;p&gt;A subscription to Entity Linking Intelligence Service API is required to use the service. A sign up may be required if don’t already have an account.
+To get a subscription key you can visit the link below and follow the steps below.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Goto &lt;a href=&quot;https://azure.microsoft.com/en-us/try/cognitive-services/?api=entity-linking-intelligence-service&quot;&gt;Try Cognitive Services&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Click &lt;code&gt;Get API Key&lt;/code&gt;, Read and Agree to Microsoft Cognitive Services Terms.&lt;/li&gt;
+  &lt;li&gt;Sign-in using your preferred account.&lt;/li&gt;
+  &lt;li&gt;Once Signed-in you will be redirected to a web page as seen below in the screenshot below.&lt;/li&gt;
+  &lt;li&gt;Save this information and either of the keys can be used to call the API Service.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-08-26-using-microsoft-azure-entity-linking-cognitive-api/API_Subcription_Key.jpg&quot; alt=&quot;API Subscription Key&quot; /&gt;
+    &lt;figcaption&gt;API Subscription Key&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;creating-an-entitylinkingserviceclient-object&quot;&gt;Creating an EntityLinkingServiceClient object&lt;/h2&gt;
+&lt;p&gt;The very first step is to create an object of the class &lt;code&gt;EntityLinkingServiceClient&lt;/code&gt;, there are various overloaded constructors that can be used to instantiate the object, however, we will use the version that takes only one argument as input, i.e. an API &lt;code&gt;Subscription Key&lt;/code&gt;.
+This is the same subscription key that was generated in Step 1.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EntityLinkingServiceClient&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientApplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;clientApplication&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EntityLinkingServiceClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Enter your Subscription Key here&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;calling-the-microsoft-azure-entity-linking-cognitive-api&quot;&gt;Calling the Microsoft Azure Entity Linking Cognitive API&lt;/h2&gt;
+&lt;p&gt;Once we have the service client initialized, the next step is to call the &lt;code&gt;LinkAsync&lt;/code&gt; method. Along with the text, you want to identify entities from, you can also specify a specific word within that text that you want to be entity linked. However, if you specify a specific word, you will also have to specify the location of the specific word in the given text.
+This method takes the following arguments:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EntityLink&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LinkAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;selection&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Text that is supplied to the service to separate the entities from.&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;selection&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Specific word within the text you want to be entity linked&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// position of the specific word offset by the number of character within the given text.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;In a case where only one argument, the input text is specified, then the service tries to recognize and identify all the entities as seen in the code below.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linkResponse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clientApplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LinkAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txtRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;display-entity-linking-api-response&quot;&gt;Display Entity Linking API Response&lt;/h2&gt;
+&lt;p&gt;The response from the method &lt;code&gt;LinkAsync&lt;/code&gt; call is returned in the form of an array of objects of the type &lt;code&gt;EntityLink&lt;/code&gt;. 
+The objects in the array are traversed one by one, serialized and formatted into JSON format.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entity&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linkResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Serialize and format the response into JSON.&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;resultJSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JsonConvert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SerializeObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;We also use a &lt;code&gt;LINQ&lt;/code&gt; query to retrieve the WikipediaID from each Entity, these IDs are then displayed accordingly.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Retrieve Wikipedia IDs for all the Entities.&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultEnitites&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linkResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WikipediaID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;postImg&quot;&gt;
+&lt;figure&gt;
+    &lt;img class=&quot;postImg&quot; src=&quot;/images/posts/2017-08-26-using-microsoft-azure-entity-linking-cognitive-api/display_entity_api_response.jpg&quot; alt=&quot;Display Entity Linking API response&quot; /&gt;
+    &lt;figcaption&gt;Display Entity Linking API response&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;source-code&quot;&gt;Source Code&lt;/h2&gt;
+&lt;p&gt;You can find the &lt;strong&gt;source code&lt;/strong&gt; at Github &lt;a href=&quot;https://github.com/keeratsingh/AzureEntityLinkingCognitiveApi&quot;&gt;AzureEntityLinkingCognitiveApi&lt;/a&gt; repository as &lt;code&gt;Visual Studio 2017&lt;/code&gt; solution.&lt;/p&gt;
+
+&lt;h2 id=&quot;final-note&quot;&gt;Final note&lt;/h2&gt;
+&lt;p&gt;This is a very brief introduction to get you started using the Microsoft Azure Entity Linking Cognitive API. The same method can be improvised upon and used to connect to other Cognitive APIs. If you have any questions or concerns, feel free to leave a comment.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 26 Aug 2017 09:15:00 -0700</pubDate>
+        <link>https://keeratsingh.github.io/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/</link>
+        <guid isPermaLink="true">https://keeratsingh.github.io/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/</guid>
+        
+        
+        <category>Microsoft</category>
+        
+        <category>Azure,</category>
+        
+        <category>Cognitive</category>
+        
+        <category>Services</category>
+        
+      </item>
     
       <item>
         <title>Authenticating Microsoft Account using Microsoft Authentication Library (MSAL)</title>

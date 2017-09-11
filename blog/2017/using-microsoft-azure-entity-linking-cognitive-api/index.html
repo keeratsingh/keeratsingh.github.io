@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msvalidate.01" content="16CD5DE1A9C516718DC8CB2ACA855B56" />
+    
+
+    <title>Using Microsoft Azure Entity Linking Cognitive API</title>
+    <meta name="description" content="Using Microsoft Azure Entity Linking Cognitive API">
+    <meta name="keywords" content="Microsoft Cognitive Services, Microsoft Azure, Entity Linking">
+    <meta name="language" content="English">
+    
+    <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="https://keeratsingh.github.io/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+  </head>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8478119733539957",
+    enable_page_level_ads: true
+  });
+</script>
+  <body>
+    <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TJPR3V"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TJPR3V');</script>
+<!-- End Google Tag Manager -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82093765-1', 'auto');
+  ga('send', 'pageview');
+  
+</script>
+
+
+    <main>
+      <header class="site-header">
+  <div class="container">
+    <h1><a href="/">Keerat<span>Singh</span></a></h1>
+
+    <button type="button" class="sliding-panel-button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="navbar sliding-panel-content">
+      <ul>
+        
+          <li><a href="/about" title="About">About</a></li>
+        
+          <li><a href="/blog" title="Blog">Blog</a></li>
+        
+        <li><a href="/feed.xml" target="_blank"><i class="icon icon-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="sliding-panel-fade-screen"></div>
+
+
+      <div class="container">
+        <article role="article" class="post">
+
+  <div class="card">
+    <header class="post-header">
+      <h1 class="post-title">Using Microsoft Azure Entity Linking Cognitive API</h1>
+      <p class="post-meta"> • <a href="http://linkedin.com/in/keerat-singh-14449660">Keerat Singh</a>  • Aug 26, 2017</p>
+    </header>
+
+    <div class="post-content">
+      <h2 id="microsoft-cognitive-services">Microsoft Cognitive Services</h2>
+<p>Microsoft Cognitive Services, formerly known as <code>Project Oxford</code> are a set of APIs, SDKs and services available to developers to make their applications more intelligent, engaging and discoverable. These services let you build apps with powerful algorithms to see, hear, speak, understand and interpret using natural methods of communication, with just a few lines of code. Microsoft Cognitive Services enable the developers to easily add intelligent features such as:</p>
+
+<ul>
+  <li>Emotion and video detection</li>
+  <li>Facial, speech and vision recognition</li>
+  <li>Speech and language understanding</li>
+</ul>
+
+<h2 id="microsoft-entity-linking-intelligence-service-api">Microsoft Entity Linking Intelligence Service API</h2>
+<p>This API is part of the broader set of APIs provided as part of <code>Microsoft Cognitive Services</code> APIs. This API is designed to help developers with tasks related to <code>Entity Linking</code>. One of the challenges while working with Natural Language Processing is recognizing the context of a particular word within a paragraph/sentence, a word might be used differently in different contexts. For example, in the case where “times” is a named entity, it still may refer to two separately distinguishable entities, such as “The New York Times” or “Times Square”. Given a specific paragraph the <code>Entity Linking Intelligence Service</code> will recognize and identify each separate entity based on its context.</p>
+
+<h2 id="install-microsoftprojectoxfordentitylinking-package">Install Microsoft.ProjectOxford.EntityLinking Package</h2>
+<p>Make sure you have added the <code>Microsoft.ProjectOxford.EntityLinking</code> NuGet Package to your project.
+To add the pacakge Go to <code>Tools</code> &gt; <code>Nuget Package Manager</code> &gt; <code>Package Manager Console</code></p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">Install-Package Microsoft.ProjectOxford.EntityLinking</code></pre></figure>
+
+<div class="postImg">
+<figure>
+    <img class="postImg" src="/images/posts/2017-05-14-authentication-using-msal/PM_Console.jpg" alt="Install Microsoft.Identity.Client Pacakge" />
+    <figcaption>Install Microsoft.ProjectOxford.EntityLinking Pacakge</figcaption>
+</figure>
+</div>
+
+<p><br /></p>
+
+<h2 id="get-an-api-subscription-key">Get an API Subscription Key</h2>
+<p>A subscription to Entity Linking Intelligence Service API is required to use the service. A sign up may be required if don’t already have an account.
+To get a subscription key you can visit the link below and follow the steps below.</p>
+
+<ul>
+  <li>Goto <a href="https://azure.microsoft.com/en-us/try/cognitive-services/?api=entity-linking-intelligence-service">Try Cognitive Services</a></li>
+  <li>Click <code>Get API Key</code>, Read and Agree to Microsoft Cognitive Services Terms.</li>
+  <li>Sign-in using your preferred account.</li>
+  <li>Once Signed-in you will be redirected to a web page as seen below in the screenshot below.</li>
+  <li>Save this information and either of the keys can be used to call the API Service.</li>
+</ul>
+
+<div class="postImg">
+<figure>
+    <img class="postImg" src="/images/posts/2017-08-26-using-microsoft-azure-entity-linking-cognitive-api/API_Subcription_Key.jpg" alt="API Subscription Key" />
+    <figcaption>API Subscription Key</figcaption>
+</figure>
+</div>
+
+<h2 id="creating-an-entitylinkingserviceclient-object">Creating an EntityLinkingServiceClient object</h2>
+<p>The very first step is to create an object of the class <code>EntityLinkingServiceClient</code>, there are various overloaded constructors that can be used to instantiate the object, however, we will use the version that takes only one argument as input, i.e. an API <code>Subscription Key</code>.
+This is the same subscription key that was generated in Step 1.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="n">EntityLinkingServiceClient</span> <span class="n">clientApplication</span><span class="p">;</span>
+<span class="n">clientApplication</span> <span class="p">=</span> <span class="k">new</span> <span class="n">EntityLinkingServiceClient</span><span class="p">(</span><span class="s">&quot;Enter your Subscription Key here&quot;</span><span class="p">);</span></code></pre></figure>
+
+<h2 id="calling-the-microsoft-azure-entity-linking-cognitive-api">Calling the Microsoft Azure Entity Linking Cognitive API</h2>
+<p>Once we have the service client initialized, the next step is to call the <code>LinkAsync</code> method. Along with the text, you want to identify entities from, you can also specify a specific word within that text that you want to be entity linked. However, if you specify a specific word, you will also have to specify the location of the specific word in the given text.
+This method takes the following arguments:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">EntityLink</span><span class="p">[]&gt;</span> <span class="n">LinkAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">,</span> <span class="kt">string</span> <span class="n">selection</span> <span class="p">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span> <span class="p">=</span> <span class="m">0</span><span class="p">);</span>
+
+<span class="p">-</span> <span class="kt">string</span> <span class="n">text</span> <span class="c1">// Text that is supplied to the service to separate the entities from.</span>
+<span class="p">-</span> <span class="kt">string</span> <span class="n">selection</span> <span class="c1">// Specific word within the text you want to be entity linked</span>
+<span class="p">-</span> <span class="kt">int</span> <span class="n">offset</span> <span class="c1">// position of the specific word offset by the number of character within the given text.</span></code></pre></figure>
+
+<p>In a case where only one argument, the input text is specified, then the service tries to recognize and identify all the entities as seen in the code below.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="kt">var</span> <span class="n">linkResponse</span> <span class="p">=</span> <span class="k">await</span> <span class="n">App</span><span class="p">.</span><span class="n">clientApplication</span><span class="p">.</span><span class="n">LinkAsync</span><span class="p">(</span><span class="n">txtRequest</span><span class="p">.</span><span class="n">Text</span><span class="p">);</span></code></pre></figure>
+
+<h2 id="display-entity-linking-api-response">Display Entity Linking API Response</h2>
+<p>The response from the method <code>LinkAsync</code> call is returned in the form of an array of objects of the type <code>EntityLink</code>. 
+The objects in the array are traversed one by one, serialized and formatted into JSON format.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">entity</span> <span class="k">in</span> <span class="n">linkResponse</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Serialize and format the response into JSON.</span>
+    <span class="n">resultJSON</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">JsonConvert</span><span class="p">.</span><span class="n">SerializeObject</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span> <span class="p">+</span> <span class="s">&quot;\n&quot;</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>We also use a <code>LINQ</code> query to retrieve the WikipediaID from each Entity, these IDs are then displayed accordingly.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Retrieve Wikipedia IDs for all the Entities.</span>
+<span class="kt">var</span> <span class="n">resultEnitites</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="n">linkResponse</span><span class="p">.</span><span class="n">Select</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">WikipediaID</span><span class="p">).</span><span class="n">ToList</span><span class="p">());</span></code></pre></figure>
+
+<div class="postImg">
+<figure>
+    <img class="postImg" src="/images/posts/2017-08-26-using-microsoft-azure-entity-linking-cognitive-api/display_entity_api_response.jpg" alt="Display Entity Linking API response" />
+    <figcaption>Display Entity Linking API response</figcaption>
+</figure>
+</div>
+
+<h2 id="source-code">Source Code</h2>
+<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/AzureEntityLinkingCognitiveApi">AzureEntityLinkingCognitiveApi</a> repository as <code>Visual Studio 2017</code> solution.</p>
+
+<h2 id="final-note">Final note</h2>
+<p>This is a very brief introduction to get you started using the Microsoft Azure Entity Linking Cognitive API. The same method can be improvised upon and used to connect to other Cognitive APIs. If you have any questions or concerns, feel free to leave a comment.</p>
+
+
+    </div>
+
+    
+<hr>
+
+<aside id="comments" class="disqus">
+  <div class="container">
+    <h3><i class="icon icon-comments-o"></i> Comments</h3>
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function() {
+        this.page.url = 'https://keeratsingh.github.io/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/';
+        this.page.identifier = '/blog/2017/using-microsoft-azure-entity-linking-cognitive-api';
+      };
+      (function() {
+        var d = document,
+        s = d.createElement('script');
+        s.src = '//keeratsingh.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+  <script id="dsq-count-scr" src="//https-keeratsingh-github-io.disqus.com/count.js" async></script>
+</aside>
+
+  </div>
+
+</article>
+
+      </div>
+
+      <footer class="site-footer">
+  <div class="container">
+    <ul class="social">
+  <li><a href="https://github.com/keeratsingh" target="_blank"><i class="icon myks-icon-github "></i></a></li>
+  
+  <li><a href="https://twitter.com/iamkeerat" target="_blank"><i class="icon myks-icon-twitter"></i></a></li>
+  <li><a href="http://linkedin.com/in/keerat-singh-14449660" target="_blank"><i class="icon myks-icon-linkedin"></i></a></li>
+  
+</ul>
+    <p class="txt-base-color">
+      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+    </p>
+  </div>
+</footer>
+
+
+      <a href="https://github.com/keeratsingh" target="_blank" class="github-corner"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#337ab7; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+      <script>
+      $(document).ready(function() {
+        $('.sliding-panel-button,.sliding-panel-fade-screen,.sliding-panel-close').on('click touchstart',function (e) {
+          $('.sliding-panel-content,.sliding-panel-fade-screen').toggleClass('is-visible');
+          e.preventDefault();
+        });
+      });
+      </script>
+    </main>
+  </body>
+</html>
