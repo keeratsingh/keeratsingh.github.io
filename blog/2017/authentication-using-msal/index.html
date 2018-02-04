@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2017/authentication-using-msal/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2017/authentication-using-msal/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -90,19 +90,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 An exciting addition to this is the new and updated Microsoft Authentication Library (MSAL), which is conveniently available across .Net, iOS, Android, and JavaScript.
 This consolidated library will be used to authenticate both Microsoft personal and Azure AD School and work accounts.</p>
 
-<p>In order to access Microsoft Graph functionality, the first step is to authenticate and get the <code>access token</code> using <code>MSAL</code>, which will be discuss in this tutorial.</p>
+<p>In order to access Microsoft Graph functionality, the first step is to authenticate and get the <code class="highlighter-rouge">access token</code> using <code class="highlighter-rouge">MSAL</code>, which will be discuss in this tutorial.</p>
 
 <h1 id="pre-requisites">Pre-Requisites</h1>
 
 <h2 id="install-microsoftidentityclient-package">Install Microsoft.Identity.Client Package</h2>
-<p>Make sure you have added the <code>Microsoft.Identity.Client</code> Nuget Package to your project.
-To add the pacakge Go to <code>Tools</code> &gt; <code>Nuget Package Manager</code> &gt; <code>Package Manager Console</code></p>
+<p>Make sure you have added the <code class="highlighter-rouge">Microsoft.Identity.Client</code> Nuget Package to your project.
+To add the pacakge Go to <code class="highlighter-rouge">Tools</code> &gt; <code class="highlighter-rouge">Nuget Package Manager</code> &gt; <code class="highlighter-rouge">Package Manager Console</code></p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">Install</span><span class="p">-</span><span class="n">Package</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Client</span> <span class="p">-</span><span class="n">Pre</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
-    <img class="postImg" src="/images/posts/2017-05-14-authentication-using-msal/PM_Console.jpg" alt="Install Microsoft.Identity.Client Pacakge" />
+    <img class="postImg" src="/images/posts/2017-05-14-authentication-using-msal/PM_Console.jpg" alt="Install Microsoft.Identity.Client Package" />
     <figcaption>Install Microsoft.Identity.Client Pacakge</figcaption>
 </figure>
 </div>
@@ -127,15 +127,15 @@ This Client Id will be required later when authenticating the user account.</p>
 </figure>
 </div>
 
-<h2 id="request-token">1. Request Token</h2>
+<h2 id="1-request-token">1. Request Token</h2>
 <p>The very first step is to request a token. Once authenticated, the requesting application receives a token, which further can be used to query Microsoft Graph API.
 This token is used to access certain resources, such as user’s information, send emails, read OneNote notebooks and many other protected resources.
 We use the AcquireTokenAsync method to acquire the token interactively, as it displays the user sign-in window as seen below.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp">    <span class="c1">//Set the scope</span>
-    <span class="k">private</span> <span class="kt">string</span><span class="p">[]</span> <span class="n">_Scopes</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="s">&quot;User.Read&quot;</span> <span class="p">};</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="n">PublicClientApplication</span> <span class="n">clientApplication</span> <span class="p">=</span> <span class="k">new</span> <span class="n">PublicClientApplication</span><span class="p">(</span><span class="n">_ClientID</span><span class="p">);</span>
-    <span class="n">authResult</span> <span class="p">=</span> <span class="k">await</span> <span class="n">App</span><span class="p">.</span><span class="n">clientApplication</span><span class="p">.</span><span class="n">AcquireTokenAsync</span><span class="p">(</span><span class="n">_Scopes</span><span class="p">);</span></code></pre></figure>
+    <span class="k">private</span> <span class="kt">string</span><span class="p">[]</span> <span class="n">_Scopes</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"User.Read"</span> <span class="p">};</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="n">PublicClientApplication</span> <span class="n">clientApplication</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PublicClientApplication</span><span class="p">(</span><span class="n">_ClientID</span><span class="p">);</span>
+    <span class="n">authResult</span> <span class="p">=</span> <span class="k">await</span> <span class="n">App</span><span class="p">.</span><span class="n">clientApplication</span><span class="p">.</span><span class="nf">AcquireTokenAsync</span><span class="p">(</span><span class="n">_Scopes</span><span class="p">);</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -151,35 +151,35 @@ We use the AcquireTokenAsync method to acquire the token interactively, as it di
 </figure>
 </div>
 
-<h2 id="receive-and-parse-token">2. Receive and Parse Token</h2>
-<p>AcquireTokenAsync method returns an object of class <code>AuthenticationResult</code>, which is stored in the variable authResult.
-The actual token is stored in the <code>authResult.AccessToken</code> property.
+<h2 id="2-receive-and-parse-token">2. Receive and Parse Token</h2>
+<p>AcquireTokenAsync method returns an object of class <code class="highlighter-rouge">AuthenticationResult</code>, which is stored in the variable authResult.
+The actual token is stored in the <code class="highlighter-rouge">authResult.AccessToken</code> property.
 We check if the object returned by the function call AcquireTokenAsync is not null and then parse the object and display it accordingly.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">if</span> <span class="p">(</span><span class="n">authResult</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">DisplayParseAuthResult</span><span class="p">(</span><span class="n">authResult</span><span class="p">);</span>
-    <span class="kt">string</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">SendGetRequest</span><span class="p">(</span><span class="n">authResult</span><span class="p">.</span><span class="n">AccessToken</span><span class="p">);</span>
-    <span class="n">DisplayAPIResponse</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="nf">DisplayParseAuthResult</span><span class="p">(</span><span class="n">authResult</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="nf">SendGetRequest</span><span class="p">(</span><span class="n">authResult</span><span class="p">.</span><span class="n">AccessToken</span><span class="p">);</span>
+    <span class="nf">DisplayAPIResponse</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<h2 id="send-get-request-with-token">3. Send GET Request with token</h2>
-<p>Once the token is received, we send a GET request attaching the access token as a header using the <code>HttpClient</code> class.
-The GET request is sent to the <code>https://graph.microsoft.com/v1.0/me</code> Graph API Endpoint.</p>
+<h2 id="3-send-get-request-with-token">3. Send GET Request with token</h2>
+<p>Once the token is received, we send a GET request attaching the access token as a header using the <code class="highlighter-rouge">HttpClient</code> class.
+The GET request is sent to the <code class="highlighter-rouge">https://graph.microsoft.com/v1.0/me</code> Graph API Endpoint.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">//Set the API Endpoint</span>
-<span class="kt">string</span> <span class="n">_GraphAPIEndpoint</span> <span class="p">=</span> <span class="s">&quot;https://graph.microsoft.com/v1.0/me&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">_GraphAPIEndpoint</span> <span class="p">=</span> <span class="s">"https://graph.microsoft.com/v1.0/me"</span><span class="p">;</span>
 
-<span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HttpClient</span><span class="p">();</span>
-<span class="n">httpClient</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span> <span class="s">&quot;Bearer &quot;</span> <span class="p">+</span> <span class="n">_AccessToken</span><span class="p">);</span>
-<span class="n">Uri</span> <span class="n">GraphAPIEndpointUri</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Uri</span><span class="p">(</span><span class="n">_GraphAPIEndpoint</span><span class="p">);</span></code></pre></figure>
+<span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
+<span class="n">httpClient</span><span class="p">.</span><span class="n">DefaultRequestHeaders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer "</span> <span class="p">+</span> <span class="n">_AccessToken</span><span class="p">);</span>
+<span class="n">Uri</span> <span class="n">GraphAPIEndpointUri</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="n">_GraphAPIEndpoint</span><span class="p">);</span></code></pre></figure>
 
-<h2 id="display-graph-api-response">4. Display Graph API Response</h2>
+<h2 id="4-display-graph-api-response">4. Display Graph API Response</h2>
 
-<p>The response from the Graph API call is returned in the form of <code>HttpResponseMessage</code> object. We then serialize the HTTP content to a string using the <code>ReadAsStringAsync</code> method. This string is then displayed on the UI.</p>
+<p>The response from the Graph API call is returned in the form of <code class="highlighter-rouge">HttpResponseMessage</code> object. We then serialize the HTTP content to a string using the <code class="highlighter-rouge">ReadAsStringAsync</code> method. This string is then displayed on the UI.</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">HttpResponseMessage</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">GetAsync</span><span class="p">(</span><span class="n">GraphAPIEndpointUri</span><span class="p">);</span>
-<span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="n">ReadAsStringAsync</span><span class="p">();</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">HttpResponseMessage</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">httpClient</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">GraphAPIEndpointUri</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="nf">ReadAsStringAsync</span><span class="p">();</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -189,7 +189,7 @@ The GET request is sent to the <code>https://graph.microsoft.com/v1.0/me</code> 
 </div>
 
 <h2 id="source-code">Source Code</h2>
-<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/MSALAuthentication">MSALAuthentication repo</a> along with the <code>Visual Studio 2017</code> solution.</p>
+<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/MSALAuthentication">MSALAuthentication repo</a> along with the <code class="highlighter-rouge">Visual Studio 2017</code> solution.</p>
 
 <h2 id="final-note">Final note</h2>
 <p>This is a very brief introduction to get you started using the MSAL and calling the Graph API. You can use the token received for further calls to the Graph API, as long as the token is in the header of the GET request.
@@ -207,7 +207,7 @@ If you have any questions or concerns, feel free to leave a comment.</p>
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2017/authentication-using-msal/';
+        this.page.url = 'http://localhost:4000/blog/2017/authentication-using-msal/';
         this.page.identifier = '/blog/2017/authentication-using-msal';
       };
       (function() {
@@ -239,7 +239,7 @@ If you have any questions or concerns, feel free to leave a comment.</p>
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>

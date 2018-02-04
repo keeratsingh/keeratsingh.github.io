@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -86,7 +86,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <div class="post-content">
       <h2 id="microsoft-cognitive-services">Microsoft Cognitive Services</h2>
-<p>Microsoft Cognitive Services, formerly known as <code>Project Oxford</code> are a set of APIs, SDKs and services available to developers to make their applications more intelligent, engaging and discoverable. These services let you build apps with powerful algorithms to see, hear, speak, understand and interpret using natural methods of communication, with just a few lines of code. Microsoft Cognitive Services enable the developers to easily add intelligent features such as:</p>
+<p>Microsoft Cognitive Services, formerly known as <code class="highlighter-rouge">Project Oxford</code> are a set of APIs, SDKs and services available to developers to make their applications more intelligent, engaging and discoverable. These services let you build apps with powerful algorithms to see, hear, speak, understand and interpret using natural methods of communication, with just a few lines of code. Microsoft Cognitive Services enable the developers to easily add intelligent features such as:</p>
 
 <ul>
   <li>Emotion and video detection</li>
@@ -95,11 +95,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </ul>
 
 <h2 id="microsoft-entity-linking-intelligence-service-api">Microsoft Entity Linking Intelligence Service API</h2>
-<p>This API is part of the broader set of APIs provided as part of <code>Microsoft Cognitive Services</code> APIs. This API is designed to help developers with tasks related to <code>Entity Linking</code>. One of the challenges while working with Natural Language Processing is recognizing the context of a particular word within a paragraph/sentence, a word might be used differently in different contexts. For example, in the case where “times” is a named entity, it still may refer to two separately distinguishable entities, such as “The New York Times” or “Times Square”. Given a specific paragraph the <code>Entity Linking Intelligence Service</code> will recognize and identify each separate entity based on its context.</p>
+<p>This API is part of the broader set of APIs provided as part of <code class="highlighter-rouge">Microsoft Cognitive Services</code> APIs. This API is designed to help developers with tasks related to <code class="highlighter-rouge">Entity Linking</code>. One of the challenges while working with Natural Language Processing is recognizing the context of a particular word within a paragraph/sentence, a word might be used differently in different contexts. For example, in the case where “times” is a named entity, it still may refer to two separately distinguishable entities, such as “The New York Times” or “Times Square”. Given a specific paragraph the <code class="highlighter-rouge">Entity Linking Intelligence Service</code> will recognize and identify each separate entity based on its context.</p>
 
 <h2 id="install-microsoftprojectoxfordentitylinking-package">Install Microsoft.ProjectOxford.EntityLinking Package</h2>
-<p>Make sure you have added the <code>Microsoft.ProjectOxford.EntityLinking</code> NuGet Package to your project.
-To add the pacakge Go to <code>Tools</code> &gt; <code>Nuget Package Manager</code> &gt; <code>Package Manager Console</code></p>
+<p>Make sure you have added the <code class="highlighter-rouge">Microsoft.ProjectOxford.EntityLinking</code> NuGet Package to your project.
+To add the pacakge Go to <code class="highlighter-rouge">Tools</code> &gt; <code class="highlighter-rouge">Nuget Package Manager</code> &gt; <code class="highlighter-rouge">Package Manager Console</code></p>
 
 <figure class="highlight"><pre><code class="language-html" data-lang="html">Install-Package Microsoft.ProjectOxford.EntityLinking</code></pre></figure>
 
@@ -118,7 +118,7 @@ To get a subscription key you can visit the link below and follow the steps belo
 
 <ul>
   <li>Goto <a href="https://azure.microsoft.com/en-us/try/cognitive-services/?api=entity-linking-intelligence-service">Try Cognitive Services</a></li>
-  <li>Click <code>Get API Key</code>, Read and Agree to Microsoft Cognitive Services Terms.</li>
+  <li>Click <code class="highlighter-rouge">Get API Key</code>, Read and Agree to Microsoft Cognitive Services Terms.</li>
   <li>Sign-in using your preferred account.</li>
   <li>Once Signed-in you will be redirected to a web page as seen below in the screenshot below.</li>
   <li>Save this information and either of the keys can be used to call the API Service.</li>
@@ -132,17 +132,17 @@ To get a subscription key you can visit the link below and follow the steps belo
 </div>
 
 <h2 id="creating-an-entitylinkingserviceclient-object">Creating an EntityLinkingServiceClient object</h2>
-<p>The very first step is to create an object of the class <code>EntityLinkingServiceClient</code>, there are various overloaded constructors that can be used to instantiate the object, however, we will use the version that takes only one argument as input, i.e. an API <code>Subscription Key</code>.
+<p>The very first step is to create an object of the class <code class="highlighter-rouge">EntityLinkingServiceClient</code>, there are various overloaded constructors that can be used to instantiate the object, however, we will use the version that takes only one argument as input, i.e. an API <code class="highlighter-rouge">Subscription Key</code>.
 This is the same subscription key that was generated in Step 1.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="n">EntityLinkingServiceClient</span> <span class="n">clientApplication</span><span class="p">;</span>
-<span class="n">clientApplication</span> <span class="p">=</span> <span class="k">new</span> <span class="n">EntityLinkingServiceClient</span><span class="p">(</span><span class="s">&quot;Enter your Subscription Key here&quot;</span><span class="p">);</span></code></pre></figure>
+<span class="n">clientApplication</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">EntityLinkingServiceClient</span><span class="p">(</span><span class="s">"Enter your Subscription Key here"</span><span class="p">);</span></code></pre></figure>
 
 <h2 id="calling-the-microsoft-azure-entity-linking-cognitive-api">Calling the Microsoft Azure Entity Linking Cognitive API</h2>
-<p>Once we have the service client initialized, the next step is to call the <code>LinkAsync</code> method. Along with the text, you want to identify entities from, you can also specify a specific word within that text that you want to be entity linked. However, if you specify a specific word, you will also have to specify the location of the specific word in the given text.
+<p>Once we have the service client initialized, the next step is to call the <code class="highlighter-rouge">LinkAsync</code> method. Along with the text, you want to identify entities from, you can also specify a specific word within that text that you want to be entity linked. However, if you specify a specific word, you will also have to specify the location of the specific word in the given text.
 This method takes the following arguments:</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">EntityLink</span><span class="p">[]&gt;</span> <span class="n">LinkAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">,</span> <span class="kt">string</span> <span class="n">selection</span> <span class="p">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span> <span class="p">=</span> <span class="m">0</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">EntityLink</span><span class="p">[</span><span class="k">]&gt;</span> <span class="nf">LinkAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">text</span><span class="p">,</span> <span class="kt">string</span> <span class="n">selection</span> <span class="p">=</span> <span class="s">""</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span> <span class="p">=</span> <span class="m">0</span><span class="p">);</span>
 
 <span class="p">-</span> <span class="kt">string</span> <span class="n">text</span> <span class="c1">// Text that is supplied to the service to separate the entities from.</span>
 <span class="p">-</span> <span class="kt">string</span> <span class="n">selection</span> <span class="c1">// Specific word within the text you want to be entity linked</span>
@@ -150,22 +150,22 @@ This method takes the following arguments:</p>
 
 <p>In a case where only one argument, the input text is specified, then the service tries to recognize and identify all the entities as seen in the code below.</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="kt">var</span> <span class="n">linkResponse</span> <span class="p">=</span> <span class="k">await</span> <span class="n">App</span><span class="p">.</span><span class="n">clientApplication</span><span class="p">.</span><span class="n">LinkAsync</span><span class="p">(</span><span class="n">txtRequest</span><span class="p">.</span><span class="n">Text</span><span class="p">);</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="kt">var</span> <span class="n">linkResponse</span> <span class="p">=</span> <span class="k">await</span> <span class="n">App</span><span class="p">.</span><span class="n">clientApplication</span><span class="p">.</span><span class="nf">LinkAsync</span><span class="p">(</span><span class="n">txtRequest</span><span class="p">.</span><span class="n">Text</span><span class="p">);</span></code></pre></figure>
 
 <h2 id="display-entity-linking-api-response">Display Entity Linking API Response</h2>
-<p>The response from the method <code>LinkAsync</code> call is returned in the form of an array of objects of the type <code>EntityLink</code>. 
+<p>The response from the method <code class="highlighter-rouge">LinkAsync</code> call is returned in the form of an array of objects of the type <code class="highlighter-rouge">EntityLink</code>. 
 The objects in the array are traversed one by one, serialized and formatted into JSON format.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">entity</span> <span class="k">in</span> <span class="n">linkResponse</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Serialize and format the response into JSON.</span>
-    <span class="n">resultJSON</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">JsonConvert</span><span class="p">.</span><span class="n">SerializeObject</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span> <span class="p">+</span> <span class="s">&quot;\n&quot;</span><span class="p">);</span>
+    <span class="n">resultJSON</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span> <span class="p">+</span> <span class="s">"\n"</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>We also use a <code>LINQ</code> query to retrieve the WikipediaID from each Entity, these IDs are then displayed accordingly.</p>
+<p>We also use a <code class="highlighter-rouge">LINQ</code> query to retrieve the WikipediaID from each Entity, these IDs are then displayed accordingly.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Retrieve Wikipedia IDs for all the Entities.</span>
-<span class="kt">var</span> <span class="n">resultEnitites</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="n">linkResponse</span><span class="p">.</span><span class="n">Select</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">WikipediaID</span><span class="p">).</span><span class="n">ToList</span><span class="p">());</span></code></pre></figure>
+<span class="kt">var</span> <span class="n">resultEnitites</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">"\n"</span><span class="p">,</span> <span class="n">linkResponse</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">WikipediaID</span><span class="p">).</span><span class="nf">ToList</span><span class="p">());</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -175,7 +175,7 @@ The objects in the array are traversed one by one, serialized and formatted into
 </div>
 
 <h2 id="source-code">Source Code</h2>
-<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/AzureEntityLinkingCognitiveApi">AzureEntityLinkingCognitiveApi</a> repository as <code>Visual Studio 2017</code> solution.</p>
+<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/AzureEntityLinkingCognitiveApi">AzureEntityLinkingCognitiveApi</a> repository as <code class="highlighter-rouge">Visual Studio 2017</code> solution.</p>
 
 <h2 id="final-note">Final note</h2>
 <p>This is a very brief introduction to get you started using the Microsoft Azure Entity Linking Cognitive API. The same method can be improvised upon and used to connect to other Cognitive APIs. If you have any questions or concerns, feel free to leave a comment.</p>
@@ -192,7 +192,7 @@ The objects in the array are traversed one by one, serialized and formatted into
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/';
+        this.page.url = 'http://localhost:4000/blog/2017/using-microsoft-azure-entity-linking-cognitive-api/';
         this.page.identifier = '/blog/2017/using-microsoft-azure-entity-linking-cognitive-api';
       };
       (function() {
@@ -224,7 +224,7 @@ The objects in the array are traversed one by one, serialized and formatted into
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>

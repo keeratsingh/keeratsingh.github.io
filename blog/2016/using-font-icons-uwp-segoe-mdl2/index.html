@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2016/using-font-icons-uwp-segoe-mdl2/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2016/using-font-icons-uwp-segoe-mdl2/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -103,11 +103,11 @@ For list of symbols, available refer to this MSDN article <a href="https://msdn.
 control to the Unicode Value of the symbol we want to use. In our example below we have different symbols as the <code class="highlighter-pygments">Text</code> property.</p>
 <h3>Using Segoe MDL2 Assets</h3>
 
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">&quot;&amp;#xEB52; &amp;#xEB51; &amp;#xEB68;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe MDL2 Assets&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"&amp;#xEB52; &amp;#xEB51; &amp;#xEB68;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h3>Using Segoe UI Symbols</h3>
 
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"> <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">&quot;&amp;#xE200; &amp;#xE1D6; &amp;#xE181;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe UI Symbol&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"> <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"&amp;#xE200; &amp;#xE1D6; &amp;#xE181;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe UI Symbol"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h2 id="using-fonticon">Using FontIcon</h2>
 <p><code class="highlighter-pygments">FontIcon</code> is a generalized version of <code class="highlighter-pygments">SymbolIcon</code>, that inherits from <code class="highlighter-pygments">IconElement</code> class. 
@@ -117,35 +117,35 @@ Instead of using a predefined set of symbols from <strong>Segoe MDL2 Assets</str
 You can even specify a different font, such as <strong>Segoe UI Symbols</strong> and specify respective Unicode value.</p>
 <h3>Using Segoe MDL2 Assets</h3>
 
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">&quot;&amp;#xEB52; &amp;#xEB51;  &amp;#xEB68;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe MDL2 Assets&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xEB52; &amp;#xEB51;  &amp;#xEB68;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h3>Using Segoe UI Symbols</h3>
 
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">&quot;&amp;#xE200; &amp;#xE1D6; &amp;#xE181;&quot;</span> <span class="na">FontFamily=</span><span class="s">&quot;Segoe UI Symbol&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE200; &amp;#xE1D6; &amp;#xE181;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe UI Symbol"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h2 id="using-symbolicon">Using SymbolIcon</h2>
 <p>Both the <code class="highlighter-pygments">SymbolIcon</code> and <code class="highlighter-pygments">FontIcon</code> inherit from the same class <code class="highlighter-pygments">IconElement</code>, 
 however <code class="highlighter-pygments">SymbolIcon</code> is constrained to a predefined set of Segoe MDL2 icons.</p>
 <h3>Using Segoe MDL2 Assets</h3>
 
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">&quot;Favorite&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">&quot;Camera&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">&quot;Mail&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">"Favorite"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">"Camera"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;SymbolIcon</span> <span class="na">Symbol=</span><span class="s">"Mail"</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 <h2 id="display-font-icons-using-c">Display font icons using C#</h2>
 <p>Font icons can also be displayed very easily using <code class="highlighter-pygments">C#</code> by updating the respective code behind file.
 Just update the respective <code class="highlighter-pygments">Gylph</code> or <code class="highlighter-pygments">Text</code> property of the control you want to display the font icons in.
 The only difference in C# is that the Unicode value is escaped differently using ‘\u’.</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">FontIconCS</span><span class="p">.</span><span class="n">Glyph</span> <span class="p">+=</span> <span class="s">&quot;\uE1D0&quot;</span><span class="p">;</span>
-<span class="n">txtFontIconCS</span><span class="p">.</span><span class="n">Text</span> <span class="p">+=</span> <span class="s">&quot;\uE1D0&quot;</span><span class="p">;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">FontIconCS</span><span class="p">.</span><span class="n">Glyph</span> <span class="p">+=</span> <span class="s">"\uE1D0"</span><span class="p">;</span>
+<span class="n">txtFontIconCS</span><span class="p">.</span><span class="n">Text</span> <span class="p">+=</span> <span class="s">"\uE1D0"</span><span class="p">;</span></code></pre></figure>
 
 <h2 id="icons-in-action">Icons in action</h2>
 <p>This is how <strong>Segoe MDL2</strong> and <strong>Segoe UI</strong> font icons look on a UWP app.<br />
 <img src="/images/posts/2016-09-05-using-font-icons-uwp-segoe-mdl2/FontIcons.jpg" alt="Windows 10 UWP Font Icons Segoe MDL2 Segoe UI" /></p>
 
 <h2 id="source-code">Source Code</h2>
-<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/FontIcons">fontIcons repo</a> along with the <code>Visual Studio 2015</code> solution.</p>
+<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/FontIcons">fontIcons repo</a> along with the <code class="highlighter-rouge">Visual Studio 2015</code> solution.</p>
 
 <h2 id="final-note">Final note</h2>
 <p>The best part about font icons is that you don’t have to worry about pixelated icons anymore. :)<br />
@@ -163,7 +163,7 @@ If you still face any problems or have any questions, feel free to leave a comme
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2016/using-font-icons-uwp-segoe-mdl2/';
+        this.page.url = 'http://localhost:4000/blog/2016/using-font-icons-uwp-segoe-mdl2/';
         this.page.identifier = '/blog/2016/using-font-icons-uwp-segoe-mdl2';
       };
       (function() {
@@ -195,7 +195,7 @@ If you still face any problems or have any questions, feel free to leave a comme
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>

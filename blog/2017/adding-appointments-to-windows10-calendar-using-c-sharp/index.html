@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -100,14 +100,14 @@ This is what my csv file looks like.</p>
 <span class="n">Test2</span><span class="p">,</span><span class="m">24</span><span class="p">-</span><span class="m">04</span><span class="p">-</span><span class="m">2017</span><span class="p">,</span><span class="m">14</span><span class="p">:</span><span class="m">00</span><span class="p">,</span><span class="m">4</span></code></pre></figure>
 
 <h2 id="reading-from-the-chosen-file">Reading from the chosen file</h2>
-<p>I used the <code>FileIO.ReadLinesAsync</code> method to read from the file and store them into an enumerable list of the type string. Once the appointments are stored
+<p>I used the <code class="highlighter-rouge">FileIO.ReadLinesAsync</code> method to read from the file and store them into an enumerable list of the type string. Once the appointments are stored
 in a list, the items in the list are read one by and each item is split based on the delimiter.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Store contents of the file into an enumerable List.</span>
-<span class="n">IList</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">lines</span> <span class="p">=</span> <span class="k">await</span> <span class="n">FileIO</span><span class="p">.</span><span class="n">ReadLinesAsync</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+<span class="n">IList</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">lines</span> <span class="p">=</span> <span class="k">await</span> <span class="n">FileIO</span><span class="p">.</span><span class="nf">ReadLinesAsync</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
 
 <span class="c1">// Split the contents of the line based on the delimiter</span>
-<span class="kt">string</span><span class="p">[]</span> <span class="n">appointmentDetails</span> <span class="p">=</span> <span class="n">line</span><span class="p">.</span><span class="n">Split</span><span class="p">(</span><span class="n">chDelimiter</span><span class="p">);</span></code></pre></figure>
+<span class="kt">string</span><span class="p">[]</span> <span class="n">appointmentDetails</span> <span class="p">=</span> <span class="n">line</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="n">chDelimiter</span><span class="p">);</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -117,35 +117,35 @@ in a list, the items in the list are read one by and each item is split based on
 </div>
 
 <h2 id="initializing-the-appointment-object">Initializing the Appointment object</h2>
-<p>Windows 10 SDK provides an API <code>Windows.ApplicationModel.Appointments</code>, through which we can manage appointments.
-Once the item in the list is split based on the delimiter, respective properties of the initialized <code>Appointment</code> object are set based on the values in the file.</p>
+<p>Windows 10 SDK provides an API <code class="highlighter-rouge">Windows.ApplicationModel.Appointments</code>, through which we can manage appointments.
+Once the item in the list is split based on the delimiter, respective properties of the initialized <code class="highlighter-rouge">Appointment</code> object are set based on the values in the file.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Create a new Appointment object</span>
-<span class="n">Appointment</span> <span class="n">appointment</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Appointment</span><span class="p">();</span>
+<span class="n">Appointment</span> <span class="n">appointment</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Appointment</span><span class="p">();</span>
 
 <span class="c1">// Expected format of string: Subject,Date,StartTime,Duration</span>
 <span class="n">appointment</span><span class="p">.</span><span class="n">Subject</span> <span class="p">=</span> <span class="n">appointmentDetails</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
-<span class="n">DateTime</span> <span class="n">dateTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">ParseExact</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;{0} {1}&quot;</span><span class="p">,</span> <span class="n">appointmentDetails</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="n">appointmentDetails</span><span class="p">[</span><span class="m">2</span><span class="p">]),</span> 
-                                        <span class="s">&quot;dd-MM-yyyy HH:mm&quot;</span><span class="p">,</span> 
+<span class="n">DateTime</span> <span class="n">dateTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">ParseExact</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0} {1}"</span><span class="p">,</span> <span class="n">appointmentDetails</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="n">appointmentDetails</span><span class="p">[</span><span class="m">2</span><span class="p">]),</span> 
+                                        <span class="s">"dd-MM-yyyy HH:mm"</span><span class="p">,</span> 
                                         <span class="n">System</span><span class="p">.</span><span class="n">Globalization</span><span class="p">.</span><span class="n">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="p">);</span>
-<span class="n">DateTimeOffset</span> <span class="n">startTime</span> <span class="p">=</span> <span class="k">new</span> <span class="n">DateTimeOffset</span><span class="p">(</span><span class="n">dateTime</span><span class="p">);</span>
+<span class="n">DateTimeOffset</span> <span class="n">startTime</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTimeOffset</span><span class="p">(</span><span class="n">dateTime</span><span class="p">);</span>
 <span class="n">appointment</span><span class="p">.</span><span class="n">StartTime</span> <span class="p">=</span> <span class="n">startTime</span><span class="p">;</span>
-<span class="n">appointment</span><span class="p">.</span><span class="n">Duration</span> <span class="p">=</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromHours</span><span class="p">(</span><span class="kt">float</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">appointmentDetails</span><span class="p">[</span><span class="m">3</span><span class="p">]));</span>
-<span class="n">appointment</span><span class="p">.</span><span class="n">Reminder</span> <span class="p">=</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromHours</span><span class="p">(</span><span class="m">1</span><span class="p">);</span></code></pre></figure>
+<span class="n">appointment</span><span class="p">.</span><span class="n">Duration</span> <span class="p">=</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromHours</span><span class="p">(</span><span class="kt">float</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">appointmentDetails</span><span class="p">[</span><span class="m">3</span><span class="p">]));</span>
+<span class="n">appointment</span><span class="p">.</span><span class="n">Reminder</span> <span class="p">=</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromHours</span><span class="p">(</span><span class="m">1</span><span class="p">);</span></code></pre></figure>
 
 <h2 id="adding-appointment-to-the-calendar">Adding appointment to the calendar</h2>
-<p>Once the required properties of the Appointment object are set, we will invoke the method Windows.ApplicationModel.Appointments.<code>AppointmentManager.ShowAddAppointmentAsync</code>,
+<p>Once the required properties of the Appointment object are set, we will invoke the method Windows.ApplicationModel.Appointments.<code class="highlighter-rouge">AppointmentManager.ShowAddAppointmentAsync</code>,
 with the following parameters:</p>
 
 <ul>
-  <li><code>Appointment</code> object: This object contains the information regarding the appointment being added.</li>
-  <li><code>Rect</code> object: As per <a href="https://msdn.microsoft.com/en-us/microsoft-r/windows.applicationmodel.appointments.appointmentstore.showaddappointmentasync">MSDN documentation</a> <code>Rect</code> is the rectangular area of user selection (for example, pressing a button), around which the operating system displays the Add Appointment UI, not within that rectangular area. For example, if an app uses a button to show the Rect, pass the Rect of the button so the Add Appointment UI displays around the button, not overlapping it.</li>
+  <li><code class="highlighter-rouge">Appointment</code> object: This object contains the information regarding the appointment being added.</li>
+  <li><code class="highlighter-rouge">Rect</code> object: As per <a href="https://msdn.microsoft.com/en-us/microsoft-r/windows.applicationmodel.appointments.appointmentstore.showaddappointmentasync">MSDN documentation</a> <code class="highlighter-rouge">Rect</code> is the rectangular area of user selection (for example, pressing a button), around which the operating system displays the Add Appointment UI, not within that rectangular area. For example, if an app uses a button to show the Rect, pass the Rect of the button so the Add Appointment UI displays around the button, not overlapping it.</li>
 </ul>
 
 <p>When this method call concludes, it returns a string object containing the appointment identifier, which is used when updating or removing an appointment.
 If the return string is empty, it means that the appointment was not added.</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">String</span> <span class="n">appointmentId</span> <span class="p">=</span> <span class="k">await</span> <span class="n">AppointmentManager</span><span class="p">.</span><span class="n">ShowAddAppointmentAsync</span><span class="p">(</span><span class="n">appointment</span><span class="p">,</span><span class="n">rect</span><span class="p">);</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">String</span> <span class="n">appointmentId</span> <span class="p">=</span> <span class="k">await</span> <span class="n">AppointmentManager</span><span class="p">.</span><span class="nf">ShowAddAppointmentAsync</span><span class="p">(</span><span class="n">appointment</span><span class="p">,</span><span class="n">rect</span><span class="p">);</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -179,7 +179,7 @@ If you have any questions or concerns, feel free to leave a comment.</p>
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp/';
+        this.page.url = 'http://localhost:4000/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp/';
         this.page.identifier = '/blog/2017/adding-appointments-to-windows10-calendar-using-c-sharp';
       };
       (function() {
@@ -211,7 +211,7 @@ If you have any questions or concerns, feel free to leave a comment.</p>
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>

@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2016/customizing-microsoft-band-using-band-sdk-uwp/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2016/customizing-microsoft-band-using-band-sdk-uwp/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -87,11 +87,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="post-content">
       <h2 id="overview">Overview</h2>
 <p>This idea was on the back burner for quite a while, and I never had the time to pursue this, until last week. I finally sat down and developed a Microsoft Band customization app,
-that helps you take advantage of the Band SDK and customize the <code>BandTheme</code>. I know the <strong>Microsoft Health</strong> app allows you to customize the BandTheme using various styles, however, I felt
-it was <strong>limited in terms of granular customization</strong>, which inspired me to develop this app that helps you to customize each and every <code>Band Color</code> class individually.
+that helps you take advantage of the Band SDK and customize the <code class="highlighter-rouge">BandTheme</code>. I know the <strong>Microsoft Health</strong> app allows you to customize the BandTheme using various styles, however, I felt
+it was <strong>limited in terms of granular customization</strong>, which inspired me to develop this app that helps you to customize each and every <code class="highlighter-rouge">Band Color</code> class individually.
 Another thing I felt the Microsoft Health app <strong>lacked in terms of Band personalization</strong> was the visual UI that helped the user interpret how the theme actually
 affected the Band Tiles. This UWP application actually helps the user have a better understanding of the components of the Band being customized.<br />
-This post will help you guide through the <code>Band SDK</code> functions used to retrieve and update the BandTheme. 
+This post will help you guide through the <code class="highlighter-rouge">Band SDK</code> functions used to retrieve and update the BandTheme. 
 There are 8 color classes that exist on the Band, however, only <strong>6 of the 8 can be customized</strong> using the Band SDK.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="err">•</span> <span class="n">Base</span>
@@ -107,9 +107,9 @@ There are 8 color classes that exist on the Band, however, only <strong>6 of the
 
 <ul>
   <li>Right click on the Project you want to add the package to.</li>
-  <li>Choose <code>Manage NuGet Packages...</code>.</li>
-  <li>Seach for package called <code>Band</code>.</li>
-  <li>Install package <code>Microsoft.Band</code> by Microsoft Corporation.
+  <li>Choose <code class="highlighter-rouge">Manage NuGet Packages...</code>.</li>
+  <li>Seach for package called <code class="highlighter-rouge">Band</code>.</li>
+  <li>Install package <code class="highlighter-rouge">Microsoft.Band</code> by Microsoft Corporation.
 <br />
 <br /></li>
 </ul>
@@ -125,9 +125,9 @@ There are 8 color classes that exist on the Band, however, only <strong>6 of the
 <p>We need to enable the Bluetooth capability of the UWP application, in order to allow the app to connect to the Microsoft band via Bluetooth.</p>
 
 <ul>
-  <li>Right click on the <code>Package.appxmanifest</code> and click open</li>
-  <li>Go to <code>Capabilities</code> tab.</li>
-  <li>Check the option <code>Bluetooth</code></li>
+  <li>Right click on the <code class="highlighter-rouge">Package.appxmanifest</code> and click open</li>
+  <li>Go to <code class="highlighter-rouge">Capabilities</code> tab.</li>
+  <li>Check the option <code class="highlighter-rouge">Bluetooth</code></li>
   <li>Save Package.appxmanifest.
 <br />
 <br /></li>
@@ -141,14 +141,14 @@ There are 8 color classes that exist on the Band, however, only <strong>6 of the
 
 <h2 id="connecting-to-the-band">Connecting to the Band</h2>
 <p>The initial step is to connect to a paired Band to the device on which your application is running. 
-We use the <code>BandClientManager</code> to get a list of paired Bands and connect to the first Band.</p>
+We use the <code class="highlighter-rouge">BandClientManager</code> to get a list of paired Bands and connect to the first Band.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Get the list of paired Bands</span>
-<span class="kt">var</span> <span class="n">pairedBands</span> <span class="p">=</span> <span class="k">await</span> <span class="n">BandClientManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">GetBandsAsync</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">pairedBands</span> <span class="p">=</span> <span class="k">await</span> <span class="n">BandClientManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="nf">GetBandsAsync</span><span class="p">();</span>
 <span class="c1">// Connect to the first Band</span>
-<span class="n">band</span> <span class="p">=</span> <span class="n">pairedBands</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">();</span>
+<span class="n">band</span> <span class="p">=</span> <span class="n">pairedBands</span><span class="p">.</span><span class="nf">FirstOrDefault</span><span class="p">();</span>
 <span class="c1">// Connect to the Band and get a new BandClient object</span>
-<span class="n">bandClient</span> <span class="p">=</span> <span class="k">await</span> <span class="n">BandClientManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">ConnectAsync</span><span class="p">(</span><span class="n">band</span><span class="p">);</span></code></pre></figure>
+<span class="n">bandClient</span> <span class="p">=</span> <span class="k">await</span> <span class="n">BandClientManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="nf">ConnectAsync</span><span class="p">(</span><span class="n">band</span><span class="p">);</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -158,20 +158,20 @@ We use the <code>BandClientManager</code> to get a list of paired Bands and conn
 </div>
 
 <h2 id="retrieving-the-band-theme">Retrieving the Band Theme</h2>
-<p>The <code>PersonalizationManager</code> allows us to retrieve the color classes currently being used on the Band device using the <code>BandTheme</code> class.
-The Band Theme is retrieved using the <code>GetThemeAsync</code> method and stored into an object of the BandTheme class.
-After the theme is retrieved, the UI is updated respectively, by converting the <code>BandColor</code> to <code>SolidColorBrush</code> and updating the <code>Fill</code> property of the ellipse.</p>
+<p>The <code class="highlighter-rouge">PersonalizationManager</code> allows us to retrieve the color classes currently being used on the Band device using the <code class="highlighter-rouge">BandTheme</code> class.
+The Band Theme is retrieved using the <code class="highlighter-rouge">GetThemeAsync</code> method and stored into an object of the BandTheme class.
+After the theme is retrieved, the UI is updated respectively, by converting the <code class="highlighter-rouge">BandColor</code> to <code class="highlighter-rouge">SolidColorBrush</code> and updating the <code class="highlighter-rouge">Fill</code> property of the ellipse.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Retrieve theme from the band</span>
-<span class="n">BandTheme</span> <span class="n">bandTheme</span> <span class="p">=</span> <span class="k">await</span> <span class="n">bandClient</span><span class="p">.</span><span class="n">PersonalizationManager</span><span class="p">.</span><span class="n">GetThemeAsync</span><span class="p">();</span>
+<span class="n">BandTheme</span> <span class="n">bandTheme</span> <span class="p">=</span> <span class="k">await</span> <span class="n">bandClient</span><span class="p">.</span><span class="n">PersonalizationManager</span><span class="p">.</span><span class="nf">GetThemeAsync</span><span class="p">();</span>
 
 <span class="c1">// Update the UI</span>
-<span class="n">eBase</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Base</span><span class="p">.</span><span class="n">ToColor</span><span class="p">());</span>
-<span class="n">eHighContrast</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">HighContrast</span><span class="p">.</span><span class="n">ToColor</span><span class="p">());</span>
-<span class="n">eHighlight</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Highlight</span><span class="p">.</span><span class="n">ToColor</span><span class="p">());</span>
-<span class="n">eLowLight</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Lowlight</span><span class="p">.</span><span class="n">ToColor</span><span class="p">());</span>
-<span class="n">eMuted</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Muted</span><span class="p">.</span><span class="n">ToColor</span><span class="p">());</span>
-<span class="n">eSecondary</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">SecondaryText</span><span class="p">.</span><span class="n">ToColor</span><span class="p">());</span></code></pre></figure>
+<span class="n">eBase</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Base</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">());</span>
+<span class="n">eHighContrast</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">HighContrast</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">());</span>
+<span class="n">eHighlight</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Highlight</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">());</span>
+<span class="n">eLowLight</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Lowlight</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">());</span>
+<span class="n">eMuted</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">Muted</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">());</span>
+<span class="n">eSecondary</span><span class="p">.</span><span class="n">Fill</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SolidColorBrush</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">.</span><span class="n">SecondaryText</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">());</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -182,11 +182,11 @@ After the theme is retrieved, the UI is updated respectively, by converting the 
 
 <h2 id="personalizing-the-band-theme">Personalizing the Band Theme</h2>
 <p>The application allows the user to customize all the 6 available Band color classes individually. Your can click on each class to bring out a color dialog box.
-This color dialog box gives you the option of either choosing a color from a <strong>predefined list of colors</strong>, included in the <code>Windows.UI.Colors</code> or entering a <strong>custom color Hex Code</strong>.<br />
+This color dialog box gives you the option of either choosing a color from a <strong>predefined list of colors</strong>, included in the <code class="highlighter-rouge">Windows.UI.Colors</code> or entering a <strong>custom color Hex Code</strong>.<br />
 Each Band color class has its own row and the application UI reflects how each Band color class affects the Microsoft Band UI.</p>
 <h3>Choosing color from ComboBox</h3>
-<p>Currently, there are <strong>141 colors</strong> to choose from <code>Windows.UI.Colors</code>, since the list is dynamically generated at runtime, 
-any new colors added to Windows.UI.Colors will be added to the <code>ComboBox</code> automatically.</p>
+<p>Currently, there are <strong>141 colors</strong> to choose from <code class="highlighter-rouge">Windows.UI.Colors</code>, since the list is dynamically generated at runtime, 
+any new colors added to Windows.UI.Colors will be added to the <code class="highlighter-rouge">ComboBox</code> automatically.</p>
 <div class="postImg">
 <figure>
     <img src="/images/posts/2016-09-07-customizing-microsoft-band-using-band-sdk-uwp/Personalizing_2a_1.jpg" alt="Choosing color using ComboBox" />
@@ -208,21 +208,21 @@ any new colors added to Windows.UI.Colors will be added to the <code>ComboBox</c
 
 <h2 id="uploading-the-band-theme">Uploading the Band Theme</h2>
 <p>Once you have customized the UWP application UI, we need to upload the theme to the connected Band device. We do that by clicking the <strong>accept icon</strong>, which
-calls the <code>SetThemeAsync</code> method. We create a new <code>BandTheme</code> object using the color values set by the user and then call the SetThemeAsync, with the BandTheme
+calls the <code class="highlighter-rouge">SetThemeAsync</code> method. We create a new <code class="highlighter-rouge">BandTheme</code> object using the color values set by the user and then call the SetThemeAsync, with the BandTheme
 object as the argument. A message is displayed on the UI once the BandTheme is uploaded successfully.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Convert user customizations into Band theme.</span>
-<span class="n">BandTheme</span> <span class="n">bandTheme</span> <span class="p">=</span> <span class="k">new</span> <span class="n">BandTheme</span><span class="p">()</span>
+<span class="n">BandTheme</span> <span class="n">bandTheme</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">BandTheme</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="n">Base</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eBase</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="n">ToBandColor</span><span class="p">(),</span>
-    <span class="n">HighContrast</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eHighContrast</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="n">ToBandColor</span><span class="p">(),</span>
-    <span class="n">Lowlight</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eLowLight</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="n">ToBandColor</span><span class="p">(),</span>
-    <span class="n">Highlight</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eHighlight</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="n">ToBandColor</span><span class="p">(),</span>
-    <span class="n">Muted</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eMuted</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="n">ToBandColor</span><span class="p">(),</span>
-    <span class="n">SecondaryText</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eSecondary</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="n">ToBandColor</span><span class="p">(),</span>
+    <span class="n">Base</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eBase</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="nf">ToBandColor</span><span class="p">(),</span>
+    <span class="n">HighContrast</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eHighContrast</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="nf">ToBandColor</span><span class="p">(),</span>
+    <span class="n">Lowlight</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eLowLight</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="nf">ToBandColor</span><span class="p">(),</span>
+    <span class="n">Highlight</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eHighlight</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="nf">ToBandColor</span><span class="p">(),</span>
+    <span class="n">Muted</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eMuted</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="nf">ToBandColor</span><span class="p">(),</span>
+    <span class="n">SecondaryText</span> <span class="p">=</span> <span class="p">((</span><span class="n">SolidColorBrush</span><span class="p">)</span><span class="n">eSecondary</span><span class="p">.</span><span class="n">Fill</span><span class="p">).</span><span class="n">Color</span><span class="p">.</span><span class="nf">ToBandColor</span><span class="p">(),</span>
 <span class="p">};</span>
 <span class="c1">// Update Band with the theme.</span>
-<span class="k">await</span> <span class="n">bandClient</span><span class="p">.</span><span class="n">PersonalizationManager</span><span class="p">.</span><span class="n">SetThemeAsync</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">);</span></code></pre></figure>
+<span class="k">await</span> <span class="n">bandClient</span><span class="p">.</span><span class="n">PersonalizationManager</span><span class="p">.</span><span class="nf">SetThemeAsync</span><span class="p">(</span><span class="n">bandTheme</span><span class="p">);</span></code></pre></figure>
 
 <div class="postImg">
 <figure>
@@ -250,11 +250,11 @@ It also covers the cancel button, in case you want to discard your changes.</p>
 </div>
 
 <h2 id="source-code">Source Code</h2>
-<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/bandManager">bandManager repo</a> along with the <code>Visual Studio 2015</code> solution.</p>
+<p>You can find the <strong>source code</strong> at Github <a href="https://github.com/keeratsingh/bandManager">bandManager repo</a> along with the <code class="highlighter-rouge">Visual Studio 2015</code> solution.</p>
 
 <h2 id="final-note">Final note</h2>
 <p>This UWP application is very basic demonstration of using the <strong>Microsoft Band SDK</strong> to interact and personalize the Band. A lot more things can be done with the SDK, such as subscribe to sensors 
-and use the data from the sensors, or update the <strong>MeTile</strong>. This is application does not use the <code>RelativePanel</code> or <code>VisualState</code> class to make the application dynamically 
+and use the data from the sensors, or update the <strong>MeTile</strong>. This is application does not use the <code class="highlighter-rouge">RelativePanel</code> or <code class="highlighter-rouge">VisualState</code> class to make the application dynamically 
 adjust to the screen size, since that was not the motive of this app.
 If you still face any problems or have any questions, feel free to leave a comment and I will be happy to help. Cheers :)</p>
 
@@ -270,7 +270,7 @@ If you still face any problems or have any questions, feel free to leave a comme
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2016/customizing-microsoft-band-using-band-sdk-uwp/';
+        this.page.url = 'http://localhost:4000/blog/2016/customizing-microsoft-band-using-band-sdk-uwp/';
         this.page.identifier = '/blog/2016/customizing-microsoft-band-using-band-sdk-uwp';
       };
       (function() {
@@ -302,7 +302,7 @@ If you still face any problems or have any questions, feel free to leave a comme
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>

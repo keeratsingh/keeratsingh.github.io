@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2016/bing-image-api-json-csharp-uwp/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2016/bing-image-api-json-csharp-uwp/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -96,118 +96,118 @@ the lock screen to the Bing Image of the Day.</p>
 I had <strong>numerous possibilities</strong> going forward. I could save it and change my desktop after a certain duration of my choice, or set it as my lock screen 
 just as a desktop wallpaper, you get my point, the key here is to get the Bing Image of the Day.</p>
 
-<p>Fortunately, Bing has a <code>REST API</code> to retrieve a <code>JSON</code> string which contains the <strong>URL to 
+<p>Fortunately, Bing has a <code class="highlighter-rouge">REST API</code> to retrieve a <code class="highlighter-rouge">JSON</code> string which contains the <strong>URL to 
 the Bing Image</strong>, which we will be making use of. 
 That is the easy part, now the hard part is to parse and retrieve the URL from the JSON string. I will be discussing in detail the <strong>different methods</strong> that can be used for 
 parsing and how they can be used to extract the <strong>Bing Image URL</strong>.</p>
 
 <h2 id="step-1-retrieve-the-json-string">Step 1. Retrieve the JSON string</h2>
 <p>The first step is to retrieve the <strong>JSON</strong> string from the <strong>Bing REST API</strong> endpoint. 
-We retrieve the string using an <code>HttpClient</code>,we have an option of using <code>Windows.Web.Http</code> or <code>System.Net.Http</code> namespace. <br />
+We retrieve the string using an <code class="highlighter-rouge">HttpClient</code>,we have an option of using <code class="highlighter-rouge">Windows.Web.Http</code> or <code class="highlighter-rouge">System.Net.Http</code> namespace. <br />
 I prefer to choose Windows.Web.Http.HttpClient for the simple reason that the System.Net.Http.HttpClient might get <strong>deprecated</strong> over time. Another reason is that 
 <strong>System.Net.Http.HttpClient supports only .Net Languages</strong>, whereas Windows.Web.Http.HttpClient was written with the aim of <strong>consolidating all the 
 HTTP APIs</strong> for different Windows Application Languages, and therefore it supports all the Windows Store 
 application languages. For the avid readers <a href="https://blogs.windows.com/buildingapps/2015/11/23/demystifying-httpclient-apis-in-the-universal-windows-platform/">here</a> is a <strong>detailed comparison</strong> between the two.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// We can specify the region we want for the Bing Image of the Day.</span>
-<span class="kt">string</span> <span class="n">strRegion</span> <span class="p">=</span> <span class="s">&quot;en-US&quot;</span><span class="p">;</span>
-<span class="kt">string</span> <span class="n">strBingImageURL</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;http://www.bing.com/HPImageArchive.aspx?format=js&amp;idx=0&amp;n={0}&amp;mkt={1}&quot;</span><span class="p">,</span> <span class="n">_numOfImages</span><span class="p">,</span> <span class="n">strRegion</span><span class="p">);</span>
-<span class="kt">string</span> <span class="n">strJSONString</span> <span class="p">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">strRegion</span> <span class="p">=</span> <span class="s">"en-US"</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">strBingImageURL</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"http://www.bing.com/HPImageArchive.aspx?format=js&amp;idx=0&amp;n={0}&amp;mkt={1}"</span><span class="p">,</span> <span class="n">_numOfImages</span><span class="p">,</span> <span class="n">strRegion</span><span class="p">);</span>
+<span class="kt">string</span> <span class="n">strJSONString</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
 
-<span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HttpClient</span><span class="p">();</span>
+<span class="n">HttpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
 
 <span class="c1">// Using an Async call makes sure the app is responsive during the time the response is fetched.</span>
 <span class="c1">// GetAsync sends an Async GET request to the Specified URI.</span>
-<span class="n">HttpResponseMessage</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">GetAsync</span><span class="p">(</span><span class="k">new</span> <span class="n">Uri</span><span class="p">(</span><span class="n">strBingImageURL</span><span class="p">));</span>
+<span class="n">HttpResponseMessage</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="n">strBingImageURL</span><span class="p">));</span>
 
 <span class="c1">// Content property get or sets the content of a HTTP response message. </span>
 <span class="c1">// ReadAsStringAsync is a method of the HttpContent which asynchronously </span>
 <span class="c1">// reads the content of the HTTP Response and returns as a string.</span>
-<span class="n">strJSONString</span> <span class="p">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="n">ReadAsStringAsync</span><span class="p">();</span></code></pre></figure>
+<span class="n">strJSONString</span> <span class="p">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="nf">ReadAsStringAsync</span><span class="p">();</span></code></pre></figure>
 
 <h2 id="step-2-parse-the-json-string">Step 2. Parse the JSON string</h2>
 <p>Now we can parse the retrieved JSON string using 3 methods<br />
-• Using <code>Windows.Data.Json</code> (<em>Native Way</em>)<br />
-• Using <code>LINQ-to-JSON</code> API’s JObject from <code>JSON.NET</code> (<em>Newtonsoft</em>)  <br />
-• Using <code>dynamic</code> object and <code>DeserializeObject</code> method JSON.NET (<em>Newtonsoft</em>)<br />
+• Using <code class="highlighter-rouge">Windows.Data.Json</code> (<em>Native Way</em>)<br />
+• Using <code class="highlighter-rouge">LINQ-to-JSON</code> API’s JObject from <code class="highlighter-rouge">JSON.NET</code> (<em>Newtonsoft</em>)  <br />
+• Using <code class="highlighter-rouge">dynamic</code> object and <code class="highlighter-rouge">DeserializeObject</code> method JSON.NET (<em>Newtonsoft</em>)<br />
 <strong>JSON.Net</strong> has existed since long before Windows.Data.Json came into existence, however, Microsoft introduced Windows.Data.Json with <strong>native support</strong> for parsing JSON.
-To use JSON.NET, you need to <strong>add</strong> the <code>Newtonsoft</code> Nuget package, which adds an additional library dependency.
+To use JSON.NET, you need to <strong>add</strong> the <code class="highlighter-rouge">Newtonsoft</code> Nuget package, which adds an additional library dependency.
 I personally prefer the native way, however for the purpose of this app I have discussed both the ways of parsing the JSON string using both <strong>JSON.NET</strong> and <strong>Windows.Data.Json namespaces</strong>.</p>
 
 <p><strong>Retrieved JSON string:</strong></p>
 
-<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="nt">&quot;images&quot;</span><span class="p">:[</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="s2">"images"</span><span class="p">:[</span><span class="w">
 
-    <span class="p">{</span><span class="nt">&quot;startdate&quot;</span><span class="p">:</span><span class="s2">&quot;20160719&quot;</span><span class="p">,</span><span class="nt">&quot;fullstartdate&quot;</span><span class="p">:</span><span class="s2">&quot;201607190700&quot;</span><span class="p">,</span><span class="nt">&quot;enddate&quot;</span><span class="p">:</span><span class="s2">&quot;20160720&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;/az/hprichbg/rb/NeonMuseum_EN-US8131993872_1920x1080.jpg&quot;</span><span class="p">,</span><span class="nt">&quot;urlbase&quot;</span><span class="p">:</span><span class="s2">&quot;/az/hprichbg/rb/NeonMuseum_EN-US8131993872&quot;</span><span class="p">,</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Neon Museum, Las Vegas, Nevada (© Kerrick James/Getty Images)&quot;</span><span class="p">,</span><span class="nt">&quot;copyrightlink&quot;</span><span class="p">:</span><span class="s2">&quot;http://www.bing.com/search?q=neon+museum&amp;form=hpcapt&amp;filters=HpDate:%2220160719_0700%22&quot;</span><span class="p">,</span><span class="nt">&quot;wp&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">&quot;hsh&quot;</span><span class="p">:</span><span class="s2">&quot;96d3e7bbe87ad583a17ef765ed935d8f&quot;</span><span class="p">,</span><span class="nt">&quot;drk&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;top&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;bot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;hs&quot;</span><span class="p">:[]}</span>
-    <span class="p">,</span>
-    <span class="p">{</span><span class="nt">&quot;startdate&quot;</span><span class="p">:</span><span class="s2">&quot;20160718&quot;</span><span class="p">,</span><span class="nt">&quot;fullstartdate&quot;</span><span class="p">:</span><span class="s2">&quot;201607180700&quot;</span><span class="p">,</span><span class="nt">&quot;enddate&quot;</span><span class="p">:</span><span class="s2">&quot;20160719&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;/az/hprichbg/rb/DiamondHead_EN-US10119574903_1920x1080.jpg&quot;</span><span class="p">,</span><span class="nt">&quot;urlbase&quot;</span><span class="p">:</span><span class="s2">&quot;/az/hprichbg/rb/DiamondHead_EN-US10119574903&quot;</span><span class="p">,</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Aerial view of Diamond Head, O’ahu, Hawaii (© Biederbick &amp; Rumpf/Offset)&quot;</span><span class="p">,</span><span class="nt">&quot;copyrightlink&quot;</span><span class="p">:</span><span class="s2">&quot;http://www.bing.com/search?q=diamond+head+hawaii&amp;form=hpcapt&amp;filters=HpDate:%2220160718_0700%22&quot;</span><span class="p">,</span><span class="nt">&quot;wp&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">&quot;hsh&quot;</span><span class="p">:</span><span class="s2">&quot;1aff492416f5e2fcf6e898743154fbda&quot;</span><span class="p">,</span><span class="nt">&quot;drk&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;top&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;bot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;hs&quot;</span><span class="p">:[]}</span>
-    <span class="p">,</span>
-    <span class="p">{</span><span class="nt">&quot;startdate&quot;</span><span class="p">:</span><span class="s2">&quot;20160717&quot;</span><span class="p">,</span><span class="nt">&quot;fullstartdate&quot;</span><span class="p">:</span><span class="s2">&quot;201607170700&quot;</span><span class="p">,</span><span class="nt">&quot;enddate&quot;</span><span class="p">:</span><span class="s2">&quot;20160718&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;/az/hprichbg/rb/MuizenbergSA_EN-US9176714978_1920x1080.jpg&quot;</span><span class="p">,</span><span class="nt">&quot;urlbase&quot;</span><span class="p">:</span><span class="s2">&quot;/az/hprichbg/rb/MuizenbergSA_EN-US9176714978&quot;</span><span class="p">,</span><span class="nt">&quot;copyright&quot;</span><span class="p">:</span><span class="s2">&quot;Beach huts in Muizenberg, South Africa (© Getty Images)&quot;</span><span class="p">,</span><span class="nt">&quot;copyrightlink&quot;</span><span class="p">:</span><span class="s2">&quot;http://www.bing.com/search?q=Muizenberg,+South+Africa&amp;form=hpcapt&amp;filters=HpDate:%2220160717_0700%22&quot;</span><span class="p">,</span><span class="nt">&quot;wp&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">&quot;hsh&quot;</span><span class="p">:</span><span class="s2">&quot;8d4bf37f9d61ab103283005264b4b8cb&quot;</span><span class="p">,</span><span class="nt">&quot;drk&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;top&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;bot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;hs&quot;</span><span class="p">:[]}</span>
+    </span><span class="p">{</span><span class="s2">"startdate"</span><span class="p">:</span><span class="s2">"20160719"</span><span class="p">,</span><span class="s2">"fullstartdate"</span><span class="p">:</span><span class="s2">"201607190700"</span><span class="p">,</span><span class="s2">"enddate"</span><span class="p">:</span><span class="s2">"20160720"</span><span class="p">,</span><span class="s2">"url"</span><span class="p">:</span><span class="s2">"/az/hprichbg/rb/NeonMuseum_EN-US8131993872_1920x1080.jpg"</span><span class="p">,</span><span class="s2">"urlbase"</span><span class="p">:</span><span class="s2">"/az/hprichbg/rb/NeonMuseum_EN-US8131993872"</span><span class="p">,</span><span class="s2">"copyright"</span><span class="p">:</span><span class="s2">"Neon Museum, Las Vegas, Nevada (© Kerrick James/Getty Images)"</span><span class="p">,</span><span class="s2">"copyrightlink"</span><span class="p">:</span><span class="s2">"http://www.bing.com/search?q=neon+museum&amp;form=hpcapt&amp;filters=HpDate:%2220160719_0700%22"</span><span class="p">,</span><span class="s2">"wp"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="s2">"hsh"</span><span class="p">:</span><span class="s2">"96d3e7bbe87ad583a17ef765ed935d8f"</span><span class="p">,</span><span class="s2">"drk"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"top"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"bot"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"hs"</span><span class="p">:[]}</span><span class="w">
+    </span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="s2">"startdate"</span><span class="p">:</span><span class="s2">"20160718"</span><span class="p">,</span><span class="s2">"fullstartdate"</span><span class="p">:</span><span class="s2">"201607180700"</span><span class="p">,</span><span class="s2">"enddate"</span><span class="p">:</span><span class="s2">"20160719"</span><span class="p">,</span><span class="s2">"url"</span><span class="p">:</span><span class="s2">"/az/hprichbg/rb/DiamondHead_EN-US10119574903_1920x1080.jpg"</span><span class="p">,</span><span class="s2">"urlbase"</span><span class="p">:</span><span class="s2">"/az/hprichbg/rb/DiamondHead_EN-US10119574903"</span><span class="p">,</span><span class="s2">"copyright"</span><span class="p">:</span><span class="s2">"Aerial view of Diamond Head, O’ahu, Hawaii (© Biederbick &amp; Rumpf/Offset)"</span><span class="p">,</span><span class="s2">"copyrightlink"</span><span class="p">:</span><span class="s2">"http://www.bing.com/search?q=diamond+head+hawaii&amp;form=hpcapt&amp;filters=HpDate:%2220160718_0700%22"</span><span class="p">,</span><span class="s2">"wp"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s2">"hsh"</span><span class="p">:</span><span class="s2">"1aff492416f5e2fcf6e898743154fbda"</span><span class="p">,</span><span class="s2">"drk"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"top"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"bot"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"hs"</span><span class="p">:[]}</span><span class="w">
+    </span><span class="p">,</span><span class="w">
+    </span><span class="p">{</span><span class="s2">"startdate"</span><span class="p">:</span><span class="s2">"20160717"</span><span class="p">,</span><span class="s2">"fullstartdate"</span><span class="p">:</span><span class="s2">"201607170700"</span><span class="p">,</span><span class="s2">"enddate"</span><span class="p">:</span><span class="s2">"20160718"</span><span class="p">,</span><span class="s2">"url"</span><span class="p">:</span><span class="s2">"/az/hprichbg/rb/MuizenbergSA_EN-US9176714978_1920x1080.jpg"</span><span class="p">,</span><span class="s2">"urlbase"</span><span class="p">:</span><span class="s2">"/az/hprichbg/rb/MuizenbergSA_EN-US9176714978"</span><span class="p">,</span><span class="s2">"copyright"</span><span class="p">:</span><span class="s2">"Beach huts in Muizenberg, South Africa (© Getty Images)"</span><span class="p">,</span><span class="s2">"copyrightlink"</span><span class="p">:</span><span class="s2">"http://www.bing.com/search?q=Muizenberg,+South+Africa&amp;form=hpcapt&amp;filters=HpDate:%2220160717_0700%22"</span><span class="p">,</span><span class="s2">"wp"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="s2">"hsh"</span><span class="p">:</span><span class="s2">"8d4bf37f9d61ab103283005264b4b8cb"</span><span class="p">,</span><span class="s2">"drk"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"top"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"bot"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"hs"</span><span class="p">:[]}</span><span class="w">
 
-    <span class="p">]</span>
+    </span><span class="p">]</span><span class="w">
 
-    <span class="p">,</span><span class="nt">&quot;tooltips&quot;</span><span class="p">:{</span><span class="nt">&quot;loading&quot;</span><span class="p">:</span><span class="s2">&quot;Loading...&quot;</span><span class="p">,</span><span class="nt">&quot;previous&quot;</span><span class="p">:</span><span class="s2">&quot;Previous image&quot;</span><span class="p">,</span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="s2">&quot;Next image&quot;</span><span class="p">,</span><span class="nt">&quot;walle&quot;</span><span class="p">:</span><span class="s2">&quot;This image is not available to download as wallpaper.&quot;</span><span class="p">,</span><span class="nt">&quot;walls&quot;</span><span class="p">:</span><span class="s2">&quot;Download this image. Use of this image is restricted to wallpaper only.&quot;</span><span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+    </span><span class="p">,</span><span class="s2">"tooltips"</span><span class="p">:{</span><span class="s2">"loading"</span><span class="p">:</span><span class="s2">"Loading..."</span><span class="p">,</span><span class="s2">"previous"</span><span class="p">:</span><span class="s2">"Previous image"</span><span class="p">,</span><span class="s2">"next"</span><span class="p">:</span><span class="s2">"Next image"</span><span class="p">,</span><span class="s2">"walle"</span><span class="p">:</span><span class="s2">"This image is not available to download as wallpaper."</span><span class="p">,</span><span class="s2">"walls"</span><span class="p">:</span><span class="s2">"Download this image. Use of this image is restricted to wallpaper only."</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <h3 id="step-2a-parsing-json-string-using-windowsdatajson">Step 2a. Parsing JSON string using Windows.Data.Json:</h3>
-<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code>Microsoft Windows.Data.Json</code> class. We use <code>JsonObject</code> 
-that implements an <strong>IMap interface</strong>, which can help in manipulating the <strong>name/value</strong> pairs like a <strong>dictionary</strong>. We use <code>JsonObject.TryParse</code> 
+<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code class="highlighter-rouge">Microsoft Windows.Data.Json</code> class. We use <code class="highlighter-rouge">JsonObject</code> 
+that implements an <strong>IMap interface</strong>, which can help in manipulating the <strong>name/value</strong> pairs like a <strong>dictionary</strong>. We use <code class="highlighter-rouge">JsonObject.TryParse</code> 
 method to parse the JSON string into a JSON value, it returns a boolean value, indicating success or failure.
-The integral part of the retrieval is <code>jsonObject["images"].GetArray()[i].GetObject()["url"].GetString()</code>.
-As seen in the above JSON string, we have a root object <code>"images"</code>, it further has 3 arrays, which are equal to the <strong>number of images</strong> specified in <strong>Step 1.</strong>
+The integral part of the retrieval is <code class="highlighter-rouge">jsonObject["images"].GetArray()[i].GetObject()["url"].GetString()</code>.
+As seen in the above JSON string, we have a root object <code class="highlighter-rouge">"images"</code>, it further has 3 arrays, which are equal to the <strong>number of images</strong> specified in <strong>Step 1.</strong>
 Each <strong>array</strong> has an object called <strong>url</strong>, which is the part of the url to the Bing Image. We retrieve url for each image and store it into a list.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using Windows.Data.Json.</span>
 <span class="n">JsonObject</span> <span class="n">jsonObject</span><span class="p">;</span>
-<span class="kt">bool</span> <span class="n">boolParsed</span> <span class="p">=</span> <span class="n">JsonObject</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">_strRawJSONString</span><span class="p">,</span> <span class="k">out</span> <span class="n">jsonObject</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="n">boolParsed</span> <span class="p">=</span> <span class="n">JsonObject</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">_strRawJSONString</span><span class="p">,</span> <span class="k">out</span> <span class="n">jsonObject</span><span class="p">);</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="n">boolParsed</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">_numOfImages</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
     <span class="p">{</span>
-       <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">jsonObject</span><span class="p">[</span><span class="s">&quot;images&quot;</span><span class="p">].</span><span class="n">GetArray</span><span class="p">()[</span><span class="n">i</span><span class="p">].</span><span class="n">GetObject</span><span class="p">()[</span><span class="s">&quot;url&quot;</span><span class="p">].</span><span class="n">GetString</span><span class="p">());</span>
+       <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">jsonObject</span><span class="p">[</span><span class="s">"images"</span><span class="p">].</span><span class="nf">GetArray</span><span class="p">()[</span><span class="n">i</span><span class="p">].</span><span class="nf">GetObject</span><span class="p">()[</span><span class="s">"url"</span><span class="p">].</span><span class="nf">GetString</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
 <h3 id="step-2b-parsing-json-string-using-linq-to-json-apis-jobject">Step 2b. Parsing JSON string using LINQ-to-JSON API’s JObject:</h3>
-<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code>LINQ-to-JSON</code> API’s 
-<code>JObject</code> explicitly.We use this method when we <strong>don’t know the JSON structure</strong>
+<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code class="highlighter-rouge">LINQ-to-JSON</code> API’s 
+<code class="highlighter-rouge">JObject</code> explicitly.We use this method when we <strong>don’t know the JSON structure</strong>
 ahead of time. This method is recommended if only <strong>one or two values</strong> from the whole JSON string are required.</p>
 
-<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using LINQ-to-JSON API&#39;s JObject explicitly.</span>
-<span class="n">JObject</span> <span class="n">jResults</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">_strRawJSONString</span><span class="p">);</span>
-<span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">image</span> <span class="k">in</span> <span class="n">jResults</span><span class="p">[</span><span class="s">&quot;images&quot;</span><span class="p">])</span>
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using LINQ-to-JSON API's JObject explicitly.</span>
+<span class="n">JObject</span> <span class="n">jResults</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_strRawJSONString</span><span class="p">);</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">image</span> <span class="k">in</span> <span class="n">jResults</span><span class="p">[</span><span class="s">"images"</span><span class="p">])</span>
 <span class="p">{</span>
-    <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="n">Add</span><span class="p">((</span><span class="kt">string</span><span class="p">)</span><span class="n">image</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">]);</span>
+    <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="nf">Add</span><span class="p">((</span><span class="kt">string</span><span class="p">)</span><span class="n">image</span><span class="p">[</span><span class="s">"url"</span><span class="p">]);</span>
 <span class="p">}</span></code></pre></figure>
 
 <h3 id="step-2c-parsing-json-string-using-deserializeobject-and-dynamic-object">Step 2c. Parsing JSON string using DeserializeObject and dynamic object</h3>
-<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code>DeserializeObject</code> method. 
-We use <code>JsonConvert.DeserializeObject</code> method when <strong>already know the JSON structure</strong> and the <strong>strongly typed class</strong> we want to deserialize into. 
-We use <code>dynamic</code> object, as it saves us the trouble of declaring a specific class to hold the JSON object.</p>
+<p>This Method parses the fetched JSON string and retrieves the Image URLs using <code class="highlighter-rouge">DeserializeObject</code> method. 
+We use <code class="highlighter-rouge">JsonConvert.DeserializeObject</code> method when <strong>already know the JSON structure</strong> and the <strong>strongly typed class</strong> we want to deserialize into. 
+We use <code class="highlighter-rouge">dynamic</code> object, as it saves us the trouble of declaring a specific class to hold the JSON object.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="c1">// Parse using DeserializeObject method.</span>
 <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">_numOfImages</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
 <span class="p">{</span>
-    <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Convert</span><span class="p">.</span><span class="n">ToString</span><span class="p">((</span><span class="n">JsonConvert</span><span class="p">.</span><span class="n">DeserializeObject</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;(</span><span class="n">_strRawJSONString</span><span class="p">)).</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">url</span><span class="p">));</span>
+    <span class="n">_lstBingImageURLs</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Convert</span><span class="p">.</span><span class="nf">ToString</span><span class="p">((</span><span class="n">JsonConvert</span><span class="p">.</span><span class="n">DeserializeObject</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;(</span><span class="n">_strRawJSONString</span><span class="p">)).</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">url</span><span class="p">));</span>
 <span class="p">}</span></code></pre></figure>
 
 <h2 id="step-3-display-images-on-ui-using-bitmapimage">Step 3. Display images on UI using BitmapImage</h2>
 <p>Each URL is converted into a Bitmap Image and added into the Stack Panel dynamically to display as an Image Object.
-<code>BitmapImage</code> class inherits from the <code>BitmapSource</code> class and is specialized 
-<code>BitmapSource</code> that is optimized for loading images using XAML.</p>
+<code class="highlighter-rouge">BitmapImage</code> class inherits from the <code class="highlighter-rouge">BitmapSource</code> class and is specialized 
+<code class="highlighter-rouge">BitmapSource</code> that is optimized for loading images using XAML.</p>
 
 <figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">url</span> <span class="k">in</span> <span class="n">_lstBingImageURLs</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// We use the Image control to display an image on the UI.</span>
-    <span class="n">Image</span> <span class="n">imgbingImage</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Image</span><span class="p">();</span>
-    <span class="kt">var</span> <span class="n">bingURL</span> <span class="p">=</span> <span class="s">&quot;https://www.bing.com&quot;</span> <span class="p">+</span> <span class="n">url</span><span class="p">;</span>
+    <span class="n">Image</span> <span class="n">imgbingImage</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Image</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">bingURL</span> <span class="p">=</span> <span class="s">"https://www.bing.com"</span> <span class="p">+</span> <span class="n">url</span><span class="p">;</span>
 
-    <span class="n">BitmapSource</span> <span class="n">imgbingImageSource</span> <span class="p">=</span> <span class="k">new</span> <span class="n">BitmapImage</span><span class="p">(</span><span class="k">new</span> <span class="n">Uri</span><span class="p">(</span><span class="n">bingURL</span><span class="p">));</span>
+    <span class="n">BitmapSource</span> <span class="n">imgbingImageSource</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">BitmapImage</span><span class="p">(</span><span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="n">bingURL</span><span class="p">));</span>
     <span class="n">imgbingImage</span><span class="p">.</span><span class="n">Source</span> <span class="p">=</span> <span class="n">imgbingImageSource</span><span class="p">;</span>
     
     <span class="c1">// Add the Image control to the Stack Panel</span>
-    <span class="n">spImages</span><span class="p">.</span><span class="n">Children</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">imgbingImage</span><span class="p">);</span>
+    <span class="n">spImages</span><span class="p">.</span><span class="n">Children</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">imgbingImage</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
 <h2 id="working-windows-10-uwp-app">Working Windows 10 UWP App</h2>
@@ -231,7 +231,7 @@ If you still face any problems or have any questions, feel free to leave a comme
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2016/bing-image-api-json-csharp-uwp/';
+        this.page.url = 'http://localhost:4000/blog/2016/bing-image-api-json-csharp-uwp/';
         this.page.identifier = '/blog/2016/bing-image-api-json-csharp-uwp';
       };
       (function() {
@@ -263,7 +263,7 @@ If you still face any problems or have any questions, feel free to leave a comme
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>

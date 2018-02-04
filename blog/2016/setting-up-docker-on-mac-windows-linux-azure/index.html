@@ -14,8 +14,8 @@
     
     <link rel="shortcut icon" type="image/png" href="/public/favicon.png">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="https://keeratsingh.github.io/blog/2016/setting-up-docker-on-mac-windows-linux-azure/">
-    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="https://keeratsingh.github.io/feed.xml" />
+    <link rel="canonical" href="http://localhost:4000/blog/2016/setting-up-docker-on-mac-windows-linux-azure/">
+    <link rel="alternate" type="application/rss+xml" title="Keerat Singh" href="http://localhost:4000/feed.xml" />
   </head>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -113,7 +113,7 @@ You can download Docker for Windows from <a href="https://download.docker.com/wi
 <p>Since Docker Engine runs natively on Linux, therefore it can be installed directly by installing the docker-engine package from apt-get. Docker is supported across
 various Linux distributions, however, I will be discussing setting up on Ubuntu.</p>
 <h3>Azure VM(Docker on Ubuntu)</h3>
-<p>Setting up Docker on Azure is easiest, thanks to a pre-existing template on Azure called <code>Docker on Ubuntu Server</code>. Docker on Ubuntu Server
+<p>Setting up Docker on Azure is easiest, thanks to a pre-existing template on Azure called <code class="highlighter-rouge">Docker on Ubuntu Server</code>. Docker on Ubuntu Server
 template deploys a Ubuntu Server 16.04 LTS VM and then automatically installs Docker Engine on the VM.
 The terminal on this machine can be accessed via ssh using putty on windows, for linux/mac native terminal works.</p>
 
@@ -141,7 +141,7 @@ citing that Docker is now up and running.</p>
 <p>To install Docker on Windows, make sure Hyper-V is supported and enabled. If Hyper-V is not enabled, you can follow this tutorial to <a href="https://msdn.microsoft.com/en-us/virtualization/hyperv_on_windows/quick_start/walkthrough_install">enable Hyper-V</a> on Windows 10.
 Also, virtualization should be enabled on the operating system for Docker to work.
 Once you have both Hyper-V and virtualization enabled, run the msi installer that you downloaded, follow the instructions to install Docker and at the last dialog box tick option
-<code>Launch Docker</code>. If everything goes well, you should see a whale icon in the taskbar, which means Docker is running and ready to use.</p>
+<code class="highlighter-rouge">Launch Docker</code>. If everything goes well, you should see a whale icon in the taskbar, which means Docker is running and ready to use.</p>
 <div class="postImg">
 <figure>
     <img class="postImg" src="/images/posts/2016-09-25-setting-up-docker-on-mac-windows-linux-azure/install-docker-on-windows.jpg" alt="Installing Docker on Windows" />
@@ -150,11 +150,11 @@ Once you have both Hyper-V and virtualization enabled, run the msi installer tha
 </div>
 <h3>Linux(uBuntu)</h3>
 <p>Since the Docker Engine is supported natively on Linux, therefore I can just install docker by running a simple script from the official Docker website. I installed Docker on Ubuntu, it is supported
-across many flavors of Linux. Docker on Linux can be installed using respective native package managers, however, I chose to install Docker using <code>curl</code>.
-You will need sudo permissions to install Docker, therefore make sure you have <code>sudo</code> privileges. Once you make sure curl is installed, you can fetch the latest Docker package as shown below.</p>
+across many flavors of Linux. Docker on Linux can be installed using respective native package managers, however, I chose to install Docker using <code class="highlighter-rouge">curl</code>.
+You will need sudo permissions to install Docker, therefore make sure you have <code class="highlighter-rouge">sudo</code> privileges. Once you make sure curl is installed, you can fetch the latest Docker package as shown below.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">which curl  
-curl -fsSL https://get.docker.com/ <span class="p">|</span> sh</code></pre></figure>
+curl <span class="nt">-fsSL</span> https://get.docker.com/ | sh</code></pre></figure>
 
 <h3>Azure VM(Docker on Ubuntu)</h3>
 <p>Docker installation is probably the easiest on Azure, since you can provision a VM with Docker pre-installed.
@@ -162,7 +162,7 @@ To provision, a new Ubuntu VM with Docker pre-installed follow the instructions 
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">- Click the + icon to add a new resource. 
 - Choose Virtual Machines.
-- Search <span class="k">for</span> <span class="sb">`</span>Docker on Ubuntu Server<span class="sb">`</span>.
+- Search <span class="k">for</span> <span class="sb">`</span>Docker on Ubuntu Server<span class="sb">`</span><span class="nb">.</span>
 - Configure your server and provision it.
 - Once the server is provisioned, SSH into the server using an SSH client like putty.
 - You will find the Docker Engine already installed.</code></pre></figure>
@@ -175,8 +175,8 @@ To provision, a new Ubuntu VM with Docker pre-installed follow the instructions 
 </div>
 
 <h2 id="verifying-docker-installation">Verifying Docker installation</h2>
-<p>In order to verify Docker installation on each platform execute <code>docker info</code> to see information regarding kernel version, a number of containers and images.
-<code>docker version</code> displays all the information regarding the version of the Client and the Server, you can even format the string into JSON format.</p>
+<p>In order to verify Docker installation on each platform execute <code class="highlighter-rouge">docker info</code> to see information regarding kernel version, a number of containers and images.
+<code class="highlighter-rouge">docker version</code> displays all the information regarding the version of the Client and the Server, you can even format the string into JSON format.</p>
 
 <h3>Mac</h3>
 
@@ -212,8 +212,8 @@ To provision, a new Ubuntu VM with Docker pre-installed follow the instructions 
 </div>
 
 <h2 id="running-hello-world-image">Running hello-world image</h2>
-<p>Execute the <code>docker run</code> command to run the image <code>hello-world</code> in the container. This image is an example of minimal dockerization. You can find more images at <a href="https://hub.docker.com/explore/">docker explore</a>.
-Run the command <code>docker ps -a</code> to list all containers, both running and stopped.</p>
+<p>Execute the <code class="highlighter-rouge">docker run</code> command to run the image <code class="highlighter-rouge">hello-world</code> in the container. This image is an example of minimal dockerization. You can find more images at <a href="https://hub.docker.com/explore/">docker explore</a>.
+Run the command <code class="highlighter-rouge">docker ps -a</code> to list all containers, both running and stopped.</p>
 <h3>Mac</h3>
 <div class="postImg">
 <figure>
@@ -259,7 +259,7 @@ This was just an introduction on how to setup and verify docker on various platf
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function() {
-        this.page.url = 'https://keeratsingh.github.io/blog/2016/setting-up-docker-on-mac-windows-linux-azure/';
+        this.page.url = 'http://localhost:4000/blog/2016/setting-up-docker-on-mac-windows-linux-azure/';
         this.page.identifier = '/blog/2016/setting-up-docker-on-mac-windows-linux-azure';
       };
       (function() {
@@ -291,7 +291,7 @@ This was just an introduction on how to setup and verify docker on various platf
   
 </ul>
     <p class="txt-base-color">
-      <small>&copy;2017 Made with ♥ by Keerat Singh</small>
+      <small>&copy;2018 Made with ❤️ by Keerat Singh</small>
     </p>
   </div>
 </footer>
